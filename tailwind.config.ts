@@ -9,6 +9,8 @@ export default {
         xlg: "1300px",
       },
       colors: {
+        "dark-blue": "#222535",
+        dark: "#343436",
       },
       spacing: {
         navD: "60px",

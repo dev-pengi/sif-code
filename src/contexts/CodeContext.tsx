@@ -45,8 +45,8 @@ interface CodeProviderProps {
 }
 
 const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
-  const [pageWidth, setPageWidth] = useState(window.innerWidth - 5);
-  const [pageHeight, setPageHeight] = useState(window.innerHeight);
+  const [pageWidth, setPageWidth] = useState(0);
+  const [pageHeight, setPageHeight] = useState(0);
 
   const [codeWidth, setCodeWidth] = useState(window.innerWidth / 2);
 
@@ -80,11 +80,18 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
   };
   useEffect(() => {
     const handleResize = () => {
-      setPageWidth(window.innerWidth - 5);
-      setPageHeight(window.innerHeight);
+      const mainElement = document.getElementById("main");
+      if (mainElement) {
+        setPageWidth(mainElement.offsetWidth - 5);
+        setPageHeight(mainElement.offsetHeight);
+      }
+      else {
+        console.log('no main element')
+      }
     };
 
     window.addEventListener("resize", handleResize);
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);

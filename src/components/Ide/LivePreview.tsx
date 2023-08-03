@@ -25,7 +25,7 @@ const LivePreview: FC<LivePreviewProps> = ({ width }) => {
   }, [files]);
 
   return (
-    <div className="h-full" style={{ width: `${width}px` }}>
+    <div className="h-full border-black border-solid border-[1px] bg-white" style={{ width: `${width}px` }}>
       <iframe
         key={iframeKey}
         src={"/index.html"}

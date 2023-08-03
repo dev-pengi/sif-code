@@ -49,6 +49,7 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({ width, style }) => {
 
   return (
     <Editor
+      className="border-black border-solid border-[1px]"
       height="100%"
       theme="vs-dark"
       width={`${String(width)}px`}

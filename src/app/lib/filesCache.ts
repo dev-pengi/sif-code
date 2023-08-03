@@ -36,4 +36,14 @@ const updateFile = (
   return file;
 };
 
-export { files, UpdateFiles, GetFiles, getFile, updateFile };
+const deleteFile = (filename: string): boolean => {
+  // add a check if the file exists
+
+  const checkFile = getFile(filename);
+  if (!checkFile) return false;
+
+  files = files.filter((file) => file.name !== filename);
+  return true;
+};
+
+export { files, UpdateFiles, GetFiles, getFile, updateFile, deleteFile };

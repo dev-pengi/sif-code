@@ -21,9 +21,8 @@ const ResizeBar: FC = () => {
   };
 
   useEffect(() => {
-    const windowWidth = window.innerWidth;
-    const minWidth = windowWidth * 0.2;
-    const maxWidth = windowWidth - 200;
+    const minWidth = 300;
+    const maxWidth = pageWidth - 200;
     const clampedWidth = Math.max(minWidth, Math.min(maxWidth, codeWidth));
 
     if (codeWidth < minWidth || codeWidth > maxWidth) {
@@ -53,7 +52,7 @@ const ResizeBar: FC = () => {
     <>
       <div
         ref={resizeBarRef}
-        className="w-[5px] bg-black cursor-col-resize"
+        className="w-[5px] bg-transparent cursor-col-resize"
         style={{ left: pageWidth }}
         onMouseDown={handleMouseDown}
       />

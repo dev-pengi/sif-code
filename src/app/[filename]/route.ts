@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getFile } from "../filesCache";
+import { getFile } from "../lib/filesCache";
 
 export async function GET(
   request: Request,
