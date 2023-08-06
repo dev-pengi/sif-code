@@ -1,22 +1,32 @@
 "use client";
-import { useRef, useEffect, useState, CSSProperties } from "react";
-import Editor, {
+import { useEffect, useState, CSSProperties, use } from "react";
+import MonacoEditor, {
   DiffEditor,
   useMonaco,
   loader,
   Monaco,
 } from "@monaco-editor/react";
+import { emmetHTML, emmetCSS } from "emmet-monaco-es";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { File } from "@/constants";
+import { useCodeContext } from "@/contexts/CodeContext";
 
-interface MonacoEditorProps {
-  width: number;
+interface EditorProps {
+  width: number | string;
+  height?: number | string;
   style?: CSSProperties;
 }
 
-const MonacoEditor: React.FC<MonacoEditorProps> = ({ width, style }) => {
+const Editor: React.FC<EditorProps> = ({ width, height, style }) => {
   const { files, setFiles, activeFile, setActiveFile } = useFilesContext();
+  const { theme, switchedView, smallScreen } = useCodeContext();
   const [currentFile, setCurrentFile] = useState<File | null>(null);
+  const [showEditor, setShowEditor] = useState(false);
+
+  useEffect(() => {
+    if (!smallScreen) return setShowEditor(true);
+    setShowEditor(switchedView);
+  }, [switchedView, smallScreen]);
 
   useEffect(() => {
     if (activeFile) {
@@ -47,25 +57,35 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({ width, style }) => {
     }
   };
 
+  const handleEditorDidMount = () => {
+    emmetHTML(window.monaco);
+    emmetCSS(window.monaco);
+  };
+
   return (
-    <Editor
-      className="border-black border-solid border-[1px]"
-      height="100%"
-      theme="vs-dark"
-      width={`${String(width)}px`}
-      defaultLanguage={currentFile?.type}
-      defaultValue={currentFile?.content}
-      onChange={handleCodeChange}
-      options={
-        {
-          minimap: {
-            enabled: false,
-          },
-          fontSize: 16,
-        } as any
-      }
-    />
+    <>
+      {showEditor && (
+        <MonacoEditor
+          className="border-black border-solid border-[1px]"
+          height={smallScreen ? "100%" : height}
+          theme={`vs-${theme}`}
+          width={smallScreen ? "100%" : width}
+          defaultLanguage={currentFile?.type}
+          value={currentFile?.content}
+          onMount={handleEditorDidMount}
+          onChange={handleCodeChange}
+          options={
+            {
+              minimap: {
+                enabled: false,
+              },
+              fontSize: 16,
+            } as any
+          }
+        />
+      )}
+    </>
   );
 };
 
-export default MonacoEditor;
+export default Editor;

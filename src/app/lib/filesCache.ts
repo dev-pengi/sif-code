@@ -37,8 +37,6 @@ const updateFile = (
 };
 
 const deleteFile = (filename: string): boolean => {
-  // add a check if the file exists
-
   const checkFile = getFile(filename);
   if (!checkFile) return false;
 

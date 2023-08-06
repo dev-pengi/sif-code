@@ -46,7 +46,6 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
     if (data) {
       !isLoaded && setIsLoaded(true);
     }
-    console.log("Files updated");
   };
 
   const debouncedUpdateFilesCache = debounce(updateFilesCache, 600);

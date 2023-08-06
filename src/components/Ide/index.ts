@@ -1,5 +1,3 @@
-import Editor from "./Editor";
-import Preview from "./LivePreview";
-import ResizeBar from "./ResizeBar";
+import IDE from "./IDE";
 
-export { Editor, Preview, ResizeBar };
+export { IDE };
