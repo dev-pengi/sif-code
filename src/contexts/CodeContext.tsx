@@ -123,7 +123,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       const mainElement = document.getElementById("main");
       if (mainElement) {
         setPageWidth(mainElement.offsetWidth - 5);
-        setPageHeight(mainElement.offsetHeight);
+        setPageHeight(mainElement.offsetHeight - 10);
       }
     };
 
@@ -137,7 +137,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
 
   useEffect(() => {
     handlePreviewResize();
-  }, [pageWidth, pageHeight, codeWidth, isHorizontal]);
+  }, [pageWidth, pageHeight, codeWidth, codeHeight,  isHorizontal]);
 
   useEffect(() => {
     setIsHorizontal(!switchedView);

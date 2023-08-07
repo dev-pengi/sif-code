@@ -48,7 +48,7 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
     }
   };
 
-  const debouncedUpdateFilesCache = debounce(updateFilesCache, 600);
+  const debouncedUpdateFilesCache = debounce(updateFilesCache, 100);
   
   useEffect(() => {
     debouncedUpdateFilesCache();

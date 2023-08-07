@@ -7,13 +7,10 @@ const ResizeBar: FC = () => {
     pageHeight,
     codeWidth,
     codeHeight,
-    previewWidth,
-    previewHeight,
-    smallScreen,
     switchedView,
     isHorizontal,
     setCodeWidth,
-
+    setCodeHeight,
   } = useCodeContext();
   const [resizing, setResizing] = useState(false);
   const resizeBarRef = useRef<HTMLDivElement | null>(null);
@@ -26,23 +23,32 @@ const ResizeBar: FC = () => {
     if (resizing && resizeBarRef.current) {
       if (isHorizontal) {
         const newPageWidth = e.clientX;
-        const minWidth = 300;
-        const maxWidth = pageWidth - 200;
+        const minWidth = 100;
+        const maxWidth = pageWidth - 100;
         const clampedWidth = Math.max(
           minWidth,
           Math.min(maxWidth, newPageWidth)
         );
         setCodeWidth(clampedWidth);
+      } else {
+        const newPageHeight = e.clientY;
+        console.log(pageHeight);
+        const minHeight = 100; 
+        const maxHeight = pageHeight - 100;
+        const clampedHeight = Math.max(
+          minHeight,
+          Math.min(maxHeight, newPageHeight)
+        );
+        setCodeHeight(clampedHeight);
       }
-      
     }
   };
 
   useEffect(() => {
     if (!pageWidth) return;
 
-    const minWidth = 300;
-    const maxWidth = pageWidth - 200;
+    const minWidth = 100;
+    const maxWidth = pageWidth - 100;
     const clampedWidth = Math.max(minWidth, Math.min(maxWidth, +codeWidth));
 
     if (+codeWidth < minWidth || +codeWidth > maxWidth) {
@@ -52,7 +58,7 @@ const ResizeBar: FC = () => {
 
   useEffect(() => {
     const handleResizeMouseUp = () => {
-      if (resizing) {
+      if (resizing) { 
         setResizing(false);
       }
     };
@@ -72,13 +78,20 @@ const ResizeBar: FC = () => {
     <>
       <div
         ref={resizeBarRef}
-        className="w-[5px] bg-transparent cursor-col-resize"
-        style={{ left: pageWidth }}
+        className={`${
+          isHorizontal
+            ? "w-[5px] h-full cursor-col-resize"
+            : "h-[10px] w-full cursor-row-resize"
+        } bg-transparent`}
         onMouseDown={handleMouseDown}
       />
 
       {resizing && (
-        <div className="w-screen h-screen fixed top-0 cursor-col-resize" />
+        <div
+          className={`w-screen h-screen fixed top-0 ${
+            isHorizontal ? "cursor-col-resize" : "cursor-row-resize"
+          }`}
+        />
       )}
     </>
   );
