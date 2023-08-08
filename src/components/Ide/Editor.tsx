@@ -58,6 +58,7 @@ const Editor: React.FC<EditorProps> = ({ width, height, style }) => {
   };
 
   const handleEditorDidMount = () => {
+    if (typeof window === "undefined") return;
     emmetHTML(window.monaco);
     emmetCSS(window.monaco);
   };
