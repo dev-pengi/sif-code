@@ -1,7 +1,6 @@
-import { CSSProperties, FC, useEffect, useState } from "react";
+import { FC } from "react";
 import ResizeBar from "./ResizeBar";
 import LivePreview from "./LivePreview";
-import { useFilesContext } from "@/contexts/FilesContext";
 import Editor from "./Editor";
 import { useCodeContext } from "@/contexts/CodeContext";
 

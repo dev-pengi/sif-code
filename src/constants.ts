@@ -13,19 +13,11 @@ type initialCodesType = {
 };
 
 const initialCodes: initialCodesType = {
-  html: `<!DOCTYPE html>
-<html>
+  html: `<!-- the code you write here is registred in the body -->
 
-<head>
-    <title>Page Title</title>
-</head>
-
-<body>
-    <h1>My First Heading</h1>
-    <p>My first paragraph.</p>
-</body>
-
-</html>`,
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+`,
 };
 
 const initialFiles: File[] = [

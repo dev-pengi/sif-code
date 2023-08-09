@@ -10,6 +10,7 @@ import {
 import { FileType, File, initialFiles } from "@/constants";
 import debounce from "lodash/debounce";
 import axios from "axios";
+import * as BrowserFS from "browserfs";
 
 interface FilesContextValue {
   files: File[];
@@ -41,19 +42,9 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const updateFilesCache = async () => {
-    const { data } = await axios.post("/files", { files });
-    if (data) {
-      !isLoaded && setIsLoaded(true);
-    }
-  };
-
-  const debouncedUpdateFilesCache = debounce(updateFilesCache, 100);
-  
   useEffect(() => {
-    debouncedUpdateFilesCache();
-  }, [files]);
-
+    setIsLoaded(true);
+  }, []);
 
   const value: FilesContextValue = {
     files,
