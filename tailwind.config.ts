@@ -9,6 +9,10 @@ export default {
       },
       colors: {
         "dark-blue": "#222535",
+        "dark-tab":"#181818",
+        "dark-active-tab":"#1f1f1f",
+        "light-tab":"#f8f8f8",
+        "light-active-tab":"#ffffff",
         dark: "#343436",
       },
       spacing: {
