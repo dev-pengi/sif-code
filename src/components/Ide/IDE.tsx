@@ -15,7 +15,7 @@ const IDE: FC = () => {
   } = useCodeContext();
   return (
     <main
-      className={`py-[5px] px-[5px] vsm:py-0 vsm:pl-[5px] pl-0 w-[calc(100vw-60px)] h-screen mt-0 ml-[60px] vsm:w-full vsm:h-[calc(100vh-60px)] vsm:mt-[60px] vsm:ml-0`}
+      className={`vsm:px-[5px] vsm:pb-[5px] w-[calc(100vw-60px)] h-screen mt-0 ml-[60px] vsm:w-full vsm:h-[calc(100vh-60px)] vsm:mt-[60px] vsm:ml-0`}
     >
       <div
         id="main"

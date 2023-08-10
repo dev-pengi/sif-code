@@ -17,8 +17,8 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
   const [showPreview, setShowPreview] = useState<boolean>(true);
 
   const [htmlFile, setHtmlFile] = useState<File | null>(null);
-  const [cssFile, setCssFile] = useState<File | null>(null);
-  const [jsFile, setJsFile] = useState<File | null>(null);
+  const [cssFile, setCssFile] = useState<string>("");
+  const [jsFile, setJsFile] = useState<string>("");
 
   useEffect(() => {
     if (!smallScreen) return setShowPreview(true);
@@ -31,22 +31,30 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
     ) as File;
   };
 
-  const getCssFile = (): File => {
-    return files.find(
-      (file) => file.type === "css" && file.name === "style.css"
-    ) as File;
+  const getCssFiles = (): string => {
+    const cssFiles = files.filter((file) => file.type === "css");
+
+    if (cssFiles.length === 0) return "";
+
+    return cssFiles.reduce((acc, file) => {
+      return acc + file.content;
+    }, "");
   };
 
-  const getJsFile = (): File => {
-    return files.find(
-      (file) => file.type === "javascript" && file.name === "script.js"
-    ) as File;
+  const getJsFiles = (): string => {
+    const jsFiles = files.filter((file) => file.type === "javascript");
+
+    if (jsFiles.length === 0) return "";
+
+    return jsFiles.reduce((acc, file) => {
+      return acc + file.content + "\n";
+    }, "");
   };
 
   useEffect(() => {
     setHtmlFile(getHtmlFile());
-    setCssFile(getCssFile());
-    setJsFile(getJsFile());
+    setCssFile(getCssFiles());
+    setJsFile(getJsFiles());
   }, [files]);
 
   return (
@@ -69,18 +77,18 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
                   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                   <title>Document</title>
                   <style>
-                    ${cssFile?.content}
+                    ${cssFile}
                   </style>
                 </head>
                 <body>
                   ${htmlFile?.content}
                   <script>
-                    ${jsFile?.content}
+                     ${jsFile}
                   </script>
                 </body>
                 `}
               title="output"
-              sandbox="allow-scripts"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
               width="100%"
               height="100%"
             />

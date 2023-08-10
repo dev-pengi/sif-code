@@ -15,8 +15,8 @@ import * as BrowserFS from "browserfs";
 interface FilesContextValue {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  activeFile: FileType;
-  setActiveFile: React.Dispatch<React.SetStateAction<FileType>>;
+  activeFile: string;
+  setActiveFile: React.Dispatch<React.SetStateAction<string>>;
   isLoaded: boolean;
   setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -24,7 +24,7 @@ interface FilesContextValue {
 const FilesContext = createContext<FilesContextValue>({
   files: [],
   setFiles: () => {},
-  activeFile: "css",
+  activeFile: "index.html",
   setActiveFile: () => {},
   isLoaded: false,
   setIsLoaded: () => {},
@@ -38,7 +38,7 @@ interface FilesProviderProps {
 
 const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   const [files, setFiles] = useState<File[]>(initialFiles);
-  const [activeFile, setActiveFile] = useState<FileType>("html");
+  const [activeFile, setActiveFile] = useState<string>("index.html");
 
   const [isLoaded, setIsLoaded] = useState(false);
 

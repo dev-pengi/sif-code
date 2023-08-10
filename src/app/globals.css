@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.filesbar-scroll {
+  overflow: hidden;
+}
+.filesbar-scroll:hover {
+  overflow-x: auto;
+}
+
+.filesbar-scroll::-webkit-scrollbar {
+  height: 4px;
+  position: absolute;
+}
+
+.filesbar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  position: absolute;
+}
+
+.filesbar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(158, 158, 158, 0.267);
+  position: absolute;
+}

@@ -10,14 +10,14 @@ import { emmetHTML, emmetCSS } from "emmet-monaco-es";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { File } from "@/constants";
 import { useCodeContext } from "@/contexts/CodeContext";
+import FilesBar from "./FilesBar";
 
 interface EditorProps {
   width: number | string;
   height?: number | string;
-  style?: CSSProperties;
 }
 
-const Editor: React.FC<EditorProps> = ({ width, height, style }) => {
+const Editor: React.FC<EditorProps> = ({ width, height }) => {
   const { files, setFiles, activeFile, setActiveFile } = useFilesContext();
   const { theme, switchedView, smallScreen } = useCodeContext();
   const [currentFile, setCurrentFile] = useState<File | null>(null);
@@ -31,7 +31,7 @@ const Editor: React.FC<EditorProps> = ({ width, height, style }) => {
   useEffect(() => {
     if (activeFile) {
       const file: File = files.find(
-        (file: File) => file.type === activeFile
+        (file: File) => file.name === activeFile
       ) as File;
       if (file) {
         setCurrentFile(file);
@@ -46,12 +46,12 @@ const Editor: React.FC<EditorProps> = ({ width, height, style }) => {
         content: value as string,
       };
       const newFiles = files.map((file) => {
-        if (file.type === currentFile.type) {
+        if (file.name === currentFile.name) {
           return newFile;
         }
         return file;
       });
-      setActiveFile(currentFile.type);
+      setActiveFile(currentFile.name);
       setCurrentFile(newFile);
       setFiles(newFiles);
     }
@@ -66,24 +66,37 @@ const Editor: React.FC<EditorProps> = ({ width, height, style }) => {
   return (
     <>
       {showEditor && (
-        <MonacoEditor
-          className="border-black border-solid border-[1px]"
-          height={smallScreen ? "100%" : height}
-          theme={`vs-${theme}`}
-          width={smallScreen ? "100%" : width}
-          defaultLanguage={currentFile?.type}
-          value={currentFile?.content}
-          onMount={handleEditorDidMount}
-          onChange={handleCodeChange}
-          options={
-            {
-              minimap: {
-                enabled: false,
-              },
-              fontSize: 16,
-            } as any
-          }
-        />
+        <div
+          style={{
+            width: smallScreen ? "100%" : width,
+            height: smallScreen ? "100%" : height,
+          }}
+        >
+          <FilesBar />
+          <div className="h-[calc(100%-50px)] w-full mt-[50x]" style={{
+            height:'calc(100% - 50px)'
+          }}>
+            <MonacoEditor
+              className=""
+              width={"100%"}
+              height={"100%"}
+              theme={`vs-${theme}`}
+              language={currentFile?.type}
+              defaultLanguage={currentFile?.type}
+              value={currentFile?.content}
+              onMount={handleEditorDidMount}
+              onChange={handleCodeChange}
+              options={
+                {
+                  minimap: {
+                    enabled: false,
+                  },
+                  fontSize: 16,
+                } as any
+              }
+            />
+          </div>
+        </div>
       )}
     </>
   );
