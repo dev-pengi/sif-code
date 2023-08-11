@@ -13,8 +13,11 @@ const FilesBar: FC = () => {
 
   return (
     <div
-      className={`w-full flex items-center filesbar-scroll h-12 bg-${theme}-tab`}
-      style={{height: "50px" }}
+      className={`w-full flex items-center filesbar-scroll h-12`}
+      style={{
+        height: "50px",
+        background: theme == "dark" ? "#181818" : "#f8f8f8",
+      }}
     >
       {files.map((file: File, index: number) => {
         const active = file.name === activeFile;
@@ -25,12 +28,15 @@ const FilesBar: FC = () => {
               height: "100%",
               borderTop: active ? "#3495eb solid 2px" : "none",
               borderRight: active ? "" : "#555555aa solid 1px",
-              // borderLeft: active ? "" : "#555555aa solid 1px",
-              // backgroundColor: active ? "#1f1f1f" : "#181818",
+              background: active
+                ? theme === "dark"
+                  ? "#1f1f1f"
+                  : "#ffffff"
+                : theme === "dark"
+                ? "#181818"
+                : "#f8f8f8",
             }}
-            className={`flex items-center px-2 py-3 min-w-[150px] max-w-[230px] ${
-              active ? `bg-${theme}-active-tab` : `bg-${theme}-tab`
-            } `}
+            className={`flex items-center px-2 py-3 min-w-[150px] max-w-[230px] `}
           >
             <Image
               src={asstes[`${file.type}Icon`]}

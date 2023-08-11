@@ -147,7 +147,10 @@ const CreateFile: FC = () => {
     <>
       <button
         onClick={openModal}
-        className={`ml-[10px] h-max p-1 rounded-sm bg-${theme}-active-tab`}
+        className={`ml-[10px] h-max p-1 rounded-sm`}
+        style={{
+          background: theme === "dark" ? "#1f1f1f" : "#ffffff",
+        }}
       >
         <Image
           src={assets.plusIcon}
