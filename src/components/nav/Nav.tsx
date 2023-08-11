@@ -6,6 +6,7 @@ import { devIcon, downloadIcon, rotateIcon, themesIcon } from "@/assets";
 import SizeIndicator from "./SizeIndicator";
 import { downloadFilesAsZip, linkFiles } from "@/utils";
 import { useFilesContext } from "@/contexts/FilesContext";
+import { toast } from "react-hot-toast";
 
 const Nav: FC = () => {
   const { setTheme, setSwitchedView, smallScreen } = useCodeContext();
@@ -20,6 +21,7 @@ const Nav: FC = () => {
   const handleDownload = () => {
     const linkedFiles = linkFiles(files);
     downloadFilesAsZip(linkedFiles, "project");
+    toast.success("Project downloaded successfully");
   };
 
   return (
