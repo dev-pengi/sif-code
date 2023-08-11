@@ -120,6 +120,7 @@ const CreateFile: FC = () => {
     setFileCreationName(null);
     setFileCreationType(null);
     closeModal();
+    toast.success("File created successfully");
   };
 
   const openModal = () => {
