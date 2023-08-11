@@ -44,6 +44,8 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
     }
   };
 
+
+
   return (
     <>
       <button
@@ -80,17 +82,20 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
           </button>
         </div>
         <p className="text-white mt-3">
-          are you sure you wanna delete <span>{filename}</span>?
+          are you sure you wanna delete <span>({filename})</span>?
         </p>
         <div className="flex justify-end mt-4">
-          <button className="py-3 px-6 text-white rounded-md">
+          <button
+            onClick={closeModal}
+            className="py-3 px-6 text-white rounded-md"
+          >
             Cancel
           </button>
           <button
             onClick={deleteFile}
             className="py-3 px-6 rounded-md bg-red-500 text-white"
           >
-            delete
+            Delete
           </button>
         </div>
       </Modal>
