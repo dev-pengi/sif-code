@@ -82,7 +82,6 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
               height={"100%"}
               theme={`vs-${theme}`}
               language={currentFile?.type}
-              defaultLanguage={currentFile?.type}
               value={currentFile?.content}
               onMount={handleEditorDidMount}
               onChange={handleCodeChange}

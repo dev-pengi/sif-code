@@ -11,12 +11,10 @@ const FilesBar: FC = () => {
   const { files, activeFile, setActiveFile } = useFilesContext();
   const { theme } = useCodeContext();
 
-  console.log(files);
-
   return (
     <div
       className={`w-full flex items-center filesbar-scroll h-12 bg-${theme}-tab`}
-      style={{ borderTop: "solid 2px #555555aa", height: "50px" }}
+      style={{height: "50px" }}
     >
       {files.map((file: File, index: number) => {
         const active = file.name === activeFile;
@@ -26,8 +24,8 @@ const FilesBar: FC = () => {
             style={{
               height: "100%",
               borderTop: active ? "#3495eb solid 2px" : "none",
-              borderRight: active ? "" : "#555555aa solid 2px",
-              borderLeft: active ? "" : "#555555aa solid 2px",
+              borderRight: active ? "" : "#555555aa solid 1px",
+              // borderLeft: active ? "" : "#555555aa solid 1px",
               // backgroundColor: active ? "#1f1f1f" : "#181818",
             }}
             className={`flex items-center px-2 py-3 min-w-[150px] max-w-[230px] ${
@@ -39,7 +37,12 @@ const FilesBar: FC = () => {
               alt={`${file.type} icon`}
               width={25}
             />
-            <h3 style={{ color: "#cccccc", marginLeft: "10px" }}>
+            <h3
+              style={{
+                color: theme === "dark" ? "#cccccc" : "#1f1f1f",
+                marginLeft: "10px",
+              }}
+            >
               {file.name}
             </h3>
           </button>

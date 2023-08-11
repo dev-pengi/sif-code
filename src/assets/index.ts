@@ -6,6 +6,7 @@ import themesIcon from "./themes.svg";
 import rotateIcon from "./rotate.svg";
 import devIcon from "./dev.svg";
 import plusIcon from "./plus.svg";
+import closeIcon from "./close.svg";
 
 export {
   cssIcon,
@@ -16,4 +17,5 @@ export {
   rotateIcon,
   devIcon,
   plusIcon,
+  closeIcon,
 };

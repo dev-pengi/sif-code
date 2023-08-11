@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import FilesProvider from "@/contexts/FilesContext";
 import CodeProvider from "@/contexts/CodeContext";
+import { Toaster } from "react-hot-toast";
 
 config.autoAddCss = false;
 
@@ -28,9 +29,10 @@ export default function RootLayout({
     <html lang="en">
       <FilesProvider>
         <CodeProvider>
-            <body className={`${inter.className} bg-dark-blue`}>
-              {children}
-            </body>
+          <body id="root" className={`${inter.className} bg-dark-blue`}>
+            <Toaster />
+            {children}
+          </body>
         </CodeProvider>
       </FilesProvider>
     </html>

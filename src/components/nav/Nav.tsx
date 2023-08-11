@@ -4,15 +4,22 @@ import { FC } from "react";
 import NavButton from "./NavButton";
 import { devIcon, downloadIcon, rotateIcon, themesIcon } from "@/assets";
 import SizeIndicator from "./SizeIndicator";
+import { downloadFilesAsZip, linkFiles } from "@/utils";
+import { useFilesContext } from "@/contexts/FilesContext";
 
 const Nav: FC = () => {
   const { setTheme, setSwitchedView, smallScreen } = useCodeContext();
+  const { files } = useFilesContext();
 
   const handleThemeToggle = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
   const handleToggleView = () => {
     setSwitchedView((prev) => !prev);
+  };
+  const handleDownload = () => {
+    const linkedFiles = linkFiles(files);
+    downloadFilesAsZip(linkedFiles, "project");
   };
 
   return (
@@ -32,6 +39,7 @@ const Nav: FC = () => {
             icon={downloadIcon}
             tooltip="Download project"
             id={"download"}
+            onClick={handleDownload}
           />
           <NavButton
             icon={themesIcon}

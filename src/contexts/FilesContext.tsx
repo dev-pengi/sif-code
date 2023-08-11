@@ -7,11 +7,7 @@ import {
   FC,
   ReactNode,
 } from "react";
-import { FileType, File, initialFiles } from "@/constants";
-import debounce from "lodash/debounce";
-import axios from "axios";
-import * as BrowserFS from "browserfs";
-
+import { File, initialFiles } from "@/constants";
 interface FilesContextValue {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;

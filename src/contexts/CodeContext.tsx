@@ -156,6 +156,31 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     setIsHorizontal(!switchedView);
   }, [switchedView]);
 
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.altKey && event.key === "t") {
+        setTheme((prev) => (prev === "light" ? "dark" : "light"));
+      }
+    };
+    if (typeof window === "undefined") return;
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.altKey && event.key === "v") {
+        setSwitchedView((prev) => !prev);
+      }
+    };
+    if (typeof window === "undefined") return;
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
   const value: CodeContextValue = {
     pageWidth,
     pageHeight,
