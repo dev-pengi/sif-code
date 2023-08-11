@@ -15,6 +15,7 @@ interface CodeContextValue {
   codeHeight: number;
   previewWidth: number;
   previewHeight: number;
+  fullScreenMode: string;
   smallScreen: boolean;
   switchedView: boolean;
   theme: "light" | "dark";
@@ -25,6 +26,7 @@ interface CodeContextValue {
   setCodeHeight: React.Dispatch<React.SetStateAction<number>>;
   setPreviewWidth: React.Dispatch<React.SetStateAction<number>>;
   setPreviewHeight: React.Dispatch<React.SetStateAction<number>>;
+  setFullScreenMode: React.Dispatch<React.SetStateAction<string>>;
   setSmallScreen: React.Dispatch<React.SetStateAction<boolean>>;
   setSwitchedView: React.Dispatch<React.SetStateAction<boolean>>;
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
@@ -36,9 +38,10 @@ const CodeContext = createContext<CodeContextValue>({
   pageHeight: 0,
   codeWidth: typeof window === "undefined" ? 0 : window.innerWidth / 2,
   codeHeight: typeof window === "undefined" ? 0 : window.innerHeight / 2,
-  previewWidth: 0,
-  previewHeight: 0,
+  previewWidth: typeof window === "undefined" ? 0 : window.innerWidth / 2,
+  previewHeight: typeof window === "undefined" ? 0 : window.innerHeight / 2,
   smallScreen: false,
+  fullScreenMode: "none",
   switchedView: false,
   theme: "dark",
   isHorizontal: true,
@@ -48,6 +51,7 @@ const CodeContext = createContext<CodeContextValue>({
   setCodeHeight: () => {},
   setPreviewWidth: () => {},
   setPreviewHeight: () => {},
+  setFullScreenMode: () => {},
   setSmallScreen: () => {},
   setSwitchedView: () => {},
   setTheme: () => {},
@@ -69,8 +73,15 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
   const [codeHeight, setCodeHeight] = useState<number>(
     typeof window === "undefined" ? 0 : window.innerHeight / 2
   );
-  const [previewWidth, setPreviewWidth] = useState<number>(0);
-  const [previewHeight, setPreviewHeight] = useState<number>(0);
+
+  const [previewWidth, setPreviewWidth] = useState<number>(
+    typeof window === "undefined" ? 0 : window.innerWidth / 2
+  );
+  const [previewHeight, setPreviewHeight] = useState<number>(
+    typeof window === "undefined" ? 0 : window.innerHeight / 2
+  );
+
+  const [fullScreenMode, setFullScreenMode] = useState("none");
 
   const [smallScreen, setSmallScreen] = useState(false);
 
@@ -119,14 +130,6 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     }
   }, [pageWidth]);
 
-  const handlePreviewResize = () => {
-    const previewIframe = document.getElementById("preview-iframe");
-    if (previewIframe) {
-      setPreviewWidth(previewIframe.offsetWidth);
-      setPreviewHeight(previewIframe.offsetHeight);
-    }
-  };
-
   useEffect(() => {
     const handleResize = () => {
       const mainElement = document.getElementById("main");
@@ -147,10 +150,6 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       }
     };
   }, []);
-
-  useEffect(() => {
-    handlePreviewResize();
-  }, [pageWidth, pageHeight, codeWidth, codeHeight, isHorizontal]);
 
   useEffect(() => {
     setIsHorizontal(!switchedView);
@@ -180,6 +179,39 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.altKey && event.key === "t") {
+        setTheme((prev) => (prev === "light" ? "dark" : "light"));
+      } else if (event.ctrlKey && event.altKey && event.key === "v") {
+        setSwitchedView((prev) => !prev);
+      } else if (event.ctrlKey && event.altKey && event.key === "c") {
+        setFullScreenMode((prev) => (prev === "code" ? "none" : "code"));
+      } else if (event.ctrlKey && event.altKey && event.key === "p") {
+        setFullScreenMode((prev) => (prev === "preview" ? "none" : "preview"));
+      } else if (event.key === "Escape") {
+        setFullScreenMode("none");
+      }
+      console.log(event.key);
+    };
+    if (typeof window === "undefined") return;
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
+  const handlePreviewResize = () => {
+    const previewIframe = document.getElementById("preview-iframe");
+    if (previewIframe) {
+      setPreviewWidth(previewIframe.offsetWidth);
+      setPreviewHeight(previewIframe.offsetHeight);
+    }
+  };
+
+  useEffect(() => {
+    handlePreviewResize();
+  }, [pageWidth, pageHeight, codeWidth, codeHeight, isHorizontal]);
 
   const value: CodeContextValue = {
     pageWidth,
@@ -188,6 +220,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     codeHeight,
     previewWidth,
     previewHeight,
+    fullScreenMode,
     smallScreen,
     switchedView,
     theme,
@@ -198,6 +231,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     setCodeHeight,
     setPreviewWidth,
     setPreviewHeight,
+    setFullScreenMode,
     setSmallScreen,
     setSwitchedView,
     setTheme,

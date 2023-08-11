@@ -19,7 +19,7 @@ interface EditorProps {
 
 const Editor: React.FC<EditorProps> = ({ width, height }) => {
   const { files, setFiles, activeFile, setActiveFile } = useFilesContext();
-  const { theme, switchedView, smallScreen } = useCodeContext();
+  const { theme, switchedView, smallScreen, fullScreenMode } = useCodeContext();
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [showEditor, setShowEditor] = useState(false);
 
@@ -65,15 +65,23 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
     emmetCSS(window.monaco);
   };
 
+  const fulleditorStyle = {
+    width: "100vw",
+    height: "100vh",
+    position: "fixed",
+    top: "0",
+    left: 0,
+    zIndex: 100,
+  };
+  const editorStyle = {
+    width: smallScreen ? "100%" : width,
+    height: smallScreen ? "100%" : height,
+  };
+
   return (
     <>
       {showEditor && (
-        <div
-          style={{
-            width: smallScreen ? "100%" : width,
-            height: smallScreen ? "100%" : height,
-          }}
-        >
+        <div style={fullScreenMode === "code" ? fulleditorStyle : editorStyle}>
           <FilesBar />
           <div
             className="h-[calc(100%-50px)] w-full mt-[50x]"

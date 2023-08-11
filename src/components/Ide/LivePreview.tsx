@@ -14,7 +14,7 @@ interface LivePreviewProps {
 
 const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
   const { files, isLoaded } = useFilesContext();
-  const { smallScreen, switchedView } = useCodeContext();
+  const { smallScreen, switchedView, fullScreenMode } = useCodeContext();
   const [showPreview, setShowPreview] = useState<boolean>(true);
 
   const [mergedFiles, setMergedFiles] = useState<string>("");
@@ -28,16 +28,26 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
     setMergedFiles(mergeFile(files));
   }, [files]);
 
+  const fullPreviewStyle = {
+    width: "100vw",
+    height: "100vh",
+    position: "fixed",
+    top: "0",
+    left: 0,
+    zIndex: 100,
+  };
+  const previewStyle = {
+    width: smallScreen ? "100%" : width,
+    height: smallScreen ? "100%" : height,
+  };
+
   return (
     <>
       {showPreview && (
         <div
           id="preview-iframe"
           className="h-full border-black border-solid border-[1px] bg-white"
-          style={{
-            width: smallScreen ? "100%" : width,
-            height: smallScreen ? "100%" : height,
-          }}
+          style={fullScreenMode === "preview" ? fullPreviewStyle : previewStyle}
         >
           {isLoaded ? (
             <iframe
