@@ -15,7 +15,7 @@ const FilesBar: FC = () => {
   return (
     
     <div
-      className={`w-full flex items-center filesbar-scroll h-12`}
+      className={`w-full flex items-center filesbar-scroll h-12 pr-[10px]`}
       style={{
         height: "50px",
         background: theme == "dark" ? "#181818" : "#f8f8f8",
@@ -38,9 +38,9 @@ const FilesBar: FC = () => {
                 ? "#181818"
                 : "#f8f8f8",
             }}
-            className={`flex items-center px-2 py-3 min-w-[150px] `}
+            className={`flex items-center px-2 py-3 min-w-max`}
           >
-            <div className="flex items-center flex-1">
+            <div className="flex items-center min-w-[120px]">
               <Image
                 src={asstes[`${file.type}Icon`]}
                 alt={`${file.type} icon`}
