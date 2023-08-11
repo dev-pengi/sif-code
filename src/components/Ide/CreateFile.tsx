@@ -83,12 +83,18 @@ const CreateFile: FC = () => {
     const file = files.find((file) => file.name === name);
     return file ? false : true;
   };
+  const FileNameValidator = (fileName: string) => {
+    return !/\s/g.test(fileName)
+  };
 
   const handleCreateFile = () => {
     if (!fileCreationType) return toast.error("Please select a file type");
     if (!fileCreationName) return toast.error("Please enter a file name");
-
     const fullName: string = getFullName(fileCreationName, fileCreationType);
+
+    if (!FileNameValidator(fullName))
+      return toast.error("this name is not valid to use");
+
     if (!checkFileName(fullName))
       return toast.error("this file already exists");
     setFiles((prev) => [
