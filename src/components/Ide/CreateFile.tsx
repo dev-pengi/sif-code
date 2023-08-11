@@ -117,8 +117,6 @@ const CreateFile: FC = () => {
         content: "",
       },
     ]);
-    setFileCreationName(null);
-    setFileCreationType(null);
     closeModal();
     toast.success("File created successfully");
   };
@@ -129,6 +127,8 @@ const CreateFile: FC = () => {
 
   function closeModal() {
     setModalIsOpen(false);
+    setFileCreationName(null);
+    setFileCreationType(null);
   }
 
   useEffect(() => {
