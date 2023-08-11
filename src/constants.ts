@@ -55,7 +55,7 @@ const ConfirmationModalStyles = {
     left: "50%",
     right: "auto",
     width: "max-content",
-    minWidth: "450px",
+    minWidth: "250px",
     maxWidth: "500px",
     minHeight: "100px",
     height: "max-content",

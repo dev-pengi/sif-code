@@ -82,7 +82,7 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
           </button>
         </div>
         <p className="text-white mt-3">
-          are you sure you wanna delete <span>({filename})</span>?
+          are you sure you want to delete <span>({filename})</span>?
         </p>
         <div className="flex justify-end mt-4">
           <button

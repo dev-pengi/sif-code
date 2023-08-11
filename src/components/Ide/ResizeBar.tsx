@@ -31,8 +31,7 @@ const ResizeBar: FC = () => {
         );
         setCodeWidth(clampedWidth);
       } else {
-        const newPageHeight = e.clientY;
-        console.log(pageHeight);
+        const newPageHeight = e.clientY - 65;
         const minHeight = 100; 
         const maxHeight = pageHeight - 100;
         const clampedHeight = Math.max(
