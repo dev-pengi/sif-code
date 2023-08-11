@@ -7,28 +7,8 @@ import { toast } from "react-hot-toast";
 import { FC, useEffect, useState } from "react";
 import Modal from "react-modal";
 import { divide } from "lodash";
+import { ModalStyles } from "@/constants";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    width: "90%",
-    maxWidth: "650px",
-    minHeight: "200px",
-    height: "max-content",
-    maxHeight: "700px",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    padding: "15px 15px",
-    background: "#343436",
-    border: "none",
-  },
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.4)",
-    zIndex: 1000,
-  },
-};
 Modal.setAppElement("#root");
 type FileCreateType = "css" | "javascript";
 
@@ -86,38 +66,41 @@ const SelectFileType: FC<{ setFileCreationType: any }> = ({
 
 const CreateFile: FC = () => {
   const { theme } = useCodeContext();
+  const { setActiveFile, files, setFiles } = useFilesContext();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [fileCreationType, setFileCreationType] =
     useState<FileCreateType | null>(null);
 
   const [fileCreationName, setFileCreationName] = useState<string | null>(null);
-  const { files, setFiles } = useFilesContext();
 
-  const checkFileName = (name: string): boolean => {
-    const file = files.find((file) => file.name === name);
-    return file ? false : true;
-  };
-  const getFullName = (name: string, type: string): string => {
+  const getFullName = (name: string, type: FileCreateType): string => {
     const fullType = type === "css" ? "css" : "js";
     if (name.endsWith(`.${fullType}`)) return name;
     else return `${name}.${fullType}`;
+  };
+  const checkFileName = (name: string): boolean => {
+    const file = files.find((file) => file.name === name);
+    return file ? false : true;
   };
 
   const handleCreateFile = () => {
     if (!fileCreationType) return toast.error("Please select a file type");
     if (!fileCreationName) return toast.error("Please enter a file name");
-    if (!checkFileName(fileCreationName))
+
+    const fullName: string = getFullName(fileCreationName, fileCreationType);
+    if (!checkFileName(fullName))
       return toast.error("this file already exists");
     setFiles((prev) => [
       ...prev,
       {
-        name: getFullName(fileCreationName, fileCreationType),
+        name: fullName,
         type: fileCreationType,
         content: "",
       },
     ]);
     closeModal();
+    setActiveFile(fullName);
     toast.success("File created successfully");
   };
 
@@ -163,7 +146,7 @@ const CreateFile: FC = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
+        style={ModalStyles}
         contentLabel="Example Modal"
       >
         <div
@@ -192,6 +175,8 @@ const CreateFile: FC = () => {
                 File name
               </label>
               <input
+                autoFocus
+                autoComplete=""
                 type="text"
                 id="file-name"
                 className="block mt-1 py-3 outline-none px-4 bg-transparent border-solid border-[555555aa] border w-full focus:border-primary text-white rounded-md"

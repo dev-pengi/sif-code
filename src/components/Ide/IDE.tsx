@@ -24,7 +24,7 @@ const IDE: FC = () => {
         }`}
       >
         <Editor
-          width={isHorizontal ? codeWidth : "100%"}
+          width={isHorizontal ? (codeWidth > 0 ? codeWidth : "50%") : "100%"}
           height={isHorizontal ? "100%" : codeHeight}
         />
         {!smallScreen && <ResizeBar />}

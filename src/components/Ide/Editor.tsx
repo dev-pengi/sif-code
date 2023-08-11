@@ -35,6 +35,8 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
       ) as File;
       if (file) {
         setCurrentFile(file);
+      } else {
+        setActiveFile(files[0].name);
       }
     }
   }, [activeFile, files]);
@@ -73,9 +75,12 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
           }}
         >
           <FilesBar />
-          <div className="h-[calc(100%-50px)] w-full mt-[50x]" style={{
-            height:'calc(100% - 50px)'
-          }}>
+          <div
+            className="h-[calc(100%-50px)] w-full mt-[50x]"
+            style={{
+              height: "calc(100% - 50px)",
+            }}
+          >
             <MonacoEditor
               className=""
               width={"100%"}

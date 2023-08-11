@@ -6,12 +6,14 @@ import * as asstes from "../../assets";
 import Image from "next/image";
 import { useCodeContext } from "@/contexts/CodeContext";
 import CreateFile from "./CreateFile";
+import DeleteFile from "./DeleteFile";
 
 const FilesBar: FC = () => {
   const { files, activeFile, setActiveFile } = useFilesContext();
   const { theme } = useCodeContext();
 
   return (
+    
     <div
       className={`w-full flex items-center filesbar-scroll h-12`}
       style={{
@@ -36,21 +38,24 @@ const FilesBar: FC = () => {
                 ? "#181818"
                 : "#f8f8f8",
             }}
-            className={`flex items-center px-2 py-3 min-w-[150px] max-w-[230px] `}
+            className={`flex items-center px-2 py-3 min-w-[150px] `}
           >
-            <Image
-              src={asstes[`${file.type}Icon`]}
-              alt={`${file.type} icon`}
-              width={25}
-            />
-            <h3
-              style={{
-                color: theme === "dark" ? "#cccccc" : "#1f1f1f",
-                marginLeft: "10px",
-              }}
-            >
-              {file.name}
-            </h3>
+            <div className="flex items-center flex-1">
+              <Image
+                src={asstes[`${file.type}Icon`]}
+                alt={`${file.type} icon`}
+                width={25}
+              />
+              <h3
+                style={{
+                  color: theme === "dark" ? "#cccccc" : "#1f1f1f",
+                  marginLeft: "10px",
+                }}
+              >
+                {file.name}
+              </h3>
+            </div>
+            {file.name !== "index.html" && <DeleteFile filename={file.name} />}
           </button>
         );
       })}
