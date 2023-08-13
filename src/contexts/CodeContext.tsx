@@ -18,6 +18,7 @@ interface CodeContextValue {
   fullScreenMode: string;
   smallScreen: boolean;
   switchedView: boolean;
+  reversedView: boolean;
   theme: "light" | "dark";
   isHorizontal: boolean;
   setPageWidth: React.Dispatch<React.SetStateAction<number>>;
@@ -29,6 +30,7 @@ interface CodeContextValue {
   setFullScreenMode: React.Dispatch<React.SetStateAction<string>>;
   setSmallScreen: React.Dispatch<React.SetStateAction<boolean>>;
   setSwitchedView: React.Dispatch<React.SetStateAction<boolean>>;
+  setReversedView: React.Dispatch<React.SetStateAction<boolean>>;
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
   setIsHorizontal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -43,6 +45,7 @@ const CodeContext = createContext<CodeContextValue>({
   smallScreen: false,
   fullScreenMode: "none",
   switchedView: false,
+  reversedView: false,
   theme: "dark",
   isHorizontal: true,
   setPageWidth: () => {},
@@ -54,6 +57,7 @@ const CodeContext = createContext<CodeContextValue>({
   setFullScreenMode: () => {},
   setSmallScreen: () => {},
   setSwitchedView: () => {},
+  setReversedView: () => {},
   setTheme: () => {},
   setIsHorizontal: () => {},
 });
@@ -86,6 +90,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
   const [smallScreen, setSmallScreen] = useState(false);
 
   const [switchedView, setSwitchedView] = useState(false);
+  const [reversedView, setReversedView] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [isHorizontal, setIsHorizontal] = useState(true);
 
@@ -118,6 +123,21 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     if (typeof window === "undefined") return;
     window.localStorage.setItem("view", switchedView ? "1" : "0");
   }, [switchedView]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const localReversed = window.localStorage.getItem("reversed");
+    if (localReversed) {
+      setSwitchedView(Number(localReversed) ? true : false);
+    } else {
+      window.localStorage.setItem("reversed", "0");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("reversed", reversedView ? "1" : "0");
+  }, [reversedView]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -190,6 +210,9 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       } else if (event.ctrlKey && event.altKey && event.key === "p") {
         setFullScreenMode((prev) => (prev === "preview" ? "none" : "preview"));
       } else if (event.key === "Escape") {
+      } else if (event.ctrlKey && event.altKey && event.key === "r") {
+        setReversedView((prev) => !prev);
+      } else if (event.key === "Escape") {
         setFullScreenMode("none");
       }
       console.log(event.key);
@@ -223,6 +246,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     fullScreenMode,
     smallScreen,
     switchedView,
+    reversedView,
     theme,
     isHorizontal,
     setPageWidth,
@@ -234,6 +258,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     setFullScreenMode,
     setSmallScreen,
     setSwitchedView,
+    setReversedView,
     setTheme,
     setIsHorizontal,
   };

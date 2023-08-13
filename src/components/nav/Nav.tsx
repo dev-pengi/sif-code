@@ -2,14 +2,25 @@
 import { useCodeContext } from "@/contexts/CodeContext";
 import { FC } from "react";
 import NavButton from "./NavButton";
-import { devIcon, downloadIcon, rotateIcon, themesIcon } from "@/assets";
+import {
+  devIcon,
+  downloadIcon,
+  rotateIcon,
+  themesIcon,
+  reverseIcon,
+} from "@/assets";
 import SizeIndicator from "./SizeIndicator";
 import { downloadFilesAsZip, linkFiles } from "@/utils";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { toast } from "react-hot-toast";
 
 const Nav: FC = () => {
-  const { setTheme, setSwitchedView, smallScreen } = useCodeContext();
+  const {
+    setTheme,
+    setSwitchedView,
+    setReversedView,
+    smallScreen,
+  } = useCodeContext();
   const { files } = useFilesContext();
 
   const handleThemeToggle = () => {
@@ -17,6 +28,9 @@ const Nav: FC = () => {
   };
   const handleToggleView = () => {
     setSwitchedView((prev) => !prev);
+  };
+  const handleReverseView = () => {
+    setReversedView((prev) => !prev);
   };
   const handleDownload = () => {
     const linkedFiles = linkFiles(files);
@@ -49,11 +63,19 @@ const Nav: FC = () => {
             id={"theme"}
             onClick={handleThemeToggle}
           />
+          {!smallScreen && (
+            <NavButton
+              icon={rotateIcon}
+              tooltip="toggle view"
+              id={"view"}
+              onClick={handleToggleView}
+            />
+          )}
           <NavButton
-            icon={rotateIcon}
-            tooltip="toggle view"
-            id={"view"}
-            onClick={handleToggleView}
+            icon={reverseIcon}
+            tooltip="reverse view"
+            id={"reverse"}
+            onClick={handleReverseView}
           />
         </div>
         {!smallScreen && <SizeIndicator />}
