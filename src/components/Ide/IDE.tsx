@@ -12,6 +12,7 @@ const IDE: FC = () => {
     smallScreen,
     codeHeight,
     isHorizontal,
+    reversedView,
   } = useCodeContext();
   return (
     <main
@@ -19,9 +20,12 @@ const IDE: FC = () => {
     >
       <div
         id="main"
-        className={`w-full h-full flex ${
-          isHorizontal ? "flex-row" : "flex-col"
-        }`}
+        className={`w-full h-full flex`}
+        style={{
+          flexDirection: isHorizontal
+            ? `${reversedView ? "row-reverse" : "row"}`
+            : `${reversedView ? "column-reverse" : "column"}`,
+        }}
       >
         <Editor
           width={isHorizontal ? (codeWidth > 0 ? codeWidth : "50%") : "100%"}

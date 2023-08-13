@@ -19,14 +19,14 @@ interface EditorProps {
 
 const Editor: React.FC<EditorProps> = ({ width, height }) => {
   const { files, setFiles, activeFile, setActiveFile } = useFilesContext();
-  const { theme, switchedView, smallScreen, fullScreenMode } = useCodeContext();
+  const { theme, reversedView, smallScreen, fullScreenMode } = useCodeContext();
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [showEditor, setShowEditor] = useState(false);
 
   useEffect(() => {
     if (!smallScreen) return setShowEditor(true);
-    setShowEditor(switchedView);
-  }, [switchedView, smallScreen]);
+    setShowEditor(!reversedView);
+  }, [reversedView, smallScreen]);
 
   useEffect(() => {
     if (activeFile) {

@@ -14,15 +14,15 @@ interface LivePreviewProps {
 
 const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
   const { files, isLoaded } = useFilesContext();
-  const { smallScreen, switchedView, fullScreenMode } = useCodeContext();
+  const { smallScreen, reversedView, fullScreenMode } = useCodeContext();
   const [showPreview, setShowPreview] = useState<boolean>(true);
 
   const [mergedFiles, setMergedFiles] = useState<string>("");
 
   useEffect(() => {
     if (!smallScreen) return setShowPreview(true);
-    setShowPreview(!switchedView);
-  }, [switchedView, smallScreen]);
+    setShowPreview(reversedView);
+  }, [reversedView, smallScreen]);
 
   useEffect(() => {
     setMergedFiles(mergeFile(files));
