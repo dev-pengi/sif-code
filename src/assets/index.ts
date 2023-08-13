@@ -8,6 +8,7 @@ import devIcon from "./dev.svg";
 import plusIcon from "./plus.svg";
 import closeIcon from "./close.svg";
 import shortcutIcon from "./shortcut.svg";
+import reverseIcon from "./reverse.svg";
 
 export {
   cssIcon,
@@ -20,4 +21,5 @@ export {
   plusIcon,
   closeIcon,
   shortcutIcon,
+  reverseIcon,
 };
