@@ -7,13 +7,13 @@ import Image from "next/image";
 import { useCodeContext } from "@/contexts/CodeContext";
 import CreateFile from "./CreateFile";
 import DeleteFile from "./DeleteFile";
+import FileTab from "./FileTab";
 
 const FilesBar: FC = () => {
   const { files, activeFile, setActiveFile } = useFilesContext();
   const { theme } = useCodeContext();
 
   return (
-    
     <div
       className={`w-full flex items-center filesbar-scroll h-12 pr-[10px]`}
       style={{
@@ -21,44 +21,9 @@ const FilesBar: FC = () => {
         background: theme == "dark" ? "#181818" : "#f8f8f8",
       }}
     >
-      {files.map((file: File, index: number) => {
-        const active = file.name === activeFile;
-        return (
-          <button
-            onClick={() => !active && setActiveFile(file.name)}
-            style={{
-              height: "100%",
-              borderTop: active ? "#3495eb solid 2px" : "none",
-              borderRight: active ? "" : "#555555aa solid 1px",
-              background: active
-                ? theme === "dark"
-                  ? "#1f1f1f"
-                  : "#ffffff"
-                : theme === "dark"
-                ? "#181818"
-                : "#f8f8f8",
-            }}
-            className={`flex items-center px-2 py-3 min-w-max`}
-          >
-            <div className="flex items-center min-w-[120px]">
-              <Image
-                src={asstes[`${file.type}Icon`]}
-                alt={`${file.type} icon`}
-                width={25}
-              />
-              <h3
-                style={{
-                  color: theme === "dark" ? "#cccccc" : "#1f1f1f",
-                  marginLeft: "10px",
-                }}
-              >
-                {file.name}
-              </h3>
-            </div>
-            {file.name !== "index.html" && <DeleteFile filename={file.name} />}
-          </button>
-        );
-      })}
+      {files.map((file: File, index: number) => (
+        <FileTab file={file} key={index} />
+      ))}
       <CreateFile />
     </div>
   );
