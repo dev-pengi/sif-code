@@ -6,8 +6,7 @@ const ResizeBar: FC = () => {
     pageWidth,
     pageHeight,
     codeWidth,
-    codeHeight,
-    switchedView,
+    reversedView,
     isHorizontal,
     setCodeWidth,
     setCodeHeight,
@@ -22,7 +21,8 @@ const ResizeBar: FC = () => {
   const handleResizeMouseMove = (e: MouseEvent) => {
     if (resizing && resizeBarRef.current) {
       if (isHorizontal) {
-        const newPageWidth = e.clientX;
+        console.log(e);
+        const newPageWidth = reversedView ? pageWidth - e.clientX : e.clientX;
         const minWidth = 100;
         const maxWidth = pageWidth - 100;
         const clampedWidth = Math.max(
@@ -31,8 +31,10 @@ const ResizeBar: FC = () => {
         );
         setCodeWidth(clampedWidth);
       } else {
-        const newPageHeight = e.clientY - 65;
-        const minHeight = 100; 
+        const newPageHeight = reversedView
+          ? (pageHeight - e.clientY) + 65
+          : e.clientY - 65;
+        const minHeight = 100;
         const maxHeight = pageHeight - 100;
         const clampedHeight = Math.max(
           minHeight,
@@ -57,7 +59,7 @@ const ResizeBar: FC = () => {
 
   useEffect(() => {
     const handleResizeMouseUp = () => {
-      if (resizing) { 
+      if (resizing) {
         setResizing(false);
       }
     };
