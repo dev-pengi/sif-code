@@ -26,14 +26,23 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
 
   const isMainFile = file.name === "index.html";
 
+  const getFullName = (name: string): string => {
+    let newName = name;
+    if (!name.endsWith(file.type)) {
+      newName += `.${file.type}`;
+    }
+    return newName;
+  };
+
   const validate = (name: string) => {
-    return !/\s/g.test(name);
+    const checkName = files.find((f) => f.name === name);
+    const nameValid = checkName && name != file.name ? false : true;
+    return !/\s/g.test(name) && nameValid;
   };
 
   const handleInputChange = (e: any) => {
-    const newName = e.target?.value;
+    const newName = getFullName(e.target.value);
     if (!newName) return setIsError(false);
-    console.log(newName);
     const validateName = validate(newName);
     setIsError(!validateName);
   };
@@ -43,15 +52,12 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
 
   const handleRename = () => {
     let newName = inputRef.current?.value as string;
+    newName = getFullName(newName);
     console.log(newName);
 
     if (!newName || isError) {
       handleCancel();
       return;
-    }
-
-    if (!newName.endsWith(file.type)) {
-      newName += `.${file.type}`;
     }
 
     const updatedFiles: File[] = files.map((f) => {
@@ -83,6 +89,19 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   useEffect(() => {
     setIsActive(file.name === activeFile);
   }, [activeFile]);
+
+  //create a useEffect to remove to set isNew to false on the current file
+  useEffect(() => {
+    if (isNew) {
+      const updatedFiles = files.map((f) => {
+        if (f.name === file.name) {
+          return { ...f, isNew: false };
+        }
+        return f;
+      });
+      setFiles(updatedFiles);
+    }
+  });
 
   return (
     <button
