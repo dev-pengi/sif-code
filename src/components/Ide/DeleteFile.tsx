@@ -106,8 +106,8 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
         .delete-button:hover {
             background: ${theme === "dark" ? "#313232" : "#e9e9e9"}};
         }
-        .delete-button:hover .delete-icon{
-            transform: rotate(90deg);
+        .delete-button:hover{
+            transform: rotate(45deg);
         }
       `}</style>
     </>

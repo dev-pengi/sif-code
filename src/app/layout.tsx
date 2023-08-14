@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import "react-contexify/dist/ReactContexify.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import FilesProvider from "@/contexts/FilesContext";
 import CodeProvider from "@/contexts/CodeContext";

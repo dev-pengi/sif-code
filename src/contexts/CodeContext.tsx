@@ -215,7 +215,6 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       } else if (event.key === "Escape") {
         setFullScreenMode("none");
       }
-      console.log(event.key);
     };
     if (typeof window === "undefined") return;
     window.addEventListener("keydown", handleKeyPress);
