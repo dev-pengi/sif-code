@@ -2,11 +2,8 @@
 import { File } from "@/constants";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { FC } from "react";
-import * as asstes from "../../assets";
-import Image from "next/image";
 import { useCodeContext } from "@/contexts/CodeContext";
 import CreateFile from "./CreateFile";
-import DeleteFile from "./DeleteFile";
 import FileTab from "./FileTab";
 
 const FilesBar: FC = () => {

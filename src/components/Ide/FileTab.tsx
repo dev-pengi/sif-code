@@ -15,7 +15,6 @@ const FileTab: FC<FileTabProps> = ({ file }) => {
   const { activeFile, setActiveFile } = useFilesContext();
   const { theme } = useCodeContext();
   const [isActive, setIsActive] = useState(file.name === activeFile);
-  const [editingName, setEditingName] = useState(false);
 
   const isMainFile = file.name === "index.html";
 
