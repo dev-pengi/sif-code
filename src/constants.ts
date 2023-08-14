@@ -1,9 +1,10 @@
-type FileType = "html" | "css" | "javascript";
+type FileType = "html" | "css" | "js";
 
 type File = {
   name: string;
   content: string;
   type: FileType;
+  isNew?: boolean;
 };
 
 type initialCodesType = {
@@ -71,5 +72,13 @@ const ConfirmationModalStyles = {
   },
 };
 
-export { initialFiles, initialCodes, ModalStyles, ConfirmationModalStyles };
+const fileNameValidator = /\s/g;
+
+export {
+  initialFiles,
+  initialCodes,
+  ModalStyles,
+  ConfirmationModalStyles,
+  fileNameValidator,
+};
 export type { File, FileType };
