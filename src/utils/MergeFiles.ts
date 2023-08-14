@@ -24,7 +24,7 @@ const getCssFiles = (
 const getJsFiles = (
   files: File[]
 ): { names: string[]; merged: string } | null => {
-  const jsFiles = files.filter((file) => file.type === "javascript");
+  const jsFiles = files.filter((file) => file.type === "js");
 
   if (jsFiles.length === 0) return null;
 
