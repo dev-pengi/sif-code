@@ -90,6 +90,19 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
     setIsActive(file.name === activeFile);
   }, [activeFile]);
 
+  const scrollActiveFile = (): void => {
+    if (tabRef.current && isActive) {
+      tabRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+  useEffect(() => {
+    isActive && scrollActiveFile();
+    isEditable && scrollActiveFile();
+  }, [isActive, isEditable]);
+
   useEffect(() => {
     if (isNew) {
       const updatedFiles = files.map((f) => {
@@ -158,7 +171,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
           ? "#181818"
           : "#f8f8f8",
       }}
-      className={`flex items-center px-2 py-3 min-w-max`}
+      className={`flex items-center px-2 min-w-max`}
     >
       <div className="flex items-center min-w-[120px]">
         <Image
