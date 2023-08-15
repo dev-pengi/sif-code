@@ -68,7 +68,6 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
       },
     ]);
     setActiveFile(fullName);
-    toast.success("File created successfully");
   };
 
   return (
