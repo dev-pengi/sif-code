@@ -40,7 +40,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
     return !/\s/g.test(name) && nameValid;
   };
 
-  const handleInputChange = (e: any) => {
+  const handleErrorCheck = (e: any) => {
     const newName = getFullName(e.target.value);
     if (!newName) return setIsError(false);
     const validateName = validate(newName);
@@ -90,7 +90,6 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
     setIsActive(file.name === activeFile);
   }, [activeFile]);
 
-  //create a useEffect to remove to set isNew to false on the current file
   useEffect(() => {
     if (isNew) {
       const updatedFiles = files.map((f) => {
@@ -102,6 +101,10 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
       setFiles(updatedFiles);
     }
   });
+
+  useEffect(() => {
+    !isEditable && setIsError(false);
+  }, [isEditable]);
 
   return (
     <button
@@ -130,7 +133,9 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
         {isEditable ? (
           <input
             ref={inputRef}
-            onChange={handleInputChange}
+            autoFocus
+            onKeyDown={(e) => e.key === "Enter" && handleRename()}
+            onChange={handleErrorCheck}
             style={{
               width: "150px",
               padding: "0 2px",
@@ -157,6 +162,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
       {isEditable ? (
         <div className="flex items-center">
           <button
+            role="button"
             onClick={handleRename}
             className={`ml-[10px] h-max p-1 tab-button rounded-sm`}
           >

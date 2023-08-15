@@ -91,15 +91,27 @@ const mergeFile = (files: File[]) => {
           <head>
               <meta charset="UTF-8">
               <title>OutPut</title>
-              <style>
-                  ${cssFiles?.merged}
-              </style>
+              ${
+                cssFiles
+                  ? `
+                <style>
+                    ${cssFiles?.merged}
+                </style>
+                `
+                  : ""
+              }
           </head>
           <body>
               ${htmlFile?.content}
-              <script>
-                  ${jsFiles?.merged}
-              </script>
+              ${
+                jsFiles
+                  ? `
+                <script>
+                    ${jsFiles?.merged}
+                </script>
+                `
+                  : ""
+              }
           </body>
       </html>
       `;

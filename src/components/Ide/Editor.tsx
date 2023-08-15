@@ -94,7 +94,9 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
               width={"100%"}
               height={"100%"}
               theme={`vs-${theme}`}
-              language={currentFile?.type}
+              language={
+                currentFile?.type == "js" ? "javascript" : currentFile?.type
+              }
               value={currentFile?.content}
               onMount={handleEditorDidMount}
               onChange={handleCodeChange}
