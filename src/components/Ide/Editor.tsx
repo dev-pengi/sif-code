@@ -18,7 +18,8 @@ interface EditorProps {
 }
 
 const Editor: React.FC<EditorProps> = ({ width, height }) => {
-  const { files, setFiles, activeFile, setActiveFile } = useFilesContext();
+  const { files, setFiles, activeFile, setActiveFile, setIsLoaded } =
+    useFilesContext();
   const { theme, reversedView, smallScreen, fullScreenMode } = useCodeContext();
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [showEditor, setShowEditor] = useState(false);
@@ -77,6 +78,11 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
     width: smallScreen ? "100%" : width,
     height: smallScreen ? "100%" : height,
   };
+  useEffect(() => {
+    loader.init().then((monaco) => {
+      setIsLoaded(true);
+    });
+  }, []);
 
   return (
     <>

@@ -1,0 +1,52 @@
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999999999;
+  background-color: #212529;
+}
+
+.pre-loader {
+  width: 40px;
+  height: 60px;
+  color: #a9a9a9;
+  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.pre-loader::before,
+.pre-loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 100% 67%, 50% 67%, 50% 34%, 0 34%);
+  animation: sp7 2s infinite;
+}
+.pre-loader::after {
+  --s: -1, -1;
+}
+
+@keyframes sp7 {
+  0%,
+  10% {
+    transform: scale(var(--s, 1)) translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: scale(var(--s, 1)) translate(0, -20px) rotate(0deg);
+  }
+  66% {
+    transform: scale(var(--s, 1)) translate(10px, -20px) rotate(-90deg);
+  }
+  90%,
+  100% {
+    transform: scale(var(--s, 1)) translate(10px, -10px) rotate(-90deg);
+  }
+}

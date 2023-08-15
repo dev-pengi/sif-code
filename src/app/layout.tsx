@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <FilesProvider>
         <CodeProvider>
-          <body id="root" className={`${inter.className} bg-dark-blue`}>
+          <body id="root" className={`${inter.className} bg-main`}>
             <Toaster />
             {children}
           </body>
