@@ -78,12 +78,8 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     typeof window === "undefined" ? 0 : window.innerHeight / 2
   );
 
-  const [previewWidth, setPreviewWidth] = useState<number>(
-    typeof window === "undefined" ? 0 : window.innerWidth / 2
-  );
-  const [previewHeight, setPreviewHeight] = useState<number>(
-    typeof window === "undefined" ? 0 : window.innerHeight / 2
-  );
+  const [previewWidth, setPreviewWidth] = useState<number>(0);
+  const [previewHeight, setPreviewHeight] = useState<number>(0);
 
   const [fullScreenMode, setFullScreenMode] = useState("none");
 
