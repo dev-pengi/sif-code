@@ -10,11 +10,7 @@ import CreateFileMenu from "./CreateFileMenu";
 const FilesBar: FC = () => {
   const { files } = useFilesContext();
   const { theme } = useCodeContext();
-  // i wanna detect if the file is new made or not
-  // if it is new made, then i want to pass the prop isNew
-  // if it is not new made, then i dont want to pass the prop isNew
   return (
-    <CreateFileMenu showOnclick={false} showOnDoubleClick>
       <div
         className={`w-full flex items-center filesbar-scroll h-12 pr-[10px]`}
         style={{
@@ -27,7 +23,6 @@ const FilesBar: FC = () => {
         ))}
         <CreateFile />
       </div>
-    </CreateFileMenu>
   );
 };
 
