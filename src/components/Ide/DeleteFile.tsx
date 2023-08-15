@@ -16,7 +16,7 @@ type ComponentProps = {
 
 const DeleteFile: FC<ComponentProps> = ({ filename }) => {
   const { theme } = useCodeContext();
-  const { setFiles, files } = useFilesContext();
+  const { setFiles, files, activeFile } = useFilesContext();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -44,7 +44,25 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        if (modalIsOpen) {
+          deleteFile();
+        }
+      } else if (e.ctrlKey && e.altKey && e.key === "d") {
+        if (!modalIsOpen) {
+          filename === activeFile && openModal();
+        }
+      }
+    };
 
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [modalIsOpen, activeFile]);
 
   return (
     <>

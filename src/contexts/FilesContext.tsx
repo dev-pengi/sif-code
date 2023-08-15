@@ -37,10 +37,7 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   const [activeFile, setActiveFile] = useState<string>("index.html");
 
   const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  
 
   const value: FilesContextValue = {
     files,

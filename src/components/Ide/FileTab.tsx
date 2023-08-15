@@ -28,7 +28,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
 
   const getFullName = (name: string): string => {
     let newName = name;
-    if (!name.endsWith(file.type)) {
+    if (!name?.endsWith(file.type)) {
       newName += `.${file.type}`;
     }
     return newName;
@@ -37,7 +37,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   const validate = (name: string) => {
     const checkName = files.find((f) => f.name === name);
     const nameValid = checkName && name != file.name ? false : true;
-    return !/\s/g.test(name) && nameValid;
+    return /^[^\s]{2,}$/g.test(name) && nameValid;
   };
 
   const handleErrorCheck = (e: any) => {
@@ -90,6 +90,19 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
     setIsActive(file.name === activeFile);
   }, [activeFile]);
 
+  const scrollActiveFile = (): void => {
+    if (tabRef.current && isActive) {
+      tabRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+  useEffect(() => {
+    isActive && scrollActiveFile();
+    isEditable && scrollActiveFile();
+  }, [isActive, isEditable]);
+
   useEffect(() => {
     if (isNew) {
       const updatedFiles = files.map((f) => {
@@ -103,7 +116,43 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   });
 
   useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        isEditable && handleCancel();
+      } else if (event.key === "Enter") {
+        isEditable && handleRename();
+      } else if (event.key === "F2") {
+        !isMainFile && isActive && setIsEditable((prev) => !prev);
+      }
+    };
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [isEditable, isActive]);
+
+  const selectInputText = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+
+      // Get the current value of the input
+      const inputValue = inputRef.current.value;
+
+      // Find the index of the last dot (.)
+      const lastDotIndex = inputValue.lastIndexOf(".");
+
+      // If a dot is found and it's not the first character
+      if (lastDotIndex > 0) {
+        // Select the text before the dot
+        inputRef.current.setSelectionRange(0, lastDotIndex);
+      }
+    }
+  };
+
+  useEffect(() => {
     !isEditable && setIsError(false);
+    isEditable && selectInputText();
   }, [isEditable]);
 
   return (
@@ -122,7 +171,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
           ? "#181818"
           : "#f8f8f8",
       }}
-      className={`flex items-center px-2 py-3 min-w-max`}
+      className={`flex items-center px-2 min-w-max`}
     >
       <div className="flex items-center min-w-[120px]">
         <Image
@@ -134,7 +183,6 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
           <input
             ref={inputRef}
             autoFocus
-            onKeyDown={(e) => e.key === "Enter" && handleRename()}
             onChange={handleErrorCheck}
             style={{
               width: "150px",
