@@ -195,21 +195,34 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
+  const checkShortCut = (event: KeyboardEvent, key: string) => {
+    const condition =
+      event.ctrlKey &&
+      event.altKey &&
+      event.key.toLowerCase() === key.toLowerCase();
+    return condition;
+  };
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.altKey && event.key === "t") {
+      if (checkShortCut(event, "t")) {
         setTheme((prev) => (prev === "light" ? "dark" : "light"));
-      } else if (event.ctrlKey && event.altKey && event.key === "v") {
+      }
+      if (checkShortCut(event, "v")) {
         setSwitchedView((prev) => !prev);
-      } else if (event.ctrlKey && event.altKey && event.key === "c") {
+      }
+      if (checkShortCut(event, "c")) {
         setFullScreenMode((prev) => (prev === "code" ? "none" : "code"));
-      } else if (event.ctrlKey && event.altKey && event.key === "p") {
+      }
+      if (checkShortCut(event, "p")) {
         setFullScreenMode((prev) => (prev === "preview" ? "none" : "preview"));
-      } else if (event.key === "Escape") {
-      } else if (event.ctrlKey && event.altKey && event.key === "r") {
-        setReversedView((prev) => !prev);
-      } else if (event.key === "Escape") {
+      }
+      if (event.key === "Escape") {
         setFullScreenMode("none");
+      }
+      if (checkShortCut(event, "r")) {
+        setReversedView((prev) => !prev);
       }
     };
     if (typeof window === "undefined") return;
@@ -217,7 +230,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [theme, switchedView, fullScreenMode, reversedView]);
 
   const handlePreviewResize = () => {
     const previewIframe = document.getElementById("preview-iframe");
