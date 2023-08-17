@@ -10,6 +10,7 @@ import closeIcon from "./close.svg";
 import shortcutIcon from "./shortcut.svg";
 import reverseIcon from "./reverse.svg";
 import checkIcon from "./check.svg";
+import infoIcon from "./info.svg";
 
 export {
   cssIcon,
@@ -24,4 +25,5 @@ export {
   shortcutIcon,
   reverseIcon,
   checkIcon,
+  infoIcon,
 };

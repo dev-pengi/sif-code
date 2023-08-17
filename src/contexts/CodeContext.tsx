@@ -212,11 +212,13 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       if (checkShortCut(event, "v")) {
         setSwitchedView((prev) => !prev);
       }
-      if (checkShortCut(event, "c")) {
-        setFullScreenMode((prev) => (prev === "code" ? "none" : "code"));
-      }
-      if (checkShortCut(event, "p")) {
-        setFullScreenMode((prev) => (prev === "preview" ? "none" : "preview"));
+      if (checkShortCut(event, "f")) {
+        setFullScreenMode((prev) => {
+          if (prev === "none") return "code";
+          else if (prev === "code") return "preview";
+          else if (prev === "preview") return "none";
+          return prev;
+        });
       }
       if (event.key === "Escape") {
         setFullScreenMode("none");

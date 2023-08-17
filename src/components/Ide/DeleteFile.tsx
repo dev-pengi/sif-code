@@ -50,7 +50,7 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
         if (modalIsOpen) {
           deleteFile();
         }
-      } else if (e.ctrlKey && e.altKey && e.key === "d") {
+      } else if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "d") {
         if (!modalIsOpen) {
           filename === activeFile && openModal();
         }

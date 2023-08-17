@@ -8,19 +8,17 @@ import {
   rotateIcon,
   themesIcon,
   reverseIcon,
+  infoIcon,
 } from "@/assets";
 import SizeIndicator from "./SizeIndicator";
 import { downloadFilesAsZip, linkFiles } from "@/utils";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { toast } from "react-hot-toast";
+import InfoMenu from "./InfoMenu";
 
 const Nav: FC = () => {
-  const {
-    setTheme,
-    setSwitchedView,
-    setReversedView,
-    smallScreen,
-  } = useCodeContext();
+  const { setTheme, setSwitchedView, setReversedView, smallScreen } =
+    useCodeContext();
   const { files } = useFilesContext();
 
   const handleThemeToggle = () => {
@@ -45,12 +43,9 @@ const Nav: FC = () => {
       <div className={`flex items-center justify-center h-full w-full`}>
         <div className="flex-1 vmd:block hidden"></div>
         <div className={`flex gap-5 vsm:flex-row flex-col`}>
-          <NavButton
-            icon={devIcon}
-            tooltip="more project"
-            id={"dev"}
-            link={"https://sifedine.com"}
-          />
+          <InfoMenu showOnContextMenu showOnclick>
+            <NavButton icon={infoIcon} tooltip="info" id={"info"} />
+          </InfoMenu>
           <NavButton
             icon={downloadIcon}
             tooltip="Download project"

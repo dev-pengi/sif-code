@@ -29,13 +29,13 @@ const initialFiles: File[] = [
   },
 ];
 
-const ModalStyles = {
+const ModalStyles = (maxWidth: string) => ({
   content: {
     top: "50%",
     left: "50%",
     right: "auto",
-    width: "90%",
-    maxWidth: "650px",
+    width: "95%",
+    maxWidth: maxWidth || "650px",
     minHeight: "200px",
     height: "max-content",
     maxHeight: "700px",
@@ -49,7 +49,7 @@ const ModalStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
     zIndex: 1000,
   },
-};
+});
 const ConfirmationModalStyles = {
   content: {
     top: "50%",
@@ -72,13 +72,42 @@ const ConfirmationModalStyles = {
   },
 };
 
-const fileNameValidator = /\s/g;
+const keyboardShortcuts = [
+  {
+    name: "Download project",
+    keys: ["Ctrl", "Alt", "S"],
+  },
+  {
+    name: "delete file",
+    keys: ["Ctrl", "Alt", "⌫"],
+  },
+  {
+    name: "rename file",
+    keys: ["F2"],
+  },
+  {
+    name: "toggle view",
+    keys: ["Ctrl", "Alt", "V"],
+  },
+  {
+    name: "reverse view",
+    keys: ["Ctrl", "Alt", "R"],
+  },
+  {
+    name: "toggle theme",
+    keys: ["Ctrl", "Alt", "T"],
+  },
+  {
+    name: "Full screens",
+    keys: ["Ctrl", "Alt", "F"],
+  },
+];
 
 export {
   initialFiles,
   initialCodes,
   ModalStyles,
   ConfirmationModalStyles,
-  fileNameValidator,
+  keyboardShortcuts,
 };
 export type { File, FileType };
