@@ -62,21 +62,20 @@ const InfoMenu: FC<InfoMenuProps> = ({
           </a>
         </Item>
         <Item onClick={openShortcuts}>
-          <ShortcutGuid
-            closeModal={closeShortcuts}
-            openModal={openShortcuts}
-            modalIsOpen={shortcutsOpen}
-          >
-            <Image
-              src={assets.shortcutIcon}
-              alt={`keyboard shortcuts`}
-              width={25}
-              className="min-w-[25px]"
-            />
-            <span className="ml-[10px]">keyboard shortcuts</span>
-          </ShortcutGuid>
+          <Image
+            src={assets.shortcutIcon}
+            alt={`keyboard shortcuts`}
+            width={25}
+            className="min-w-[25px]"
+          />
+          <span className="ml-[10px]">keyboard shortcuts</span>
         </Item>
       </Menu>
+      <ShortcutGuid
+        closeModal={closeShortcuts}
+        openModal={openShortcuts}
+        modalIsOpen={shortcutsOpen}
+      />
     </>
   );
 };

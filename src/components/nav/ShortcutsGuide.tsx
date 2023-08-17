@@ -3,7 +3,7 @@ import * as assets from "../../assets";
 import Image from "next/image";
 import { FC, useEffect } from "react";
 import Modal from "react-modal";
-import { ModalStyles } from "@/constants";
+import { ModalStyles, keyboardShortcuts } from "@/constants";
 
 Modal.setAppElement("#root");
 
@@ -11,11 +11,9 @@ type ComponentProps = {
   openModal: () => void;
   closeModal: () => void;
   modalIsOpen: boolean;
-  children?: React.ReactNode;
 };
 
 const ShortcutGuid: FC<ComponentProps> = ({
-  children,
   openModal,
   closeModal,
   modalIsOpen,
@@ -37,7 +35,6 @@ const ShortcutGuid: FC<ComponentProps> = ({
 
   return (
     <>
-      {children}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -45,20 +42,45 @@ const ShortcutGuid: FC<ComponentProps> = ({
         contentLabel="Keyboard shortcuts"
       >
         <div
-          className="flex justify-between items-center w-full px-1 mt-[1px] pb-3 border-b border-gray-300"
+          className="py-6 border-b border-gray-500"
           style={{ borderBottomStyle: "solid" }}
         >
-          <p className="text-[23px] text-gray-100 font-semibold text-center">
-            Keyboard shortcuts
-          </p>
-          <button onClick={closeModal}>
-            <Image
-              src={assets.closeIcon}
-              alt="close icon"
-              width={28}
-              className="min-w-[18px] hover:opacity-70 duration-200"
-            />
-          </button>
+          <div className="flex justify-between items-center w-full px-6">
+            <p className="text-[21px] text-gray-300 font-semibold text-center">
+              Keyboard shortcuts
+            </p>
+            <button onClick={closeModal}>
+              <Image
+                src={assets.closeIcon}
+                alt="close icon"
+                width={24}
+                className="min-w-[24px] hover:opacity-70 duration-200"
+              />
+            </button>
+          </div>
+        </div>
+        <div className="py-6 px-6 grid grid-flow-row vmd:grid-cols-2 grid-cols-1 gap-x-9 gap-y-4">
+          {keyboardShortcuts.map((shortcut, index) => (
+            <div key={index} className="flex items-center justify-between">
+              <h3 className="text-[16px] font-medium text-gray-300 truncate">
+                {shortcut.name}
+              </h3>
+              <div className="flex items-center gap-3 justify-end">
+                {shortcut.keys.map((key, index2) => (
+                  <p
+                    key={index2}
+                    className={`flex items-center justify-center capitalize border border-gray-500 border-solid w-max text-[14px] text-gray-300 rounded-[4px]`}
+                    style={{
+                      width: key.size == "normal" ? "32px" : "50px",
+                      height: "32px",
+                    }}
+                  >
+                    {key.name}
+                  </p>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </Modal>
     </>
