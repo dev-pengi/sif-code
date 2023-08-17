@@ -1,6 +1,6 @@
 "use client";
 import { useCodeContext } from "@/contexts/CodeContext";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import NavButton from "./NavButton";
 import {
   devIcon,
@@ -35,6 +35,21 @@ const Nav: FC = () => {
     downloadFilesAsZip(linkedFiles, "project");
     toast.success("Project downloaded successfully");
   };
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      console.log(e.key);
+      if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "s") {
+        handleDownload();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <nav
