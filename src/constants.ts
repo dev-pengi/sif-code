@@ -87,7 +87,7 @@ const keyboardShortcuts = [
     keys: [
       { name: "Ctrl", size: "large" },
       {
-        name: "Shift",
+        name: "Alt",
         size: "large",
       },
       {
@@ -101,7 +101,7 @@ const keyboardShortcuts = [
     keys: [
       { name: "Ctrl", size: "large" },
       {
-        name: "Shift",
+        name: "Alt",
         size: "large",
       },
       {
@@ -111,11 +111,39 @@ const keyboardShortcuts = [
     ],
   },
   {
+    name: "Navigte to next file",
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Alt",
+        size: "large",
+      },
+      {
+        name: "→",
+        size: "normal",
+      },
+    ],
+  },
+  {
+    name: "Navigte to previous file",
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Alt",
+        size: "large",
+      },
+      {
+        name: "←",
+        size: "normal",
+      },
+    ],
+  },
+  {
     name: "toggle view",
     keys: [
       { name: "Ctrl", size: "large" },
       {
-        name: "Shift",
+        name: "Alt",
         size: "large",
       },
       {
@@ -129,7 +157,7 @@ const keyboardShortcuts = [
     keys: [
       { name: "Ctrl", size: "large" },
       {
-        name: "Shift",
+        name: "Alt",
         size: "large",
       },
       {
@@ -143,7 +171,7 @@ const keyboardShortcuts = [
     keys: [
       { name: "Ctrl", size: "large" },
       {
-        name: "Shift",
+        name: "Alt",
         size: "large",
       },
       {
@@ -157,7 +185,7 @@ const keyboardShortcuts = [
     keys: [
       { name: "Ctrl", size: "large" },
       {
-        name: "Shift",
+        name: "Alt",
         size: "large",
       },
       {
