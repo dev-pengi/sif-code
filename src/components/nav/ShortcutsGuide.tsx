@@ -21,8 +21,8 @@ const ShortcutGuid: FC<ComponentProps> = ({
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       console.log(e.key);
-      if (e.ctrlKey && e.key.toLowerCase() === "slash") {
-        openModal;
+      if (e.ctrlKey && e.altKey && e.key === "/") {
+        modalIsOpen ? closeModal() : openModal();
       }
     };
 
