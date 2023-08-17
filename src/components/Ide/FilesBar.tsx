@@ -8,7 +8,7 @@ import FileTab from "./FileTab";
 import CreateFileMenu from "./CreateFileMenu";
 
 const FilesBar: FC = () => {
-  const { files, activeFile } = useFilesContext();
+  const { files } = useFilesContext();
   const { theme } = useCodeContext();
   const activeFileRef = useRef<HTMLDivElement>(null);
 
@@ -22,10 +22,7 @@ const FilesBar: FC = () => {
       }}
     >
       {files.map((file: File, index: number) => (
-          <FileTab
-            file={file}
-            isNew={file.isNew}
-          />
+        <FileTab file={file} isNew={file.isNew} />
       ))}
       <CreateFile />
     </div>
