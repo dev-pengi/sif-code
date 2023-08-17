@@ -84,25 +84,25 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
         contentLabel="Example Modal"
       >
         <div
-          className="flex justify-between items-center w-full px-1 mt-[1px] pb-3 border-b border-gray-300"
+          className="flex justify-between items-center w-full px-2 py-5 border-b border-gray-300"
           style={{ borderBottomStyle: "solid" }}
         >
-          <p className="text-[23px] text-gray-100 font-semibold text-center">
-            Confirm Delete
+          <p className="text-[21px] text-gray-300 font-semibold text-center">
+            Confirm delete
           </p>
           <button onClick={closeModal}>
             <Image
               src={assets.closeIcon}
               alt="close icon"
-              width={28}
-              className="min-w-[18px] hover:opacity-70 duration-200"
+              width={24}
+              className="min-w-[24px] hover:opacity-70 duration-200"
             />
           </button>
         </div>
         <p className="text-white mt-3">
           are you sure you want to delete <span>({filename})</span>?
         </p>
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4 pb-3">
           <button
             onClick={closeModal}
             className="py-3 px-6 text-white rounded-md"
