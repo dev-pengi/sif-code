@@ -38,7 +38,6 @@ const Nav: FC = () => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      console.log(e.key);
       if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "s") {
         handleDownload();
       }

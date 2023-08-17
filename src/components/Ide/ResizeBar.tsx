@@ -21,7 +21,6 @@ const ResizeBar: FC = () => {
   const handleResizeMouseMove = (e: MouseEvent) => {
     if (resizing && resizeBarRef.current) {
       if (isHorizontal) {
-        console.log(e);
         const newPageWidth = reversedView ? pageWidth - e.clientX : e.clientX;
         const minWidth = 100;
         const maxWidth = pageWidth - 100;

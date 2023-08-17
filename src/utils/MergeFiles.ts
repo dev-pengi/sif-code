@@ -52,9 +52,6 @@ const linkFiles = (files: File[]): File[] => {
     })
     .join("\n");
 
-  console.log(cssFiles?.names);
-  console.log(mappedCssFiles);
-
   const linked = `
     <!DOCTYPE html>
     <html lang="en">

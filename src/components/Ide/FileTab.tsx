@@ -53,7 +53,6 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   const handleRename = () => {
     let newName = inputRef.current?.value as string;
     newName = getFullName(newName);
-    console.log(newName);
 
     if (!newName || isError) {
       handleCancel();
@@ -66,8 +65,6 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
       }
       return f;
     });
-    console.log(updatedFiles);
-
     setFiles(updatedFiles);
     setActiveFile(newName);
     setIsEditable(false);
