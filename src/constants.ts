@@ -41,8 +41,9 @@ const ModalStyles = (maxWidth: string) => ({
     maxHeight: "700px",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    padding: "15px 15px",
-    background: "#343436",
+    padding: "0",
+    background: "#212529",
+    borderRadius: "9px",
     border: "none",
   },
   overlay: {
@@ -56,14 +57,14 @@ const ConfirmationModalStyles = {
     left: "50%",
     right: "auto",
     width: "95%",
-    maxWidth: "450px",
+    maxWidth: "500px",
     minHeight: "100px",
     height: "max-content",
     maxHeight: "700px",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    padding: "15px 15px",
-    background: "#343436",
+    padding: "0 15px",
+    background: "#212529",
     border: "none",
   },
   overlay: {
@@ -72,34 +73,114 @@ const ConfirmationModalStyles = {
   },
 };
 
+type keyboardShortcutsType = {
+  name: string;
+  keys: {
+    name: string;
+    size: "large" | "normal";
+  }[];
+}[];
+
 const keyboardShortcuts = [
   {
     name: "Download project",
-    keys: ["Ctrl", "Alt", "S"],
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Shift",
+        size: "large",
+      },
+      {
+        name: "s",
+        size: "normal",
+      },
+    ],
   },
   {
     name: "delete file",
-    keys: ["Ctrl", "Alt", "⌫"],
-  },
-  {
-    name: "rename file",
-    keys: ["F2"],
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Shift",
+        size: "large",
+      },
+      {
+        name: "⌫",
+        size: "normal",
+      },
+    ],
   },
   {
     name: "toggle view",
-    keys: ["Ctrl", "Alt", "V"],
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Shift",
+        size: "large",
+      },
+      {
+        name: "V",
+        size: "normal",
+      },
+    ],
   },
   {
     name: "reverse view",
-    keys: ["Ctrl", "Alt", "R"],
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Shift",
+        size: "large",
+      },
+      {
+        name: "R",
+        size: "normal",
+      },
+    ],
   },
   {
     name: "toggle theme",
-    keys: ["Ctrl", "Alt", "T"],
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Shift",
+        size: "large",
+      },
+      {
+        name: "t",
+        size: "normal",
+      },
+    ],
   },
   {
     name: "Full screens",
-    keys: ["Ctrl", "Alt", "F"],
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Shift",
+        size: "large",
+      },
+      {
+        name: "f",
+        size: "normal",
+      },
+    ],
+  },
+  {
+    name: "Show shortcuts",
+    keys: [
+      { name: "Ctrl", size: "large" },
+      { name: "/", size: "normal" },
+    ],
+  },
+  {
+    name: "rename file",
+    keys: [
+      {
+        name: "f2",
+        size: "normal",
+      },
+    ],
   },
 ];
 
