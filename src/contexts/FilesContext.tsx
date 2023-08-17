@@ -84,15 +84,31 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   }, [activeFile, files]);
 
   useEffect(() => {
-    if (fileNavigationHistory.includes(activeFile)) {
-      setFileNavigationHistory((prev) => {
-        const updatedHistory = prev.filter((file) => file !== activeFile);
-        return [...updatedHistory, activeFile];
-      });
-    } else {
+    if (!activeFile) return;
+
+    if (!fileNavigationHistory.includes(activeFile)) {
       setFileNavigationHistory((prev) => [...prev, activeFile]);
+    } else {
+      setFileNavigationHistory((prev) => {
+        return [...prev.filter((file) => file != activeFile), activeFile];
+      });
     }
-  }, [activeFile]);
+
+    setFileNavigationHistory((prev) =>
+      prev.filter((file) => files.find((f) => f.name === file))
+    );
+  }, [activeFile, files]);
+
+  useEffect(() => {
+    const file = files.find((f) => f.name === activeFile);
+    if (!file) {
+      const lastValidFile =
+        fileNavigationHistory[fileNavigationHistory.length - 1];
+      setActiveFile(lastValidFile);
+    }
+  }, [fileNavigationHistory, activeFile]);
+
+  console.log(fileNavigationHistory);
 
   const value: FilesContextValue = {
     files,

@@ -36,8 +36,6 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
       ) as File;
       if (file) {
         setCurrentFile(file);
-      } else {
-        setActiveFile(files[0].name);
       }
     }
   }, [activeFile, files]);
