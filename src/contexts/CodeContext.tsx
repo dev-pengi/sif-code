@@ -171,31 +171,6 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     setIsHorizontal(!switchedView);
   }, [switchedView]);
 
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.altKey && event.key === "t") {
-        setTheme((prev) => (prev === "light" ? "dark" : "light"));
-      }
-    };
-    if (typeof window === "undefined") return;
-    window.addEventListener("keydown", handleKeyPress);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, []);
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.altKey && event.key === "v") {
-        setSwitchedView((prev) => !prev);
-      }
-    };
-    if (typeof window === "undefined") return;
-    window.addEventListener("keydown", handleKeyPress);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, []);
-
   const checkShortCut = (event: KeyboardEvent, key: string) => {
     const condition =
       event.ctrlKey &&
@@ -227,10 +202,9 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
         setReversedView((prev) => !prev);
       }
     };
-    if (typeof window === "undefined") return;
-    window.addEventListener("keydown", handleKeyPress);
+    document.addEventListener("keydown", handleKeyPress);
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      document.removeEventListener("keydown", handleKeyPress);
     };
   }, [theme, switchedView, fullScreenMode, reversedView]);
 
