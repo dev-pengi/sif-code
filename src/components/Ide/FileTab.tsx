@@ -136,15 +136,11 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
     if (inputRef.current) {
       inputRef.current.focus();
 
-      // Get the current value of the input
       const inputValue = inputRef.current.value;
 
-      // Find the index of the last dot (.)
       const lastDotIndex = inputValue.lastIndexOf(".");
 
-      // If a dot is found and it's not the first character
       if (lastDotIndex > 0) {
-        // Select the text before the dot
         inputRef.current.setSelectionRange(0, lastDotIndex);
       }
     }
