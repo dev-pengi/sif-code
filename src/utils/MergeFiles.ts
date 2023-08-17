@@ -41,16 +41,18 @@ const linkFiles = (files: File[]): File[] => {
   const cssFiles = getCssFiles(files);
   const jsFiles = getJsFiles(files);
 
-  const mappedCssFiles = cssFiles?.names
-    .map((name) => {
-      return `<link rel="stylesheet" href="${name}">`;
-    })
-    .join("\n");
-  const mappedJsFiles = jsFiles?.names
-    .map((name) => {
-      return `<script src="${name}"></script>`;
-    })
-    .join("\n");
+  const mappedCssFiles =
+    cssFiles?.names
+      .map((name) => {
+        return `<link rel="stylesheet" href="${name}">`;
+      })
+      .join("\n") ?? "";
+  const mappedJsFiles =
+    jsFiles?.names
+      .map((name) => {
+        return `<script src="${name}"></script>`;
+      })
+      .join("\n") ?? "";
 
   const linked = `
     <!DOCTYPE html>
