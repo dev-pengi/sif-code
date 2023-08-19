@@ -83,6 +83,27 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
     };
   }, [activeFile, files]);
 
+  const receiveShortcutMessage = (event: MessageEvent) => {
+    const parentOrigin = new URL(document.referrer).origin;
+    if (event.origin === parentOrigin) {
+      const action = event.data;
+
+      if (action === "navigateNext") {
+        setNextFileActive();
+      }
+      if (action === "navigatePrevious") {
+        setPreviousFileActive();
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", receiveShortcutMessage);
+    return () => {
+      window.removeEventListener("message", receiveShortcutMessage);
+    };
+  }, [activeFile, files]);
+
   useEffect(() => {
     if (!activeFile) return;
 
@@ -107,8 +128,6 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
       setActiveFile(lastValidFile);
     }
   }, [fileNavigationHistory, activeFile]);
-
-  console.log(fileNavigationHistory);
 
   const value: FilesContextValue = {
     files,

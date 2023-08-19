@@ -64,6 +64,34 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
     };
   }, [modalIsOpen, activeFile]);
 
+  const receiveShortcutMessage = (event: MessageEvent) => {
+    const parentOrigin = new URL(document.referrer).origin;
+    if (event.origin === parentOrigin) {
+      const action = event.data;
+
+      if (action === "enter") {
+        if (modalIsOpen) {
+          deleteFile();
+        }
+      }
+      if (action === "deleteFile") {
+        if (!modalIsOpen) {
+          if (filename === activeFile) {
+            openModal();
+          }
+        }
+      }
+      // Add conditions for other actions
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", receiveShortcutMessage);
+    return () => {
+      window.removeEventListener("message", receiveShortcutMessage);
+    };
+  }, [modalIsOpen, activeFile]);
+
   return (
     <>
       <button

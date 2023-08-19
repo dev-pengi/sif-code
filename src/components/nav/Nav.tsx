@@ -50,6 +50,24 @@ const Nav: FC = () => {
     };
   }, []);
 
+  const receiveShortcutMessage = (event: MessageEvent) => {
+    const parentOrigin = new URL(document.referrer).origin;
+    if (event.origin === parentOrigin) {
+      const action = event.data;
+
+      if (action === "downloadProject") {
+        handleDownload();
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", receiveShortcutMessage);
+    return () => {
+      window.removeEventListener("message", receiveShortcutMessage);
+    };
+  }, []);
+
   return (
     <nav
       className={`z-10 bg-transparent fixed left-0 h-screen w-navD vsm:top-0 vsm:w-screen vsm:h-navD vsm:px-6`}

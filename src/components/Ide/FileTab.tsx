@@ -83,6 +83,31 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
     };
   }, []);
 
+  const receiveShortcutMessage = (event: MessageEvent) => {
+    const parentOrigin = new URL(document.referrer).origin;
+    if (event.origin === parentOrigin) {
+      const action = event.data;
+
+      if (action === "renameFile") {
+        !isMainFile && isActive && setIsEditable((prev) => !prev);
+      }
+      else if (action === "escape") {
+        isEditable && handleCancel();
+      } else if (action === "enter") {
+        isEditable && handleRename();
+      } else if (action === "click") {
+        handleCancel();
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", receiveShortcutMessage);
+    return () => {
+      window.removeEventListener("message", receiveShortcutMessage);
+    };
+  }, []);
+
   useEffect(() => {
     setIsActive(file.name === activeFile);
   }, [activeFile]);

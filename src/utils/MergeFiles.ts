@@ -1,4 +1,4 @@
-import { File } from "@/constants";
+import { File, iframeSetUp } from "@/constants";
 
 const getHtmlFile = (files: File[]): File => {
   return files.find(
@@ -34,6 +34,10 @@ const getJsFiles = (
       return acc + file.content + "\n";
     }, ""),
   };
+};
+
+const getIframeScripts = (): string => {
+  return iframeSetUp;
 };
 
 const linkFiles = (files: File[]): File[] => {
@@ -111,6 +115,10 @@ const mergeFile = (files: File[]) => {
                 `
                   : ""
               }
+              
+              <script>
+              ${getIframeScripts()}
+              </script>
           </body>
       </html>
       `;
