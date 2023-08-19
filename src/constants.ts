@@ -79,9 +79,9 @@ type keyboardShortcutsType = {
     name: string;
     size: "large" | "normal";
   }[];
-}[];
+};
 
-const keyboardShortcuts = [
+const keyboardShortcuts: keyboardShortcutsType[] = [
   {
     name: "Download project",
     keys: [
@@ -212,11 +212,62 @@ const keyboardShortcuts = [
   },
 ];
 
+const iframeSetUp = `
+const handleShortcut = (event) => {
+  const key = event.key.toLowerCase(); // Convert key to lowercase
+
+  parent.postMessage(key, "*");
+  if (event.ctrlKey && event.altKey && key === "s") {
+    parent.postMessage("downloadProject", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "backspace") {
+    parent.postMessage("deleteFile", "*");
+  }
+  if (key === "enter") {
+    parent.postMessage("enter", "*");
+  }
+  if (key === "escape") {
+    parent.postMessage("escape", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "arrowright") {
+    parent.postMessage("navigateNext", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "arrowleft") {
+    parent.postMessage("navigatePrevious", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "v") {
+    parent.postMessage("toggleView", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "r") {
+    parent.postMessage("reverseView", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "t") {
+    parent.postMessage("toggleTheme", "*");
+  }
+  if (event.ctrlKey && event.altKey && key === "f") {
+    parent.postMessage("toggleFullScreen", "*");
+  }
+  if (event.ctrlKey && key === "/") {
+    parent.postMessage("showShortcuts", "*");
+  }
+  if (key === "f2") {
+    parent.postMessage("renameFile", "*");
+  }
+};
+
+document.addEventListener("keydown", handleShortcut);
+document.addEventListener("click", () => {
+  parent.postMessage("click", "*");
+});
+
+`;
+
 export {
   initialFiles,
   initialCodes,
   ModalStyles,
   ConfirmationModalStyles,
   keyboardShortcuts,
+  iframeSetUp,
 };
 export type { File, FileType };
