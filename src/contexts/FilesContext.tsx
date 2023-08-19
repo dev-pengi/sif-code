@@ -84,17 +84,13 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   }, [activeFile, files]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-    const parentOrigin = new URL(document.referrer).origin;
-    if (event.origin === parentOrigin) {
       const action = event.data;
-
       if (action === "navigateNext") {
         setNextFileActive();
       }
       if (action === "navigatePrevious") {
         setPreviousFileActive();
       }
-    }
   };
 
   useEffect(() => {

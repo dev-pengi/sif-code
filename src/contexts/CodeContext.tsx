@@ -209,8 +209,6 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
   }, [theme, switchedView, fullScreenMode, reversedView]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-    const parentOrigin = new URL(document.referrer).origin;
-    if (event.origin === parentOrigin) {
       const action = event.data;
       if (action === "toggleTheme") {
         setTheme((prev) => (prev === "light" ? "dark" : "light"));
@@ -232,7 +230,6 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
       if (action === "reverseView") {
         setReversedView((prev) => !prev);
       }
-    }
   };
 
   useEffect(() => {

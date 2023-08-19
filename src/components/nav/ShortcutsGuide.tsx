@@ -33,15 +33,11 @@ const ShortcutGuid: FC<ComponentProps> = ({
   }, [modalIsOpen]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-    const parentOrigin = new URL(document.referrer).origin;
-    if (event.origin === parentOrigin) {
       const action = event.data;
 
       if (action === "showShortcuts") {
         modalIsOpen ? closeModal() : openModal();
       }
-      // Add conditions for other actions
-    }
   };
 
   useEffect(() => {

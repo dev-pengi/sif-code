@@ -84,8 +84,6 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   }, []);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-    const parentOrigin = new URL(document.referrer).origin;
-    if (event.origin === parentOrigin) {
       const action = event.data;
 
       if (action === "renameFile") {
@@ -98,7 +96,6 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
       } else if (action === "click") {
         handleCancel();
       }
-    }
   };
 
   useEffect(() => {

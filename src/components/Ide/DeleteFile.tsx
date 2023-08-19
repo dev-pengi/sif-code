@@ -65,8 +65,6 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
   }, [modalIsOpen, activeFile]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-    const parentOrigin = new URL(document.referrer).origin;
-    if (event.origin === parentOrigin) {
       const action = event.data;
 
       if (action === "enter") {
@@ -81,8 +79,6 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
           }
         }
       }
-      // Add conditions for other actions
-    }
   };
 
   useEffect(() => {
