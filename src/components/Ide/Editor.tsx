@@ -107,7 +107,7 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
               options={
                 {
                   minimap: {
-                    enabled: false,
+                    enabled: fullScreenMode === "code",
                   },
                   fontSize: 16,
                 } as any
