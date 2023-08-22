@@ -11,6 +11,7 @@ import shortcutIcon from "./shortcut.svg";
 import reverseIcon from "./reverse.svg";
 import checkIcon from "./check.svg";
 import infoIcon from "./info.svg";
+import githubIcon from "./github.svg";
 
 export {
   cssIcon,
@@ -26,4 +27,5 @@ export {
   reverseIcon,
   checkIcon,
   infoIcon,
+  githubIcon,
 };
