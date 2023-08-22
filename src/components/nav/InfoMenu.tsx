@@ -48,6 +48,21 @@ const InfoMenu: FC<InfoMenuProps> = ({
       <Menu id={MENU_ID} theme="dark" animation="fade">
         <Item>
           <a
+            href="https://github.com/dev-pengi/sif-code"
+            target="_blank"
+            className="w-full h-full flex items-center"
+          >
+            <Image
+              src={assets.githubIcon}
+              alt={`github project`}
+              width={25}
+              className="min-w-[25px]"
+            />
+            <span className="ml-[10px]">github project</span>
+          </a>
+        </Item>
+        <Item>
+          <a
             href="https://sifedine.com"
             target="_blank"
             className="w-full h-full flex items-center"
@@ -61,6 +76,7 @@ const InfoMenu: FC<InfoMenuProps> = ({
             <span className="ml-[10px]">creator's portfolio</span>
           </a>
         </Item>
+        <Separator />
         <Item onClick={openShortcuts}>
           <Image
             src={assets.shortcutIcon}
