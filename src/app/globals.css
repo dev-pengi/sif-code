@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --contexify-menu-bgColor: rgba(40, 40, 40, 0.98);
+  --contexify-menu-bgColor: rgba(40, 40, 40, 1);
   --contexify-separator-color: #4c4c4c;
   --contexify-item-color: #fff;
   --contexify-activeItem-color: #fff;

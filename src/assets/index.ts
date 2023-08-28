@@ -12,6 +12,9 @@ import reverseIcon from "./reverse.svg";
 import checkIcon from "./check.svg";
 import infoIcon from "./info.svg";
 import githubIcon from "./github.svg";
+import portfolioIcon from "./portfolio.png";
+import clipIcon from "./clip.png";
+import blobIcon from "./blob.png";
 
 export {
   cssIcon,
@@ -28,4 +31,7 @@ export {
   checkIcon,
   infoIcon,
   githubIcon,
+  portfolioIcon,
+  clipIcon,
+  blobIcon,
 };
