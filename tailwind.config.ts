@@ -20,7 +20,7 @@ export default {
         navD: "60px",
       },
       boxShadow: {
-        headerShadow: "rgba(0, 0, 0, 0.03) 0px 10px 50px;",
+        headerShadow: "rgba(0, 0, 0, 0.03) 0px 10px 50px",
       },
     },
   },

@@ -1,9 +1,17 @@
-import { Children, FC, cloneElement, isValidElement, useState } from "react";
+import { FC, useState } from "react";
 import * as assets from "@/assets";
 
-import { Menu, Item, Separator, useContextMenu } from "react-contexify";
+import {
+  Menu,
+  Item,
+  Separator,
+  useContextMenu,
+  Submenu,
+  SubMenuProps,
+} from "react-contexify";
 import Image from "next/image";
 import ShortcutGuid from "./ShortcutsGuide";
+import { moreProjects } from "@/constants";
 const MENU_ID = "info-menu";
 
 interface InfoMenuProps {
@@ -45,22 +53,7 @@ const InfoMenu: FC<InfoMenuProps> = ({
       >
         {children}
       </div>
-      <Menu id={MENU_ID} theme="dark" animation="fade">
-        <Item>
-          <a
-            href="https://sifedine.com"
-            target="_blank"
-            className="w-full h-full flex items-center"
-          >
-            <Image
-              src={assets.devIcon}
-              alt={`creator portfolio`}
-              width={25}
-              className="min-w-[25px]"
-            />
-            <span className="ml-[10px]">creator's portfolio</span>
-          </a>
-        </Item>
+      <Menu id={MENU_ID} theme="dark">
         <Item>
           <a
             href="https://github.com/dev-pengi/sif-code"
@@ -76,6 +69,38 @@ const InfoMenu: FC<InfoMenuProps> = ({
             <span className="ml-[10px]">github project</span>
           </a>
         </Item>
+
+        <Submenu
+          label={
+            <>
+              <Image
+                src={assets.devIcon}
+                alt={`creator portfolio`}
+                width={25}
+                className="min-w-[25px]"
+              />
+              <span className="ml-[10px]">more projects</span>
+            </>
+          }
+        >
+          {moreProjects.map((project, index: number) => (
+            <Item>
+              <a
+                href={`https://${project.link}`}
+                target="_blank"
+                className="w-full h-full flex items-center"
+              >
+                <Image
+                  src={project.icon}
+                  alt={project.name}
+                  width={25}
+                  className="min-w-[25px]"
+                />
+                <span className="ml-[10px]">{project.name}</span>
+              </a>
+            </Item>
+          ))}
+        </Submenu>
 
         <Separator />
         <Item onClick={openShortcuts}>

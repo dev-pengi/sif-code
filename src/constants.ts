@@ -1,3 +1,5 @@
+import { blobIcon, clipIcon, portfolioIcon } from "./assets";
+
 type FileType = "html" | "css" | "js";
 
 type File = {
@@ -262,6 +264,24 @@ document.addEventListener("click", () => {
 
 `;
 
+const moreProjects = [
+  {
+    name: "css path-clip",
+    icon: clipIcon,
+    link: "clip.sifedine.com",
+  },
+  {
+    name: "blob generator",
+    icon: blobIcon,
+    link: "blob.sifedine.com",
+  },
+  {
+    name: "dev portfolio",
+    icon: portfolioIcon,
+    link: "sifedine.com",
+  },
+];
+
 export {
   initialFiles,
   initialCodes,
@@ -269,5 +289,6 @@ export {
   ConfirmationModalStyles,
   keyboardShortcuts,
   iframeSetUp,
+  moreProjects,
 };
 export type { File, FileType };
