@@ -5,10 +5,7 @@ import { useFilesContext } from "@/contexts/FilesContext";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 import { FC, useEffect, useState } from "react";
-import Modal from "react-modal";
-import { ConfirmationModalStyles } from "@/constants";
-
-Modal.setAppElement("#root");
+import { Modal } from "../modals/Modal";
 
 type ComponentProps = {
   filename: string;
@@ -65,20 +62,20 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
   }, [modalIsOpen, activeFile]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-      const action = event.data;
+    const action = event.data;
 
-      if (action === "enter") {
-        if (modalIsOpen) {
-          deleteFile();
+    if (action === "enter") {
+      if (modalIsOpen) {
+        deleteFile();
+      }
+    }
+    if (action === "deleteFile") {
+      if (!modalIsOpen) {
+        if (filename === activeFile) {
+          openModal();
         }
       }
-      if (action === "deleteFile") {
-        if (!modalIsOpen) {
-          if (filename === activeFile) {
-            openModal();
-          }
-        }
-      }
+    }
   };
 
   useEffect(() => {
@@ -101,12 +98,7 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
           className="min-w-[18px] delete-icon duration-200"
         />
       </button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={ConfirmationModalStyles}
-        contentLabel="Example Modal"
-      >
+      <Modal isConfirmation isOpen={modalIsOpen} onRequestClose={closeModal}>
         <div
           className="flex justify-between items-center w-full px-2 py-5 border-b border-gray-300"
           style={{ borderBottomStyle: "solid" }}

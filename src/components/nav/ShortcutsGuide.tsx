@@ -2,10 +2,8 @@
 import * as assets from "../../assets";
 import Image from "next/image";
 import { FC, useEffect } from "react";
-import Modal from "react-modal";
-import { ModalStyles, keyboardShortcuts } from "@/constants";
-
-Modal.setAppElement("#root");
+import { Modal } from "../modals/Modal";
+import { keyboardShortcuts } from "@/constants";
 
 type ComponentProps = {
   openModal: () => void;
@@ -33,11 +31,11 @@ const ShortcutGuid: FC<ComponentProps> = ({
   }, [modalIsOpen]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-      const action = event.data;
+    const action = event.data;
 
-      if (action === "showShortcuts") {
-        modalIsOpen ? closeModal() : openModal();
-      }
+    if (action === "showShortcuts") {
+      modalIsOpen ? closeModal() : openModal();
+    }
   };
 
   useEffect(() => {
@@ -49,12 +47,7 @@ const ShortcutGuid: FC<ComponentProps> = ({
 
   return (
     <>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={ModalStyles("900px")}
-        contentLabel="Keyboard shortcuts"
-      >
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <div
           className="py-6 border-b border-gray-500"
           style={{ borderBottomStyle: "solid" }}

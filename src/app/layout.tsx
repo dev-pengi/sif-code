@@ -30,6 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <FilesProvider>
         <CodeProvider>
+          <div id="modal-container"></div>
           <body id="root" className={`${inter.className} bg-main`}>
             <Toaster />
             {children}
