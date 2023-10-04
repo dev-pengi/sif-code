@@ -6,7 +6,7 @@ import MonacoEditor, {
   loader,
   Monaco,
 } from "@monaco-editor/react";
-import { emmetHTML, emmetCSS } from "emmet-monaco-es";
+import * as Emmets from "emmet-monaco-es";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { File } from "@/constants";
 import { useCodeContext } from "@/contexts/CodeContext";
@@ -60,11 +60,11 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
 
   const handleEditorDidMount = () => {
     if (typeof window === "undefined") return;
-    emmetHTML(window.monaco);
-    emmetCSS(window.monaco);
+    Emmets.emmetHTML(window.monaco);
+    Emmets.emmetCSS(window.monaco);
   };
 
-  const fulleditorStyle = {
+  const fullEditorStyle = {
     width: "100vw",
     height: "100vh",
     position: "fixed",
@@ -85,7 +85,7 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
   return (
     <>
       {showEditor && (
-        <div style={fullScreenMode === "code" ? fulleditorStyle : editorStyle}>
+        <div style={fullScreenMode === "code" ? fullEditorStyle : editorStyle}>
           <FilesBar />
           <div
             className="h-[calc(100%-50px)] w-full mt-[50x]"
