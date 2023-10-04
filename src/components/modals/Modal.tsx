@@ -28,10 +28,16 @@ const Modal: FC<ModalProps> = ({
     };
   }, []);
 
-
   const modalType = isConfirmation ? "confirmation" : "default";
 
-  const rootElement = document.getElementById("root");
+  const [rootElement, setRootElement] = useState<any>(null);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const root = document.getElementById("root");
+    setRootElement(root);
+  }, []);
+
   if (!rootElement) {
     console.error("Root element with id 'root' not found.");
     return null;
