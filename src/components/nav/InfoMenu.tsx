@@ -7,7 +7,6 @@ import {
   Separator,
   useContextMenu,
   Submenu,
-  SubMenuProps,
 } from "react-contexify";
 import Image from "next/image";
 import ShortcutGuid from "./ShortcutsGuide";
