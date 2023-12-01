@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import ShortcutGuid from "./ShortcutsGuide";
 import { moreProjects } from "@/constants";
+import { useCodeContext } from "@/contexts/CodeContext";
 const MENU_ID = "info-menu";
 
 interface InfoMenuProps {
@@ -26,6 +27,7 @@ const InfoMenu: FC<InfoMenuProps> = ({
   showOnContextMenu,
   children,
 }) => {
+  const { smallScreen } = useCodeContext();
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const openShortcuts = (): void => {
     setShortcutsOpen(true);
@@ -69,37 +71,60 @@ const InfoMenu: FC<InfoMenuProps> = ({
           </a>
         </Item>
 
-        <Submenu
-          label={
-            <>
-              <Image
-                src={assets.devIcon}
-                alt={`creator portfolio`}
-                width={25}
-                className="min-w-[25px]"
-              />
-              <span className="ml-[10px]">more projects</span>
-            </>
-          }
-        >
-          {moreProjects.map((project, index: number) => (
-            <Item>
-              <a
-                href={`https://${project.link}`}
-                target="_blank"
-                className="w-full h-full flex items-center"
-              >
+        {smallScreen ? (
+          <>
+            <Separator />
+            {moreProjects.map((project, index: number) => (
+              <Item>
+                <a
+                  href={`https://${project.link}`}
+                  target="_blank"
+                  className="w-full h-full flex items-center"
+                >
+                  <Image
+                    src={project.icon}
+                    alt={project.name}
+                    width={25}
+                    className="min-w-[25px]"
+                  />
+                  <span className="ml-[10px]">{project.name}</span>
+                </a>
+              </Item>
+            ))}
+          </>
+        ) : (
+          <Submenu
+            label={
+              <>
                 <Image
-                  src={project.icon}
-                  alt={project.name}
+                  src={assets.devIcon}
+                  alt={`creator portfolio`}
                   width={25}
                   className="min-w-[25px]"
                 />
-                <span className="ml-[10px]">{project.name}</span>
-              </a>
-            </Item>
-          ))}
-        </Submenu>
+                <span className="ml-[10px]">more projects</span>
+              </>
+            }
+          >
+            {moreProjects.map((project, index: number) => (
+              <Item>
+                <a
+                  href={`https://${project.link}`}
+                  target="_blank"
+                  className="w-full h-full flex items-center"
+                >
+                  <Image
+                    src={project.icon}
+                    alt={project.name}
+                    width={25}
+                    className="min-w-[25px]"
+                  />
+                  <span className="ml-[10px]">{project.name}</span>
+                </a>
+              </Item>
+            ))}
+          </Submenu>
+        )}
 
         <Separator />
         <Item onClick={openShortcuts}>

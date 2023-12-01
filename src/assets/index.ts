@@ -16,6 +16,10 @@ import githubIcon from "./github.svg";
 import portfolioIcon from "./portfolio.png";
 import clipIcon from "./clip.png";
 import blobIcon from "./blob.png";
+import FilesIcon from "./FilesIcon";
+import ZipIcon from "./ZipIcon";
+import HtmlIcon from "./HtmlIcon";
+import SifFileIcon from "./SifFileIcon";
 
 export {
   cssIcon,
@@ -36,4 +40,8 @@ export {
   portfolioIcon,
   clipIcon,
   blobIcon,
+  FilesIcon,
+  ZipIcon,
+  HtmlIcon,
+  SifFileIcon,
 };

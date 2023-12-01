@@ -67,7 +67,7 @@ const NavButton: FC<NavButtonProps> = ({
   return (
     <>
       <LinkOrButton
-        className="bg-transparent hover:bg-main-lighter duration-75 rounded-md py-2 vsm:px-3 px-2"
+        className="bg-transparent hover:bg-main-lighter duration-75 rounded-md py-2 vsm:px-3 px-2 w-max"
         href={link}
         onClick={onClick}
         data-tooltip-id={id}

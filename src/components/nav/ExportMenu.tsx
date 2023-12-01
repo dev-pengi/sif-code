@@ -1,7 +1,12 @@
 "use client";
+import { FilesIcon, HtmlIcon, SifFileIcon, ZipIcon } from "@/assets";
 import { useFilesContext } from "@/contexts/FilesContext";
-import { downloadFilesAsZip, linkFiles } from "@/utils";
-import exportAsSif from "@/utils/ExportAsSif";
+import {
+  downloadFilesAsZip,
+  linkFiles,
+  exportAsSif,
+  ExportAsHtml,
+} from "@/utils";
 import { FC, useEffect, useRef, useState } from "react";
 import { Item, Menu, Separator, useContextMenu } from "react-contexify";
 import toast from "react-hot-toast";
@@ -20,7 +25,7 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
   showOnContextMenu,
   children,
 }) => {
-  const { files, setFiles } = useFilesContext();
+  const { files, setFiles, projectName, setProjectName } = useFilesContext();
   const fileRef = useRef(null);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const openShortcuts = (): void => {
@@ -41,12 +46,12 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
   }
   const handleZipExport = () => {
     const linkedFiles = linkFiles(files);
-    downloadFilesAsZip(linkedFiles, "project");
+    downloadFilesAsZip(linkedFiles, projectName);
     toast.success("Project downloaded successfully");
   };
 
   const handleSifExport = () => {
-    exportAsSif(files, "project");
+    exportAsSif(files, projectName);
     toast.success("Project exported successfully");
   };
 
@@ -84,7 +89,7 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
   const handleFileBrowsing = () => {
     if (!fileRef.current) return;
     const fileInput = fileRef.current as HTMLInputElement;
-    fileInput.value = '';
+    fileInput.value = "";
     fileInput.click();
   };
 
@@ -107,7 +112,8 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
     try {
       const fileData = await readFileData(selectedFile);
       const jsonData = parseBinarySif(fileData);
-      setFiles(jsonData);
+      setFiles(jsonData.files);
+      setProjectName(jsonData.projectName);
       toast.success("Project has been imported");
     } catch (error) {
       toast.error("Error decoding imported file");
@@ -138,6 +144,11 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
     return atob(binaryData);
   };
 
+  const handleHtmlExport = () => {
+    ExportAsHtml(files, projectName);
+    toast.success("Project exported successfully");
+  };
+
   return (
     <>
       <div
@@ -148,18 +159,37 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
         {children}
       </div>
       <Menu id={MENU_ID} theme="dark">
-        <Item onClick={handleZipExport}>
-          <span>Export as</span> <span className="font-bold ml-1"> .zip</span>
+        <Item onClick={handleFileBrowsing}>
+          <div className="w-[25px]">
+            <FilesIcon />
+          </div>
+          <span className="ml-[10px]">Import Project</span>
         </Item>
-        <Item>
-          <span>Export as</span> <span className="font-bold ml-1"> .html</span>
+        <Separator />
+        <Item onClick={handleZipExport}>
+          <div className="w-[25px]">
+            <ZipIcon />
+          </div>
+          <span className="ml-[10px]">
+            <span>Export as</span> <span className="font-bold ml-1">ZIP</span>
+          </span>
+        </Item>
+        <Item onClick={handleHtmlExport}>
+          <div className="w-[25px]">
+            <HtmlIcon />
+          </div>
+          <span className="ml-[10px]">
+            <span>Export as</span> <span className="font-bold ml-1">HTML</span>
+          </span>
         </Item>
         <Separator />
         <Item onClick={handleSifExport}>
-          <span>Export as</span> <span className="font-bold ml-1"> .sif</span>
-        </Item>
-        <Item onClick={handleFileBrowsing}>
-          <span>Import </span> <span className="font-bold ml-1"> .sif </span>
+          <div className="w-[25px]">
+            <SifFileIcon />
+          </div>
+          <span className="ml-[10px]">
+            <span>Export as</span> <span className="font-bold ml-1"> .sif</span>
+          </span>
         </Item>
       </Menu>
       <input

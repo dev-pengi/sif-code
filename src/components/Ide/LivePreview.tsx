@@ -24,8 +24,12 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
     setShowPreview(reversedView);
   }, [reversedView, smallScreen]);
 
+  const handleFileUpdate = async () => {
+    const HtmlFile = await mergeFile(files);
+    setMergedFiles(HtmlFile);
+  };
   useEffect(() => {
-    setMergedFiles(mergeFile(files));
+    handleFileUpdate();
   }, [files]);
 
   const fullPreviewStyle = {
@@ -53,7 +57,8 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
             <iframe
               srcDoc={mergedFiles}
               title="output"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              sandbox="allow-scripts allow-same-origin"
+              referrerPolicy="no-referrer"
               width="100%"
               height="100%"
             />

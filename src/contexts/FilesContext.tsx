@@ -11,6 +11,8 @@ import { File, initialFiles } from "@/constants";
 interface FilesContextValue {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  projectName: string;
+  setProjectName: React.Dispatch<React.SetStateAction<string>>;
   activeFile: string;
   setActiveFile: React.Dispatch<React.SetStateAction<string>>;
   isLoaded: boolean;
@@ -20,6 +22,8 @@ interface FilesContextValue {
 const FilesContext = createContext<FilesContextValue>({
   files: [],
   setFiles: () => {},
+  projectName: "My New Project",
+  setProjectName: () => {},
   activeFile: "index.html",
   setActiveFile: () => {},
   isLoaded: false,
@@ -38,6 +42,7 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
     "index.html",
   ]);
   const [activeFile, setActiveFile] = useState<string>("index.html");
+  const [projectName, setProjectName] = useState<string>("My New Project");
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -84,13 +89,13 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   }, [activeFile, files]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-      const action = event.data;
-      if (action === "navigateNext") {
-        setNextFileActive();
-      }
-      if (action === "navigatePrevious") {
-        setPreviousFileActive();
-      }
+    const action = event.data;
+    if (action === "navigateNext") {
+      setNextFileActive();
+    }
+    if (action === "navigatePrevious") {
+      setPreviousFileActive();
+    }
   };
 
   useEffect(() => {
@@ -128,6 +133,8 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   const value: FilesContextValue = {
     files,
     setFiles,
+    projectName,
+    setProjectName,
     activeFile,
     setActiveFile,
     isLoaded,

@@ -1,4 +1,6 @@
 import { File, iframeSetUp } from "@/constants";
+import prettier from "prettier/standalone";
+import prettierHtmlPlugins from "prettier/plugins/html";
 
 const getHtmlFile = (files: File[]): File => {
   return files.find(
@@ -84,7 +86,7 @@ const linkFiles = (files: File[]): File[] => {
   return newFiles;
 };
 
-const mergeFile = (files: File[]) => {
+const mergeFile = async (files: File[], devMode: boolean = true) => {
   const htmlFile = getHtmlFile(files);
   const cssFiles = getCssFiles(files);
   const jsFiles = getJsFiles(files);
@@ -115,14 +117,27 @@ const mergeFile = (files: File[]) => {
                 `
                   : ""
               }
+
               
-              <script>
+              ${
+                devMode
+                  ? `<script>
               ${getIframeScripts()}
-              </script>
+              </script>`
+                  : ""
+              }
           </body>
       </html>
       `;
-  return result;
+
+  const formattedCode = await prettier.format(result, {
+    parser: "html",
+    plugins: [prettierHtmlPlugins],
+  });
+
+  console.log(formattedCode);
+
+  return formattedCode;
 };
 
 export { getHtmlFile, getCssFiles, getJsFiles, mergeFile, linkFiles };

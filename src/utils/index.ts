@@ -1,4 +1,6 @@
-import downloadFilesAsZip from "./DownladAsZip";
+import downloadFilesAsZip from "./ExportAsZip";
+import exportAsSif from "./ExportAsSif";
+import ExportAsHtml from "./ExportAsHtml";
 import {
   getCssFiles,
   getHtmlFile,
@@ -7,4 +9,13 @@ import {
   mergeFile,
 } from "./MergeFiles";
 
-export { downloadFilesAsZip, getCssFiles, getHtmlFile, getJsFiles, linkFiles, mergeFile };
+export {
+  downloadFilesAsZip,
+  exportAsSif,
+  ExportAsHtml,
+  getCssFiles,
+  getHtmlFile,
+  getJsFiles,
+  linkFiles,
+  mergeFile,
+};

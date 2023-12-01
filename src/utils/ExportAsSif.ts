@@ -1,13 +1,17 @@
-import { saveAs } from 'file-saver';
-import { File } from '@/constants';
+import { saveAs } from "file-saver";
+import { File } from "@/constants";
 
-const exportAsSif = (files: File[], folderName: string): void => {
-  const filesJSON = files.map((file) => ({ ...file, isNew: false }));
-  const serializedData = JSON.stringify(filesJSON, null, 2);
+const exportAsSif = (files: File[], projectName: string): void => {
+  const exportJSON = {
+    projectName: projectName,
+    lastExport: Date.now(),
+    files: files.map((file) => ({ ...file, isNew: false })),
+  };
+  const serializedData = JSON.stringify(exportJSON, null, 2);
 
   const binaryData = convertToBinary(serializedData);
-  const blob = new Blob([binaryData], { type: 'application/octet-stream' });
-  const fileName = `${folderName}.sif`;
+  const blob = new Blob([binaryData], { type: "application/octet-stream" });
+  const fileName = `${projectName}.sif`;
 
   saveAs(blob, fileName);
 };
