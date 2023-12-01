@@ -22,7 +22,8 @@ const ProjectName: FC = () => {
     if (isError) {
       setEditedProjectName(projectName);
       console.log("not editing");
-    } else if (!isError && isEditing) {
+    }
+    if (!isError && isEditing) {
       console.log(editedProjectName);
       setProjectName(editedProjectName);
     }
@@ -60,15 +61,41 @@ const ProjectName: FC = () => {
   useEffect(() => {
     const handleClickOutside = (e: any) => {
       if (nameArea.current && !nameArea.current.contains(e.target)) {
-        handleExit();
+        isEditing && handleExit();
       }
     };
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        isEditing && handleExit();
+      } else if (event.key === "Enter") {
+        isEditing && handleExit();
+      }
+    };
+
     document.addEventListener("click", handleClickOutside);
+    document.addEventListener("keydown", handleKeyPress);
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [editedProjectName]);
+  }, [editedProjectName, isEditing, isError]);
+
+  const receiveShortcutMessage = (event: MessageEvent) => {
+    const action = event.data;
+    if (action === "enter") {
+      isEditing && handleExit();
+    } else if (action === "click") {
+      isEditing && handleExit();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", receiveShortcutMessage);
+    return () => {
+      window.removeEventListener("message", receiveShortcutMessage);
+    };
+  }, [editedProjectName, isError, isEditing]);
 
   return (
     <h3
