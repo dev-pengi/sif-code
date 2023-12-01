@@ -10,6 +10,7 @@ export default {
       colors: {
         primary: "#3498db",
         main: "#212529",
+        "main-lighter": "#2d3338",
         "dark-tab": "#181818",
         "dark-active-tab": "#1f1f1f",
         "light-tab": "#f8f8f8",

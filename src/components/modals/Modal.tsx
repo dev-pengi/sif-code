@@ -109,6 +109,7 @@ const ModalStyles = {
       height: "max-content",
       maxHeight: "700px",
       padding: "0 15px",
+      borderRadius: "9px",
       background: "#212529",
       border: "none",
       zIndex: 1001,

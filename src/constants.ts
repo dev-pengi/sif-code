@@ -85,7 +85,35 @@ type keyboardShortcutsType = {
 
 const keyboardShortcuts: keyboardShortcutsType[] = [
   {
-    name: "Download project",
+    name: "Export as .zip",
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Alt",
+        size: "large",
+      },
+      {
+        name: "z",
+        size: "normal",
+      },
+    ],
+  },
+  {
+    name: "Export as .html",
+    keys: [
+      { name: "Ctrl", size: "large" },
+      {
+        name: "Alt",
+        size: "large",
+      },
+      {
+        name: "h",
+        size: "normal",
+      },
+    ],
+  },
+  {
+    name: "Export as .sif",
     keys: [
       { name: "Ctrl", size: "large" },
       {
@@ -113,7 +141,7 @@ const keyboardShortcuts: keyboardShortcutsType[] = [
     ],
   },
   {
-    name: "Navigte to next file",
+    name: "Navigate to next file",
     keys: [
       { name: "Ctrl", size: "large" },
       {
@@ -127,7 +155,7 @@ const keyboardShortcuts: keyboardShortcutsType[] = [
     ],
   },
   {
-    name: "Navigte to previous file",
+    name: "Navigate to previous file",
     keys: [
       { name: "Ctrl", size: "large" },
       {
@@ -219,7 +247,7 @@ const handleShortcut = (event) => {
   const key = event.key.toLowerCase(); // Convert key to lowercase
 
   parent.postMessage(key, "*");
-  if (event.ctrlKey && event.altKey && key === "s") {
+  if (event.ctrlKey && event.altKey && key === "z") {
     parent.postMessage("downloadProject", "*");
   }
   if (event.ctrlKey && event.altKey && key === "backspace") {

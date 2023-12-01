@@ -121,13 +121,13 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
         <div className="flex justify-end mt-4 pb-3">
           <button
             onClick={closeModal}
-            className="py-3 px-6 text-white rounded-md"
+            className="py-[10px] px-6 text-white rounded-md"
           >
             Cancel
           </button>
           <button
             onClick={deleteFile}
-            className="py-3 px-6 rounded-md bg-red-500 text-white"
+            className="py-[10px] px-6 rounded-md bg-red-500 text-white"
           >
             Delete
           </button>
