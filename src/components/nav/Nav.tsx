@@ -1,6 +1,6 @@
 "use client";
 import { useCodeContext } from "@/contexts/CodeContext";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import NavButton from "./NavButton";
 import {
   RotateIcon,
@@ -8,22 +8,16 @@ import {
   ReverseIcon,
   InfoIcon,
   ExportIcon,
+  MenuIcon,
 } from "@/assets";
 import SizeIndicator from "./SizeIndicator";
-import { downloadFilesAsZip, linkFiles } from "@/utils";
-import { useFilesContext } from "@/contexts/FilesContext";
-import { toast } from "react-hot-toast";
-import InfoMenu from "./InfoMenu";
 import DownloadMenu from "./ExportMenu";
 import ProjectName from "./ProjectName";
+import NavMenu from "./NavMenu";
 
 const Nav: FC = () => {
   const { setTheme, setSwitchedView, setReversedView, smallScreen } =
     useCodeContext();
-
-  const handleThemeToggle = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
   const handleToggleView = () => {
     setSwitchedView((prev) => !prev);
   };
@@ -37,9 +31,9 @@ const Nav: FC = () => {
     >
       <div className={`flex items-center h-full w-full`}>
         <div className={`flex gap-4 vsm:flex-row flex-col flex-1 items-center`}>
-          <InfoMenu showOnContextMenu showOnclick>
-            <NavButton Icon={InfoIcon} tooltip="info" id={"info"} />
-          </InfoMenu>
+          <NavMenu showOnContextMenu showOnclick>
+            <NavButton Icon={MenuIcon} tooltip="info" id={"info"} />
+          </NavMenu>
           <DownloadMenu showOnContextMenu showOnclick>
             <NavButton
               Icon={ExportIcon}
@@ -47,12 +41,6 @@ const Nav: FC = () => {
               id={"download"}
             />
           </DownloadMenu>
-          <NavButton
-            Icon={ThemeIcon}
-            tooltip="toggle theme"
-            id={"theme"}
-            onClick={handleThemeToggle}
-          />
           {!smallScreen && (
             <NavButton
               Icon={RotateIcon}

@@ -7,19 +7,20 @@ import ThemeIcon from "./ThemeIcon";
 import RotateIcon from "./RotateIcon";
 import devIcon from "./dev.svg";
 import plusIcon from "./plus.svg";
-import closeIcon from "./close.svg";
-import shortcutIcon from "./shortcut.svg";
+import CloseIcon from "./CloseIcon";
+import ShortcutIcon from "./ShortcutIcon";
 import ReverseIcon from "./ReverseIcon";
-import checkIcon from "./check.svg";
+import CheckIcon from "./CheckIcon";
 import InfoIcon from "./InfoIcon";
-import githubIcon from "./github.svg";
+import GithubIcon from "./GithubIcon";
 import portfolioIcon from "./portfolio.png";
-import clipIcon from "./clip.png";
-import blobIcon from "./blob.png";
 import FilesIcon from "./FilesIcon";
 import ZipIcon from "./ZipIcon";
 import HtmlIcon from "./HtmlIcon";
 import SifFileIcon from "./SifFileIcon";
+import MenuIcon from "./MenuIcon";
+import ExternalIcon from "./ExternalIcon";
+
 
 export {
   cssIcon,
@@ -31,17 +32,16 @@ export {
   RotateIcon,
   devIcon,
   plusIcon,
-  closeIcon,
-  shortcutIcon,
+  CloseIcon,
+  ShortcutIcon,
   ReverseIcon,
-  checkIcon,
+  CheckIcon,
   InfoIcon,
-  githubIcon,
+  GithubIcon,
   portfolioIcon,
-  clipIcon,
-  blobIcon,
   FilesIcon,
   ZipIcon,
   HtmlIcon,
   SifFileIcon,
+  MenuIcon,ExternalIcon,
 };

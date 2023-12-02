@@ -192,7 +192,10 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
               cursor: "pointer",
               height: "100%",
               borderTop: isActive ? "#3495eb solid 2px" : "none",
-              borderRight: isActive ? "" : "#555555aa solid 1px",
+              borderRight:
+                isActive && !snapshot.isDragging
+                  ? ""
+                  : `${theme === "dark" ? "#555555aa" : "#aaaaaa55"} solid 1px`,
               background: isActive
                 ? theme === "dark"
                   ? "#1f1f1f"
@@ -201,7 +204,9 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
                   ? "#181818"
                   : "#f8f8f8",
             }}
-            className={`flex items-center px-2 min-w-max`}
+            className={`flex items-center ${
+              snapshot.isDragging ? "shadow-xl opacity-80" : ""
+            } px-2 min-w-max`}
           >
             <div className="flex items-center min-w-[120px]">
               <Image
@@ -238,29 +243,23 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
               )}
             </div>
             {isRenaming ? (
-              <div className="flex items-center">
+              <div className="flex items-center text-white">
                 <button
                   role="button"
                   onClick={handleRename}
                   className={`ml-[10px] h-max p-1 tab-button rounded-sm`}
                 >
-                  <Image
-                    src={assets.checkIcon}
-                    alt="tab-icon"
-                    width={18}
-                    className="min-w-[18px] tab-icon duration-200"
-                  />
+                  <div className="w-[18px]">
+                    <assets.CheckIcon />
+                  </div>
                 </button>
                 <button
                   onClick={handleCancel}
                   className={`ml-[5px] h-max p-1 tab-button rounded-sm`}
                 >
-                  <Image
-                    src={assets.closeIcon}
-                    alt="tab-icon"
-                    width={18}
-                    className="min-w-[18px] tab-icon duration-200"
-                  />
+                  <div className="w-[18px]">
+                    <assets.CloseIcon />
+                  </div>
                 </button>
                 <style jsx>{`
         .tab-button {

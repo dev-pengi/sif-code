@@ -57,12 +57,9 @@ const ShortcutGuid: FC<ComponentProps> = ({
               Keyboard shortcuts
             </p>
             <button onClick={closeModal}>
-              <Image
-                src={assets.closeIcon}
-                alt="close icon"
-                width={24}
-                className="min-w-[24px] hover:opacity-70 duration-200"
-              />
+              <div className="w-[22px] text-white">
+                <assets.CloseIcon />
+              </div>
             </button>
           </div>
         </div>

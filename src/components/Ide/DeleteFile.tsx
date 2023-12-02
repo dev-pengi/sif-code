@@ -91,12 +91,9 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
         onClick={openModal}
         className={`ml-[10px] h-max p-1 delete-button rounded-sm`}
       >
-        <Image
-          src={assets.closeIcon}
-          alt="delete-icon"
-          width={18}
-          className="min-w-[18px] delete-icon duration-200"
-        />
+        <div className="w-[18px] text-white">
+          <assets.CloseIcon />
+        </div>
       </button>
       <Modal isConfirmation isOpen={modalIsOpen} onRequestClose={closeModal}>
         <div
@@ -107,12 +104,9 @@ const DeleteFile: FC<ComponentProps> = ({ filename }) => {
             Confirm delete
           </p>
           <button onClick={closeModal}>
-            <Image
-              src={assets.closeIcon}
-              alt="close icon"
-              width={24}
-              className="min-w-[24px] hover:opacity-70 duration-200"
-            />
+            <div className="w-[22px] text-white">
+              <assets.CloseIcon />
+            </div>
           </button>
         </div>
         <p className="text-white mt-3">

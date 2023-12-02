@@ -14,20 +14,20 @@ import { moreProjects } from "@/constants";
 import { useCodeContext } from "@/contexts/CodeContext";
 const MENU_ID = "info-menu";
 
-interface InfoMenuProps {
+interface NavMenuProps {
   showOnclick?: boolean;
   showOnDoubleClick?: boolean;
   showOnContextMenu?: boolean;
   children: React.ReactNode;
 }
 
-const InfoMenu: FC<InfoMenuProps> = ({
+const NavMenu: FC<NavMenuProps> = ({
   showOnclick = true,
   showOnDoubleClick,
   showOnContextMenu,
   children,
 }) => {
-  const { smallScreen } = useCodeContext();
+  const { smallScreen, setTheme, theme } = useCodeContext();
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const openShortcuts = (): void => {
     setShortcutsOpen(true);
@@ -45,6 +45,12 @@ const InfoMenu: FC<InfoMenuProps> = ({
       event: e,
     });
   }
+  const handleDarkTheme = () => {
+    setTheme("dark");
+  };
+  const handleLightTheme = () => {
+    setTheme("light");
+  };
   return (
     <>
       <div
@@ -55,18 +61,65 @@ const InfoMenu: FC<InfoMenuProps> = ({
         {children}
       </div>
       <Menu id={MENU_ID} theme="dark">
+        {smallScreen ? (
+          <>
+            <Item onClick={handleDarkTheme}>
+              <div className="w-[22px]">
+                {theme === "dark" && <assets.CheckIcon />}
+              </div>
+              <span className="ml-[10px]">Dark Theme</span>
+            </Item>
+            <Item onClick={handleLightTheme}>
+              <div className="w-[22px]">
+                {theme === "light" && <assets.CheckIcon />}
+              </div>
+              <span className="ml-[10px]">Light Theme</span>
+            </Item>
+          </>
+        ) : (
+          <Submenu
+            label={
+              <>
+                <div className="w-[22px]">
+                  <assets.ThemeIcon />
+                </div>
+                <span className="ml-[10px]">Theme</span>
+              </>
+            }
+          >
+            <Item onClick={handleDarkTheme} closeOnClick={false}>
+              <div className="w-[22px]">
+                {theme === "dark" && <assets.CheckIcon />}
+              </div>
+              <span className="ml-[10px]">Dark Theme</span>
+            </Item>
+            <Item onClick={handleLightTheme} closeOnClick={false}>
+              <div className="w-[22px]">
+                {theme === "light" && <assets.CheckIcon />}
+              </div>
+              <span className="ml-[10px]">Light Theme</span>
+            </Item>
+          </Submenu>
+        )}
+        <Separator />
+        <Item onClick={openShortcuts}>
+          <div className="w-[25px]">
+            <assets.ShortcutIcon />
+          </div>
+          <span className="ml-[10px]">keyboard shortcuts</span>
+        </Item>
+
+        <Separator />
+
         <Item>
           <a
             href="https://github.com/dev-pengi/sif-code"
             target="_blank"
             className="w-full h-full flex items-center"
           >
-            <Image
-              src={assets.githubIcon}
-              alt={`github project`}
-              width={25}
-              className="min-w-[25px]"
-            />
+            <div className="w-[25px]">
+              <assets.GithubIcon />
+            </div>
             <span className="ml-[10px]">github project</span>
           </a>
         </Item>
@@ -81,12 +134,9 @@ const InfoMenu: FC<InfoMenuProps> = ({
                   target="_blank"
                   className="w-full h-full flex items-center"
                 >
-                  <Image
-                    src={project.icon}
-                    alt={project.name}
-                    width={25}
-                    className="min-w-[25px]"
-                  />
+                  <div className="w-[25px]">
+                    <assets.ExternalIcon />
+                  </div>
                   <span className="ml-[10px]">{project.name}</span>
                 </a>
               </Item>
@@ -113,29 +163,15 @@ const InfoMenu: FC<InfoMenuProps> = ({
                   target="_blank"
                   className="w-full h-full flex items-center"
                 >
-                  <Image
-                    src={project.icon}
-                    alt={project.name}
-                    width={25}
-                    className="min-w-[25px]"
-                  />
+                  <div className="w-[25px]">
+                    <assets.ExternalIcon />
+                  </div>
                   <span className="ml-[10px]">{project.name}</span>
                 </a>
               </Item>
             ))}
           </Submenu>
         )}
-
-        <Separator />
-        <Item onClick={openShortcuts}>
-          <Image
-            src={assets.shortcutIcon}
-            alt={`keyboard shortcuts`}
-            width={25}
-            className="min-w-[25px]"
-          />
-          <span className="ml-[10px]">keyboard shortcuts</span>
-        </Item>
       </Menu>
       <ShortcutGuid
         closeModal={closeShortcuts}
@@ -146,4 +182,4 @@ const InfoMenu: FC<InfoMenuProps> = ({
   );
 };
 
-export default InfoMenu;
+export default NavMenu;

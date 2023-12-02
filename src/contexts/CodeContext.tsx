@@ -87,7 +87,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
 
   const [switchedView, setSwitchedView] = useState(false);
   const [reversedView, setReversedView] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isHorizontal, setIsHorizontal] = useState(true);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     if (localTheme) {
       setTheme(localTheme as "light" | "dark");
     } else {
-      window.localStorage.setItem("theme", "light");
+      window.localStorage.setItem("theme", "dark");
     }
   }, []);
 
