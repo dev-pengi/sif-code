@@ -11,10 +11,10 @@ import DeleteFile from "./DeleteFile";
 
 interface FileTabProps {
   file: File;
-  isNew?: boolean;
 }
 
-const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
+const FileTab: FC<FileTabProps> = ({ file }) => {
+  const isNew = file.isNew;
   const { activeFile, setActiveFile, files, setFiles } = useFilesContext();
   const { theme } = useCodeContext();
   const [isActive, setIsActive] = useState(file.name === activeFile);
@@ -22,7 +22,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   const [isError, setIsError] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const tabRef = useRef<HTMLButtonElement | null>(null);
+  const tabRef = useRef<HTMLDivElement | null>(null);
 
   const isMainFile = file.name === "index.html";
 
@@ -84,18 +84,17 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   }, []);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-      const action = event.data;
+    const action = event.data;
 
-      if (action === "renameFile") {
-        !isMainFile && isActive && setIsEditable((prev) => !prev);
-      }
-      else if (action === "escape") {
-        isEditable && handleCancel();
-      } else if (action === "enter") {
-        isEditable && handleRename();
-      } else if (action === "click") {
-        handleCancel();
-      }
+    if (action === "renameFile") {
+      !isMainFile && isActive && setIsEditable((prev) => !prev);
+    } else if (action === "escape") {
+      isEditable && handleCancel();
+    } else if (action === "enter") {
+      isEditable && handleRename();
+    } else if (action === "click") {
+      handleCancel();
+    }
   };
 
   useEffect(() => {
@@ -171,10 +170,11 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
   }, [isEditable]);
 
   return (
-    <button
+    <div
       ref={tabRef}
       onClick={() => !isActive && setActiveFile(file.name)}
       style={{
+        cursor:"pointer",
         height: "100%",
         borderTop: isActive ? "#3495eb solid 2px" : "none",
         borderRight: isActive ? "" : "#555555aa solid 1px",
@@ -183,8 +183,8 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
             ? "#1f1f1f"
             : "#ffffff"
           : theme === "dark"
-          ? "#181818"
-          : "#f8f8f8",
+            ? "#181818"
+            : "#f8f8f8",
       }}
       className={`flex items-center px-2 min-w-max`}
     >
@@ -259,7 +259,7 @@ const FileTab: FC<FileTabProps> = ({ file, isNew }) => {
       ) : (
         <>{!isMainFile && <DeleteFile filename={file.name} />}</>
       )}
-    </button>
+    </div>
   );
 };
 

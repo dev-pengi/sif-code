@@ -39,7 +39,6 @@ const Modal: FC<ModalProps> = ({
   }, []);
 
   if (!rootElement) {
-    console.error("Root element with id 'root' not found.");
     return null;
   }
 

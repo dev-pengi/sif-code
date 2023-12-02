@@ -5,7 +5,7 @@ const RotateIcon: FC = () => {
     <svg
       fill="currentColor"
       width="100%"
-      height="auto"
+       
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >

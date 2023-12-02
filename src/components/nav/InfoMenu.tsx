@@ -75,7 +75,7 @@ const InfoMenu: FC<InfoMenuProps> = ({
           <>
             <Separator />
             {moreProjects.map((project, index: number) => (
-              <Item>
+              <Item key={index}>
                 <a
                   href={`https://${project.link}`}
                   target="_blank"
@@ -107,7 +107,7 @@ const InfoMenu: FC<InfoMenuProps> = ({
             }
           >
             {moreProjects.map((project, index: number) => (
-              <Item>
+              <Item key={index}>
                 <a
                   href={`https://${project.link}`}
                   target="_blank"
