@@ -1,6 +1,7 @@
 import downloadFilesAsZip from "./ExportAsZip";
-import exportAsSif from "./ExportAsSif";
+import exportAsSif, { convertToBinary,convertToText,parseBinarySif } from "./ExportAsSif";
 import ExportAsHtml from "./ExportAsHtml";
+import copyText from "./copyText";
 import {
   getCssFiles,
   getHtmlFile,
@@ -18,4 +19,6 @@ export {
   getJsFiles,
   linkFiles,
   mergeFile,
+  convertToBinary,
+  copyText,convertToText,parseBinarySif
 };

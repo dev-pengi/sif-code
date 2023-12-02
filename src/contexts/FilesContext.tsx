@@ -7,7 +7,11 @@ import {
   FC,
   ReactNode,
 } from "react";
+import { useSearchParams } from "next/navigation";
 import { File, initialFiles } from "@/constants";
+import { convertToBinary, parseBinarySif } from "@/utils";
+import axios from "axios";
+import toast from "react-hot-toast";
 interface FilesContextValue {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
@@ -17,6 +21,8 @@ interface FilesContextValue {
   setActiveFile: React.Dispatch<React.SetStateAction<string>>;
   isLoaded: boolean;
   setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+  isImported: boolean;
+  setIsImported: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FilesContext = createContext<FilesContextValue>({
@@ -28,6 +34,8 @@ const FilesContext = createContext<FilesContextValue>({
   setActiveFile: () => {},
   isLoaded: false,
   setIsLoaded: () => {},
+  isImported: false,
+  setIsImported: () => {},
 });
 
 export const useFilesContext = () => useContext(FilesContext);
@@ -37,6 +45,9 @@ interface FilesProviderProps {
 }
 
 const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
+  const searchParams = useSearchParams();
+  const importURL = searchParams.get("import");
+
   const [files, setFiles] = useState<File[]>(initialFiles);
   const [fileNavigationHistory, setFileNavigationHistory] = useState<string[]>([
     "index.html",
@@ -45,6 +56,7 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   const [projectName, setProjectName] = useState<string>("My New Project");
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isImported, setIsImported] = useState(false);
 
   const setNextFileActive = () => {
     const currentFileIndex = files.findIndex(
@@ -56,6 +68,35 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
       setActiveFile(nextFile.name);
     }
   };
+
+  const handleShareImport = async () => {
+    console.log(importURL)
+    if (importURL) {
+      const TOKEN =
+        "e9bcf8e75f1cdcca89c815aab5e656a6190832a3b87af5e1accefbc63a69061340e3f5d98860ef4e7dd7fef1f012b6ab4782045d4a13c724dd9534fda84a6c63";
+      const headers = {
+        "content-type": " text/plain",
+        Authorization: `Bearer ${TOKEN}`,
+      };
+      const endpoint = `https://hastebin.com/documents/${importURL}`;
+
+      try {
+        let { data } = await axios.get(endpoint, {
+          headers,
+        });
+        const parsedData = parseBinarySif(data?.data);
+        setFiles(parsedData.files);
+        setProjectName(parsedData.projectName);
+      } catch (error) {
+        console.error(error)
+        toast.error("Couldn't load the project");
+      }
+    }
+    setIsImported(true);
+  };
+  useEffect(() => {
+    handleShareImport();
+  }, []);
 
   const setPreviousFileActive = () => {
     const currentFileIndex = files.findIndex(
@@ -139,6 +180,8 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
     setActiveFile,
     isLoaded,
     setIsLoaded,
+    isImported,
+    setIsImported,
   };
 
   return (

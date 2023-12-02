@@ -1,12 +1,16 @@
 "use client";
-import { FilesIcon, HtmlIcon, SifFileIcon, ZipIcon } from "@/assets";
+import { FilesIcon, HtmlIcon, ShareIcon, SifFileIcon, ZipIcon } from "@/assets";
 import { useFilesContext } from "@/contexts/FilesContext";
 import {
   downloadFilesAsZip,
   linkFiles,
   exportAsSif,
   ExportAsHtml,
+  convertToBinary,
+  copyText,
+  parseBinarySif,
 } from "@/utils";
+import axios from "axios";
 import { FC, useEffect, useRef, useState } from "react";
 import { Item, Menu, Separator, useContextMenu } from "react-contexify";
 import toast from "react-hot-toast";
@@ -116,15 +120,18 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
       return;
     }
 
-    try {
+    const handleImport = async () => {
       const fileData = await readFileData(selectedFile);
       const jsonData = parseBinarySif(fileData);
       setFiles(jsonData.files);
       setProjectName(jsonData.projectName);
-      toast.success("Project has been imported");
-    } catch (error) {
-      toast.error("Error decoding imported file");
-    }
+    };
+
+    toast.promise(handleImport(), {
+      loading: "Decoding the file...",
+      success: <>Project has been imported!</>,
+      error: <>Error decoding imported file!.</>,
+    });
   };
   const readFileData = (file: any) => {
     return new Promise<string>((resolve, reject) => {
@@ -143,13 +150,34 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
     });
   };
 
-  const parseBinarySif = (binaryData: any) => {
-    const text = convertToText(binaryData);
-    return JSON.parse(text);
+  const generateProjectLink = async () => {
+    const TOKEN =
+      "e9bcf8e75f1cdcca89c815aab5e656a6190832a3b87af5e1accefbc63a69061340e3f5d98860ef4e7dd7fef1f012b6ab4782045d4a13c724dd9534fda84a6c63";
+    const headers = {
+      "content-type": " text/plain",
+      Authorization: `Bearer ${TOKEN}`,
+    };
+    const endpoint = "https://hastebin.com/documents";
+    const projectData = convertToBinary(files, projectName);
+
+    let { data } = await axios.post(endpoint, projectData, {
+      headers,
+    });
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      const projectURL = `${window.location.protocol}//${hostname}:${window.location.port}/?import=${data.key}`;
+      copyText(projectURL);
+    }
   };
-  const convertToText = (binaryData: any) => {
-    return atob(binaryData);
+
+  const handleProjectShare = async () => {
+    toast.promise(generateProjectLink(), {
+      loading: "Uploading the project...",
+      success: <>Project link has been copied to clipboard!</>,
+      error: <>Error while uploading the project!.</>,
+    });
   };
+
   return (
     <>
       <div
@@ -191,6 +219,13 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
           <span className="ml-[10px]">
             <span>Export as</span> <span className="font-bold ml-1"> .sif</span>
           </span>
+        </Item>
+        <Separator />
+        <Item onClick={handleProjectShare}>
+          <div className="w-[25px]">
+            <ShareIcon />
+          </div>
+          <span className="ml-[10px]">Share Project Link</span>
         </Item>
       </Menu>
       <input

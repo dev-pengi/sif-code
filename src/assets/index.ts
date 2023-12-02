@@ -20,7 +20,7 @@ import HtmlIcon from "./HtmlIcon";
 import SifFileIcon from "./SifFileIcon";
 import MenuIcon from "./MenuIcon";
 import ExternalIcon from "./ExternalIcon";
-
+import ShareIcon from "./ShareIcon";
 
 export {
   cssIcon,
@@ -43,5 +43,7 @@ export {
   ZipIcon,
   HtmlIcon,
   SifFileIcon,
-  MenuIcon,ExternalIcon,
+  MenuIcon,
+  ExternalIcon,
+  ShareIcon,
 };
