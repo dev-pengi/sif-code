@@ -3,13 +3,11 @@ import { useCodeContext } from "@/contexts/CodeContext";
 import { FC, useEffect } from "react";
 import NavButton from "./NavButton";
 import {
-  devIcon,
-  downloadIcon,
-  rotateIcon,
-  themesIcon,
-  reverseIcon,
-  infoIcon,
-  exportIcon,
+  RotateIcon,
+  ThemeIcon,
+  ReverseIcon,
+  InfoIcon,
+  ExportIcon,
 } from "@/assets";
 import SizeIndicator from "./SizeIndicator";
 import { downloadFilesAsZip, linkFiles } from "@/utils";
@@ -40,38 +38,42 @@ const Nav: FC = () => {
       <div className={`flex items-center h-full w-full`}>
         <div className={`flex gap-4 vsm:flex-row flex-col flex-1 items-center`}>
           <InfoMenu showOnContextMenu showOnclick>
-            <NavButton icon={infoIcon} tooltip="info" id={"info"} />
+            <NavButton Icon={InfoIcon} tooltip="info" id={"info"} />
           </InfoMenu>
           <DownloadMenu showOnContextMenu showOnclick>
             <NavButton
-              icon={exportIcon}
+              Icon={ExportIcon}
               tooltip="Download project"
               id={"download"}
             />
           </DownloadMenu>
           <NavButton
-            icon={themesIcon}
+            Icon={ThemeIcon}
             tooltip="toggle theme"
             id={"theme"}
             onClick={handleThemeToggle}
           />
           {!smallScreen && (
             <NavButton
-              icon={rotateIcon}
+              Icon={RotateIcon}
               tooltip="toggle view"
               id={"view"}
               onClick={handleToggleView}
             />
           )}
           <NavButton
-            icon={reverseIcon}
+            Icon={ReverseIcon}
             tooltip="reverse view"
             id={"reverse"}
             onClick={handleReverseView}
           />
         </div>
-        {!smallScreen && <ProjectName />}
-        {!smallScreen && <SizeIndicator />}
+        {!smallScreen && (
+          <>
+            <ProjectName />
+            <SizeIndicator />
+          </>
+        )}
       </div>
     </nav>
   );

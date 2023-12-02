@@ -18,13 +18,10 @@ const ProjectName: FC = () => {
   };
 
   const handleExit = () => {
-    console.log("first");
     if (isError) {
       setEditedProjectName(projectName);
-      console.log("not editing");
     }
     if (!isError && isEditing) {
-      console.log(editedProjectName);
       setProjectName(editedProjectName);
     }
     setIsEditing(false);
@@ -48,6 +45,7 @@ const ProjectName: FC = () => {
       selectInputText();
     }
   }, [isEditing]);
+
   useEffect(() => {
     !isEditing && setEditedProjectName(projectName);
   }, [isEditing, projectName]);
@@ -64,6 +62,7 @@ const ProjectName: FC = () => {
         isEditing && handleExit();
       }
     };
+
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         isEditing && handleExit();
@@ -100,7 +99,9 @@ const ProjectName: FC = () => {
   return (
     <h3
       onClick={handleEditing}
-      className="text-white mx-4 text-center font-medium truncate cursor-pointer max-w-[300px]"
+      className={`${
+        isEditing ? "" : "px-3 py-1 bg-main-lighter rounded-md"
+      } text-white mx-4 text-center font-medium truncate cursor-pointer max-w-[300px]`}
       ref={nameArea}
     >
       {isEditing ? (

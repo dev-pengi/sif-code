@@ -55,12 +55,19 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
     toast.success("Project exported successfully");
   };
 
+  const handleHtmlExport = () => {
+    ExportAsHtml(files, projectName);
+    toast.success("Project exported successfully");
+  };
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "z") {
         handleZipExport();
       } else if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "s") {
         handleSifExport();
+      } else if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "h") {
+        handleHtmlExport();
       }
     };
 
@@ -143,12 +150,6 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
   const convertToText = (binaryData: any) => {
     return atob(binaryData);
   };
-
-  const handleHtmlExport = () => {
-    ExportAsHtml(files, projectName);
-    toast.success("Project exported successfully");
-  };
-
   return (
     <>
       <div

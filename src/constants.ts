@@ -228,6 +228,7 @@ const keyboardShortcuts: keyboardShortcutsType[] = [
     name: "Show shortcuts",
     keys: [
       { name: "Ctrl", size: "large" },
+      { name: "Alt", size: "large" },
       { name: "/", size: "normal" },
     ],
   },

@@ -1,11 +1,10 @@
 import { ReactNode } from "react";
-import Image from "next/image";
 import { FC } from "react";
 import { Tooltip } from "react-tooltip";
 import { useCodeContext } from "@/contexts/CodeContext";
 
 interface NavButtonProps {
-  icon: any;
+  Icon: FC;
   tooltip: string;
   id: string;
   link?: string;
@@ -56,7 +55,7 @@ const LinkOrButton: FC<LinkOrButtonProps> = ({
 };
 
 const NavButton: FC<NavButtonProps> = ({
-  icon,
+  Icon,
   tooltip,
   id,
   link,
@@ -67,13 +66,15 @@ const NavButton: FC<NavButtonProps> = ({
   return (
     <>
       <LinkOrButton
-        className="bg-transparent hover:bg-main-lighter duration-75 rounded-md py-2 vsm:px-3 px-2 w-max"
+        className="bg-transparent text-white hover:bg-main-lighter duration-75 rounded-md py-2 vsm:px-3 px-2 w-max"
         href={link}
         onClick={onClick}
         data-tooltip-id={id}
         data-tooltip-content={tooltip}
       >
-        <Image src={icon} alt={tooltip} width={25} />
+        <div className="w-[25px]">
+          <Icon />
+        </div>
       </LinkOrButton>
       <Tooltip
         place={smallScreen ? "right" : "bottom"}

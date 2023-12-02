@@ -2,16 +2,16 @@ import cssIcon from "./css.svg";
 import htmlIcon from "./html.svg";
 import jsIcon from "./js.svg";
 import downloadIcon from "./download.svg";
-import exportIcon from "./export.svg";
-import themesIcon from "./themes.svg";
-import rotateIcon from "./rotate.svg";
+import ExportIcon from "./ExportIcon";
+import ThemeIcon from "./ThemeIcon";
+import RotateIcon from "./RotateIcon";
 import devIcon from "./dev.svg";
 import plusIcon from "./plus.svg";
 import closeIcon from "./close.svg";
 import shortcutIcon from "./shortcut.svg";
-import reverseIcon from "./reverse.svg";
+import ReverseIcon from "./ReverseIcon";
 import checkIcon from "./check.svg";
-import infoIcon from "./info.svg";
+import InfoIcon from "./InfoIcon";
 import githubIcon from "./github.svg";
 import portfolioIcon from "./portfolio.png";
 import clipIcon from "./clip.png";
@@ -26,16 +26,16 @@ export {
   htmlIcon,
   jsIcon,
   downloadIcon,
-  exportIcon,
-  themesIcon,
-  rotateIcon,
+  ExportIcon,
+  ThemeIcon,
+  RotateIcon,
   devIcon,
   plusIcon,
   closeIcon,
   shortcutIcon,
-  reverseIcon,
+  ReverseIcon,
   checkIcon,
-  infoIcon,
+  InfoIcon,
   githubIcon,
   portfolioIcon,
   clipIcon,
