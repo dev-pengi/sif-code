@@ -23,24 +23,11 @@ const FilesBar: FC = () => {
           {...provided.droppableProps}
         >
           {files.map((file: File, index: number) => (
-            <Draggable
-              key={file.name}
+            <FileTab
+              file={file}
               index={index}
-              draggableId={file.name}
-              isDragDisabled={file.name === "index.html"}
-              disableInteractiveElementBlocking
-            >
-              {(provided, snapshot) => (
-                <div
-                  className="h-full"
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                >
-                  <FileTab file={file} />
-                </div>
-              )}
-            </Draggable>
+              key={file.name}
+            />
           ))}
 
           <CreateFile />

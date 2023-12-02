@@ -16,7 +16,7 @@ type initialCodesType = {
 };
 
 const initialCodes: initialCodesType = {
-  html: `<!-- the code you write here is registred in the body -->
+  html: `<!-- the code you write here is registered in the body -->
 
 <h1>My First Heading</h1>
 <p>My first paragraph.</p>

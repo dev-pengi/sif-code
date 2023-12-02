@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import ResizeBar from "./ResizeBar";
 import LivePreview from "./LivePreview";
 import Editor from "./Editor";
@@ -17,6 +17,7 @@ const IDE: FC = () => {
     reversedView,
   } = useCodeContext();
   const { files, setFiles } = useFilesContext();
+  const [isDragging, setIsDragging] = useState(false);
 
   function MoveArrayItem(arr: any[], oldIndex: number, newIndex: number) {
     if (newIndex >= arr.length) {
@@ -30,33 +31,19 @@ const IDE: FC = () => {
   }
 
   const handleDragEnd = (props: any) => {
-    let sourceIndex = props.source.index;
-    let destinationIndex = props.destination.index;
+    setIsDragging(false);
+    let sourceIndex = props?.source?.index;
+    let destinationIndex = props?.destination?.index;
+
+    if (sourceIndex === undefined || destinationIndex === undefined) return;
 
     if (destinationIndex === 0) destinationIndex = 1;
 
     setFiles((prev) => MoveArrayItem(prev, sourceIndex, destinationIndex));
   };
-
-  console.log(files);
-
-  /*
-  {
-    "draggableId": "script.js",
-    "type": "DEFAULT",
-    "source": {
-        "index": 1,
-        "droppableId": "files-bar"
-    },
-    "reason": "DROP",
-    "mode": "FLUID",
-    "destination": {
-        "droppableId": "files-bar",
-        "index": 2
-    },
-    "combine": null
-}
-*/
+  const handleDragStart = () => {
+    setIsDragging(true);
+  };
 
   return (
     <main
@@ -71,7 +58,10 @@ const IDE: FC = () => {
             : `${reversedView ? "column-reverse" : "column"}`,
         }}
       >
-        <DragDropContext onDragEnd={handleDragEnd}>
+        <DragDropContext
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
           <Editor
             width={isHorizontal ? (codeWidth > 0 ? codeWidth : "50%") : "100%"}
             height={isHorizontal ? "100%" : codeHeight}
@@ -83,6 +73,7 @@ const IDE: FC = () => {
           height={isHorizontal ? "100%" : pageHeight - +codeHeight}
         />
       </div>
+      {isDragging && <div className={`w-screen h-screen fixed top-0 left-0`} />}
     </main>
   );
 };
