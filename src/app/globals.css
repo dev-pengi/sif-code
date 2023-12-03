@@ -8,6 +8,7 @@
   --contexify-item-color: #fff;
   --contexify-activeItem-color: #fff;
   --contexify-activeItem-bgColor: #3498db;
+  --contexify-activeItem-danger: #ff2323;
   --contexify-rightSlot-color: #6f6e77;
   --contexify-activeRightSlot-color: #fff;
   --contexify-arrow-color: #6f6e77;
@@ -34,4 +35,20 @@
 .filesbar-scroll::-webkit-scrollbar-thumb {
   background: rgba(158, 158, 158, 0.267);
   position: absolute;
+}
+
+.contexify_item:not(.contexify_item-disabled).danger > .contexify_itemContent,
+.contexify_item:not(.contexify_item-disabled).danger > .contexify_itemContent {
+  color: var(--contexify-activeItem-danger);
+}
+
+.contexify_item:not(.contexify_item-disabled).danger:focus
+  > .contexify_itemContent,
+.contexify_item:not(.contexify_item-disabled).danger:hover
+  > .contexify_itemContent,
+.contexify_submenu-isOpen,
+.contexify_submenu-isOpen > .contexify_itemContent {
+  background-color: var(--contexify-activeItem-danger);
+  border-radius: var(--contexify-activeItem-radius);
+  color: var(--contexify-activeItem-color);
 }

@@ -1,30 +1,43 @@
-import { Children, FC, cloneElement, isValidElement } from "react";
 import * as assets from "@/assets";
+import { FC } from "react";
 
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  useContextMenu,
-} from "react-contexify";
-import { toast } from "react-hot-toast";
 import { useFilesContext } from "@/contexts/FilesContext";
-import Image from "next/image";
+import { Item, Menu, Separator, useContextMenu } from "react-contexify";
+import { toast } from "react-hot-toast";
+import { initialCodes } from "@/constants";
 const MENU_ID = "create-file";
 
-type FileCreateType = "css" | "js";
+type FileCreateType = "css" | "scss" | "less" | "js" | "json";
 
 type FileCreate = {
   type: FileCreateType;
+  icon: FC;
+  separate?: boolean;
 };
 const filesCreate: FileCreate[] = [
   {
     type: "css",
+    icon: assets.ColoredCssIcon,
+    separate: true,
   },
+  // {
+  //   type: "scss",
+  //   icon: assets.ColoredScssIcon,
+  // },
+  // {
+  //   type: "less",
+  //   icon: assets.ColoredLessIcon,
+  //   separate: true,
+  // },
   {
     type: "js",
+    icon: assets.ColoredJsIcon,
+    // separate: true,
   },
+  // {
+  //   type: "json",
+  //   icon: assets.ColoredJsonIcon,
+  // },
 ];
 
 interface CreateFileMenuProps {
@@ -53,9 +66,18 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
   const handleCreateFile = (type: FileCreateType) => {
     if (!type) return toast.error("Please select a file type");
 
+    const typeNames: any = {
+      css: "style",
+      scss: "style",
+      less: "style",
+      js: "script",
+      json: "data",
+      default: "file",
+    };
+
     const typeIndex = files.filter((file) => file.type === type).length;
     const nameIndex = typeIndex > 0 ? typeIndex : "";
-    const typeName = type === "css" ? "style" : type === "js" ? "script" : "";
+    const typeName = typeNames[type] || typeNames.default;
     const fullName = `${typeName}${nameIndex}.${type}`;
 
     setFiles((prev) => [
@@ -63,7 +85,7 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
       {
         name: fullName,
         type,
-        content: "",
+        content: initialCodes[type] || "",
         isNew: true,
       },
     ]);
@@ -83,15 +105,12 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
         {filesCreate.map((fileCreate: FileCreate, index: number) => (
           <>
             <Item key={index} onClick={() => handleCreateFile(fileCreate.type)}>
-              <Image
-                src={assets[`${fileCreate.type}Icon`]}
-                alt={`${fileCreate.type} icon`}
-                width={25}
-                className="min-w-[25px]"
-              />
+              <div className="w-[25px]">
+                <fileCreate.icon />
+              </div>
               <span className="ml-[10px]">{fileCreate.type}</span>
             </Item>
-            {index < filesCreate.length - 1 && <Separator />}
+            {fileCreate.separate && <Separator />}
           </>
         ))}
       </Menu>

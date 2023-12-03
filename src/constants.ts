@@ -1,5 +1,4 @@
-
-type FileType = "html" | "css" | "js";
+type FileType = "html" | "css" | "js" | "scss" | "less" | "json";
 
 type File = {
   name: string;
@@ -12,6 +11,9 @@ type initialCodesType = {
   html: string;
   css?: string;
   js?: string;
+  scss?: string;
+  less?: string;
+  json?: string;
 };
 
 const initialCodes: initialCodesType = {
@@ -20,6 +22,16 @@ const initialCodes: initialCodesType = {
 <h1>My First Heading</h1>
 <p>My first paragraph.</p>
 `,
+  css: `/* Start your CSS styling journey! */`,
+  js: `// Start coding your own logic, no limits!`,
+  scss: `/*
+  Start your SCSS styling journey!
+  all .SCSS files will be compiled to css on ZIP and HTML exports
+*/`,
+less: `/*
+  Start your LESS styling journey!
+  all .LESS files will be compiled to css on ZIP and HTML exports
+*/`,
 };
 
 const initialFiles: File[] = [

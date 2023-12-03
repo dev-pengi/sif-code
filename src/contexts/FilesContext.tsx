@@ -70,7 +70,6 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
   };
 
   const handleShareImport = async () => {
-    console.log(importURL)
     if (importURL) {
       const TOKEN =
         "e9bcf8e75f1cdcca89c815aab5e656a6190832a3b87af5e1accefbc63a69061340e3f5d98860ef4e7dd7fef1f012b6ab4782045d4a13c724dd9534fda84a6c63";

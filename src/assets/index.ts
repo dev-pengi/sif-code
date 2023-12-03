@@ -1,6 +1,3 @@
-import cssIcon from "./css.svg";
-import htmlIcon from "./html.svg";
-import jsIcon from "./js.svg";
 import downloadIcon from "./download.svg";
 import ExportIcon from "./ExportIcon";
 import ThemeIcon from "./ThemeIcon";
@@ -21,11 +18,15 @@ import SifFileIcon from "./SifFileIcon";
 import MenuIcon from "./MenuIcon";
 import ExternalIcon from "./ExternalIcon";
 import ShareIcon from "./ShareIcon";
+import DeleteIcon from "./DeleteIcon";
+import ColoredHtmlIcon from "./ColoredHtmlIcon";
+import ColoredCssIcon from "./ColoredCssIcon";
+import ColoredScssIcon from "./ColoredScssIcon";
+import ColoredLessIcon from "./ColoredLessIcon";
+import ColoredJsIcon from "./ColoredJsIcon";
+import ColoredJsonIcon from "./ColoredJsonIcon";
 
 export {
-  cssIcon,
-  htmlIcon,
-  jsIcon,
   downloadIcon,
   ExportIcon,
   ThemeIcon,
@@ -46,4 +47,10 @@ export {
   MenuIcon,
   ExternalIcon,
   ShareIcon,
+  DeleteIcon,
+  ColoredHtmlIcon,
+  ColoredCssIcon,
+  ColoredScssIcon,
+  ColoredLessIcon,ColoredJsIcon,
+  ColoredJsonIcon,
 };

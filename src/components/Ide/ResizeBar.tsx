@@ -22,8 +22,8 @@ const ResizeBar: FC = () => {
     if (resizing && resizeBarRef.current) {
       if (isHorizontal) {
         const newPageWidth = reversedView ? pageWidth - e.clientX : e.clientX;
-        const minWidth = 100;
-        const maxWidth = pageWidth - 100;
+        const minWidth = 101;
+        const maxWidth = pageWidth - 101;
         const clampedWidth = Math.max(
           minWidth,
           Math.min(maxWidth, newPageWidth)
@@ -33,8 +33,8 @@ const ResizeBar: FC = () => {
         const newPageHeight = reversedView
           ? (pageHeight - e.clientY) + 65
           : e.clientY - 65;
-        const minHeight = 100;
-        const maxHeight = pageHeight - 100;
+        const minHeight = 101;
+        const maxHeight = pageHeight - 101;
         const clampedHeight = Math.max(
           minHeight,
           Math.min(maxHeight, newPageHeight)

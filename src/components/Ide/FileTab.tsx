@@ -1,7 +1,5 @@
-import Image from "next/image";
-
 import { FC, useEffect, useRef, useState } from "react";
-import * as assets from "@/assets";
+import * as Assets from "@/assets";
 
 import { useCodeContext } from "@/contexts/CodeContext";
 import { useFilesContext } from "@/contexts/FilesContext";
@@ -42,8 +40,10 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
     return /^[^\s]{2,}$/g.test(name) && nameValid;
   };
 
-  const handleErrorCheck = (e: any) => {
-    const newName = getFullName(e.target.value);
+  const handleErrorCheck = () => {
+    if (!inputRef.current) return;
+    const currentName = inputRef.current.value as string;
+    const newName = getFullName(currentName);
     if (!newName) return setIsError(false);
     const validateName = validate(newName);
     setIsError(!validateName);
@@ -52,11 +52,15 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
     setIsRenaming(false);
   };
 
+  const handleChange = () => {
+    handleErrorCheck();
+  };
+
   const handleRename = () => {
     let newName = inputRef.current?.value as string;
     newName = getFullName(newName);
 
-    if (!newName || isError) {
+    if (!newName || !isRenaming || isError) {
       handleCancel();
       return;
     }
@@ -91,9 +95,9 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
     if (action === "renameFile") {
       !isMainFile && isActive && setIsRenaming((prev) => !prev);
     } else if (action === "escape") {
-      isRenaming && handleCancel();
+      handleCancel();
     } else if (action === "enter") {
-      isRenaming && handleRename();
+      handleRename();
     } else if (action === "click") {
       handleCancel();
     }
@@ -104,7 +108,7 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
     return () => {
       window.removeEventListener("message", receiveShortcutMessage);
     };
-  }, []);
+  }, [isRenaming, isActive, isError]);
 
   useEffect(() => {
     setIsActive(file.name === activeFile);
@@ -138,9 +142,9 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        isRenaming && handleCancel();
+        handleCancel();
       } else if (event.key === "Enter") {
-        isRenaming && handleRename();
+        handleRename();
       } else if (event.key === "F2") {
         !isMainFile && isActive && setIsRenaming((prev) => !prev);
       }
@@ -150,7 +154,7 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [isRenaming, isActive]);
+  }, [isRenaming, isActive, isError]);
 
   const selectInputText = () => {
     if (inputRef.current) {
@@ -167,9 +171,19 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
   };
 
   useEffect(() => {
-    !isRenaming && setIsError(false);
-    isRenaming && selectInputText();
+    console.log(isRenaming);
+    if (isRenaming) {
+      setIsError(false);
+      handleErrorCheck();
+      selectInputText();
+    }
   }, [isRenaming]);
+
+  const Icon: any =
+    //@ts-ignore
+    Assets[
+      `Colored${file.type.charAt(0).toUpperCase() + file.type.slice(1)}Icon`
+    ];
 
   return (
     <Draggable
@@ -208,17 +222,15 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
               snapshot.isDragging ? "shadow-xl opacity-80" : ""
             } px-2 min-w-max`}
           >
+            <div className="w-[25px]">
+              <Icon />
+            </div>
             <div className="flex items-center min-w-[120px]">
-              <Image
-                src={assets[`${file.type}Icon`]}
-                alt={`${file.type} icon`}
-                width={25}
-              />
               {isRenaming ? (
                 <input
                   ref={inputRef}
                   autoFocus
-                  onChange={handleErrorCheck}
+                  onChange={handleChange}
                   style={{
                     width: "150px",
                     padding: "0 2px",
@@ -250,7 +262,7 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
                   className={`ml-[10px] h-max p-1 tab-button rounded-sm`}
                 >
                   <div className="w-[18px]">
-                    <assets.CheckIcon />
+                    <Assets.CheckIcon />
                   </div>
                 </button>
                 <button
@@ -258,7 +270,7 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
                   className={`ml-[5px] h-max p-1 tab-button rounded-sm`}
                 >
                   <div className="w-[18px]">
-                    <assets.CloseIcon />
+                    <Assets.CloseIcon />
                   </div>
                 </button>
                 <style jsx>{`

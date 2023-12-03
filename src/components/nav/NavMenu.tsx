@@ -10,8 +10,9 @@ import {
 } from "react-contexify";
 import Image from "next/image";
 import ShortcutGuid from "./ShortcutsGuide";
-import { moreProjects } from "@/constants";
+import { initialFiles, moreProjects } from "@/constants";
 import { useCodeContext } from "@/contexts/CodeContext";
+import { useFilesContext } from "@/contexts/FilesContext";
 const MENU_ID = "info-menu";
 
 interface NavMenuProps {
@@ -28,6 +29,7 @@ const NavMenu: FC<NavMenuProps> = ({
   children,
 }) => {
   const { smallScreen, setTheme, theme } = useCodeContext();
+  const { setProjectName, setFiles } = useFilesContext();
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const openShortcuts = (): void => {
     setShortcutsOpen(true);
@@ -50,6 +52,11 @@ const NavMenu: FC<NavMenuProps> = ({
   };
   const handleLightTheme = () => {
     setTheme("light");
+  };
+
+  const handleReset = () => {
+    setFiles(initialFiles);
+    setProjectName("My New Project");
   };
   return (
     <>
@@ -102,7 +109,7 @@ const NavMenu: FC<NavMenuProps> = ({
           </Submenu>
         )}
         <Separator />
-        <Item onClick={openShortcuts}>
+        <Item onClick={openShortcuts} >
           <div className="w-[25px]">
             <assets.ShortcutIcon />
           </div>
@@ -172,6 +179,15 @@ const NavMenu: FC<NavMenuProps> = ({
             ))}
           </Submenu>
         )}
+
+        <Separator />
+
+        <Item onClick={handleReset} className="danger">
+          <div className="w-[25px]">
+            <assets.DeleteIcon />
+          </div>
+          <span className="ml-[10px]">Reset Project</span>
+        </Item>
       </Menu>
       <ShortcutGuid
         closeModal={closeShortcuts}

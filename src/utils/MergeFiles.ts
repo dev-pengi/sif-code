@@ -135,8 +135,6 @@ const mergeFile = async (files: File[], devMode: boolean = true) => {
     plugins: [prettierHtmlPlugins],
   });
 
-  console.log(formattedCode);
-
   return formattedCode;
 };
 

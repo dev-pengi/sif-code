@@ -29,7 +29,6 @@ const ProjectName: FC = () => {
 
   const handleInputChange = (e: any) => {
     setEditedProjectName(inputRef.current?.value as string);
-    console.log(inputRef.current?.value);
   };
 
   const selectInputText = () => {
