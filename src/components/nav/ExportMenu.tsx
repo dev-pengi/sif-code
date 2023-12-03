@@ -165,7 +165,9 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
     });
     if (typeof window !== "undefined") {
       const hostname = window.location.hostname;
-      const projectURL = `${window.location.protocol}//${hostname}:${window.location.port}/?import=${data.key}`;
+      const projectURL = `${window.location.protocol}//${hostname}${
+        window.location.port ? `:${window.location.port}` : ""
+      }/?import=${data.key}`;
       copyText(projectURL);
     }
   };
