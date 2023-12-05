@@ -25,6 +25,7 @@ const CreateFile: FC = () => {
             className="min-w-[18px]"
           />
         </button>
+        {/* <div className="w-[50px] h-full bg-transparent"></div> */}
       </CreateFileMenu>
     </>
   );

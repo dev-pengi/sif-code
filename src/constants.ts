@@ -1,10 +1,14 @@
+import { SnowFlakeConfig, Snowflake } from "snowflake-uid";
+
 type FileType = "html" | "css" | "js" | "scss" | "less" | "json";
 
 type File = {
   name: string;
   content: string;
   type: FileType;
+  id: string;
   isNew?: boolean;
+  compileToType?: FileType;
 };
 
 type initialCodesType = {
@@ -28,17 +32,26 @@ const initialCodes: initialCodesType = {
   Start your SCSS styling journey!
   all .SCSS files will be compiled to css on ZIP and HTML exports
 */`,
-less: `/*
+  less: `/*
   Start your LESS styling journey!
   all .LESS files will be compiled to css on ZIP and HTML exports
 */`,
 };
 
+const config: SnowFlakeConfig = {
+  epoch: 1641043200, // Set the epoch to January 1, 2023 at 00:00:00
+  workerId: 1,
+  processId: 1,
+  toString: true,
+};
+
+const snowflake = new Snowflake(config);
 const initialFiles: File[] = [
   {
     name: "index.html",
     content: initialCodes.html || "",
     type: "html",
+    id: String(snowflake.generate()),
   },
 ];
 
@@ -327,5 +340,6 @@ export {
   keyboardShortcuts,
   iframeSetUp,
   moreProjects,
+  snowflake,
 };
 export type { File, FileType };

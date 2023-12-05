@@ -76,6 +76,7 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
     width: smallScreen ? "100%" : width,
     height: smallScreen ? "100%" : height,
   };
+
   useEffect(() => {
     loader.init().then((monaco) => {
       setIsLoaded(true);
@@ -98,6 +99,7 @@ const Editor: React.FC<EditorProps> = ({ width, height }) => {
               width={"100%"}
               height={"100%"}
               theme={`vs-${theme}`}
+              path={`${currentFile?.name}-${currentFile?.id}`}
               language={
                 currentFile?.type == "js" ? "javascript" : currentFile?.type
               }

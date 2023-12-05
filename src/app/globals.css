@@ -9,6 +9,7 @@
   --contexify-activeItem-color: #fff;
   --contexify-activeItem-bgColor: #3498db;
   --contexify-activeItem-danger: #ff2323;
+  --contexify-textItem-danger: #ff6b6b;
   --contexify-rightSlot-color: #6f6e77;
   --contexify-activeRightSlot-color: #fff;
   --contexify-arrow-color: #6f6e77;
@@ -39,7 +40,11 @@
 
 .contexify_item:not(.contexify_item-disabled).danger > .contexify_itemContent,
 .contexify_item:not(.contexify_item-disabled).danger > .contexify_itemContent {
-  color: var(--contexify-activeItem-danger);
+  color: var(--contexify-textItem-danger);
+}
+.contexify_item:not(.contexify_item-disabled) > .contexify_itemContent,
+.contexify_item:not(.contexify_item-disabled) > .contexify_itemContent {
+  margin: 4px auto;
 }
 
 .contexify_item:not(.contexify_item-disabled).danger:focus

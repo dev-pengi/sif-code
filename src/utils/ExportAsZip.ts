@@ -2,12 +2,19 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { File } from "@/constants";
 
-const downloadFilesAsZip = (files: File[], folderName: string) => {
+const downloadFilesAsZip = (files: any[], folderName: string) => {
   const zip = new JSZip();
   const folder = zip.folder(folderName);
 
   files.forEach((file) => {
-    folder?.file(file.name, file.content);
+    if (file.type === "folder") {
+      const nestedFolder = folder?.folder(file.name);
+      file.files.forEach((folderFile: File) => {
+        nestedFolder?.file(folderFile.name, folderFile.content);
+      });
+    } else {
+      folder?.file(file.name, file.content);
+    }
   });
 
   zip

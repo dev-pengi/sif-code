@@ -48,8 +48,8 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
       event: e,
     });
   }
-  const handleZipExport = () => {
-    const linkedFiles = linkFiles(files);
+  const handleZipExport = async () => {
+    const linkedFiles = await linkFiles(files, projectName);
     downloadFilesAsZip(linkedFiles, projectName);
     toast.success("Project downloaded successfully");
   };
@@ -189,7 +189,7 @@ const DownloadMenu: FC<DownloadMenuProps> = ({
       >
         {children}
       </div>
-      <Menu id={MENU_ID} theme="dark">
+      <Menu id={MENU_ID} theme="dark" animation={false}>
         <Item onClick={handleFileBrowsing}>
           <div className="w-[25px]">
             <FilesIcon />

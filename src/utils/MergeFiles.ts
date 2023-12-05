@@ -1,17 +1,50 @@
 import { File, iframeSetUp } from "@/constants";
 import prettier from "prettier/standalone";
 import prettierHtmlPlugins from "prettier/plugins/html";
+import * as sass from "sass";
+import * as less from "less";
 
 const getHtmlFile = (files: File[]): File => {
   return files.find(
     (file) => file.type === "html" && file.name === "index.html"
   ) as File;
 };
+const compileCssProcessors = async (files: File[]): Promise<File[] | []> => {
+  const proFiles = files.filter(
+    (file) => file.type === "scss" || file.type === "less"
+  );
+  const compiledFiles: File[] = [];
 
-const getCssFiles = (
+  for (const file of proFiles) {
+    try {
+      let compiledFile = { css: "" };
+      if (file.type === "scss") {
+        compiledFile = await sass.compileStringAsync(file.content);
+      } else {
+        compiledFile = await less.render(file.content);
+      }
+      const fileName = file.name.split(".")[0];
+      const fullFileName = `${fileName}.css`;
+
+      compiledFiles.push({
+        ...file,
+        name: fullFileName,
+        type: "css",
+        content: compiledFile.css,
+      });
+    } catch (error) {
+      continue;
+    }
+  }
+  return compiledFiles;
+};
+
+const getCssFiles = async (
   files: File[]
-): { names: string[]; merged: string } | null => {
+): Promise<{ names: string[]; merged: string } | null> => {
   const cssFiles = files.filter((file) => file.type === "css");
+  const compiledCssFiles = await compileCssProcessors(files);
+  cssFiles.push(...compiledCssFiles);
 
   if (cssFiles.length === 0) return null;
 
@@ -42,21 +75,46 @@ const getIframeScripts = (): string => {
   return iframeSetUp;
 };
 
-const linkFiles = (files: File[]): File[] => {
+function resolveNamingConflicts(files: File[]): File[] {
+  const nameCountMap: Record<string, number> = {};
+
+  // Count occurrences of each name
+  files.forEach((file) => {
+    nameCountMap[file.name] = (nameCountMap[file.name] || 0) + 1;
+  });
+
+  // Resolve conflicts by appending a number to duplicate names
+  return files.map((file) => {
+    if (nameCountMap[file.name] > 1) {
+      const fileName = file.name.split('.')[0]
+      const fileExtension = file.name.split('.')[1]
+      const newName = `${fileName}_${nameCountMap[file.name]--}.${fileExtension}`;
+      return { ...file, name: newName };
+    }
+    return file;
+  });
+}
+
+const linkFiles = async (files: File[], projectName: string): Promise<any> => {
   const htmlFile = getHtmlFile(files);
-  const cssFiles = getCssFiles(files);
-  const jsFiles = getJsFiles(files);
+  const jsFiles = files.filter((file) => file.type === "js");
+  let cssFiles = files.filter((file) => file.type === "css");
+
+  const compiledCssFiles = await compileCssProcessors(files);
+  cssFiles.push(...compiledCssFiles);
+  cssFiles = resolveNamingConflicts(cssFiles);
 
   const mappedCssFiles =
-    cssFiles?.names
-      .map((name) => {
-        return `<link rel="stylesheet" href="${name}">`;
+    cssFiles
+      ?.map((file) => {
+        return `<link rel="stylesheet" href="css/${file.name}">`;
       })
       .join("\n") ?? "";
+
   const mappedJsFiles =
-    jsFiles?.names
-      .map((name) => {
-        return `<script src="${name}"></script>`;
+    jsFiles
+      ?.map((file) => {
+        return `<script src="javascript/${file.name}"></script>`;
       })
       .join("\n") ?? "";
 
@@ -65,7 +123,7 @@ const linkFiles = (files: File[]): File[] => {
     <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <title>OutPut</title>
+            <title>${projectName}</title>
             ${mappedCssFiles}
         </head>
         <body>
@@ -75,8 +133,17 @@ const linkFiles = (files: File[]): File[] => {
     </html>
     `;
 
-  const newFiles: File[] = [
-    ...files,
+  const newFiles = [
+    {
+      type: "folder",
+      name: "javascript",
+      files: jsFiles,
+    },
+    {
+      type: "folder",
+      name: "css",
+      files: cssFiles,
+    },
     {
       name: "index.html",
       content: linked,
@@ -86,16 +153,22 @@ const linkFiles = (files: File[]): File[] => {
   return newFiles;
 };
 
-const mergeFile = async (files: File[], devMode: boolean = true) => {
+const mergeFile = async (
+  files: File[],
+  projectName: string,
+  devMode: boolean = true
+) => {
   const htmlFile = getHtmlFile(files);
-  const cssFiles = getCssFiles(files);
   const jsFiles = getJsFiles(files);
+
+  const cssFiles = await getCssFiles(files);
+
   const result = `
       <!DOCTYPE html>
       <html lang="en">
           <head>
               <meta charset="UTF-8">
-              <title>OutPut</title>
+              <title>${projectName}</title>
               ${
                 cssFiles
                   ? `
@@ -130,10 +203,14 @@ const mergeFile = async (files: File[], devMode: boolean = true) => {
       </html>
       `;
 
-  const formattedCode = await prettier.format(result, {
-    parser: "html",
-    plugins: [prettierHtmlPlugins],
-  });
+  let formattedCode = result;
+
+  try {
+    formattedCode = await prettier.format(result, {
+      parser: "html",
+      plugins: [prettierHtmlPlugins],
+    });
+  } catch (error) {}
 
   return formattedCode;
 };

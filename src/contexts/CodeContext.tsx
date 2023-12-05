@@ -21,6 +21,7 @@ interface CodeContextValue {
   reversedView: boolean;
   theme: "light" | "dark";
   isHorizontal: boolean;
+  previewKey: number;
   setPageWidth: React.Dispatch<React.SetStateAction<number>>;
   setPageHeight: React.Dispatch<React.SetStateAction<number>>;
   setCodeWidth: React.Dispatch<React.SetStateAction<number>>;
@@ -33,6 +34,7 @@ interface CodeContextValue {
   setReversedView: React.Dispatch<React.SetStateAction<boolean>>;
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
   setIsHorizontal: React.Dispatch<React.SetStateAction<boolean>>;
+  setPreviewKey: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CodeContext = createContext<CodeContextValue>({
@@ -48,6 +50,7 @@ const CodeContext = createContext<CodeContextValue>({
   reversedView: false,
   theme: "dark",
   isHorizontal: true,
+  previewKey: 0,
   setPageWidth: () => {},
   setPageHeight: () => {},
   setCodeWidth: () => {},
@@ -60,6 +63,7 @@ const CodeContext = createContext<CodeContextValue>({
   setReversedView: () => {},
   setTheme: () => {},
   setIsHorizontal: () => {},
+  setPreviewKey: () => {},
 });
 
 export const useCodeContext = () => useContext(CodeContext);
@@ -79,6 +83,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
   );
 
   const [previewWidth, setPreviewWidth] = useState<number>(0);
+  const [previewKey, setPreviewKey] = useState<number>(0);
   const [previewHeight, setPreviewHeight] = useState<number>(0);
 
   const [fullScreenMode, setFullScreenMode] = useState("none");
@@ -209,27 +214,27 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
   }, [theme, switchedView, fullScreenMode, reversedView]);
 
   const receiveShortcutMessage = (event: MessageEvent) => {
-      const action = event.data;
-      if (action === "toggleTheme") {
-        setTheme((prev) => (prev === "light" ? "dark" : "light"));
-      }
-      if (action === "toggleView") {
-        setSwitchedView((prev) => !prev);
-      }
-      if (action === "toggleFullScreen") {
-        setFullScreenMode((prev) => {
-          if (prev === "none") return "code";
-          else if (prev === "code") return "preview";
-          else if (prev === "preview") return "none";
-          return prev;
-        });
-      }
-      if (action === "escape") {
-        setFullScreenMode("none");
-      }
-      if (action === "reverseView") {
-        setReversedView((prev) => !prev);
-      }
+    const action = event.data;
+    if (action === "toggleTheme") {
+      setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    }
+    if (action === "toggleView") {
+      setSwitchedView((prev) => !prev);
+    }
+    if (action === "toggleFullScreen") {
+      setFullScreenMode((prev) => {
+        if (prev === "none") return "code";
+        else if (prev === "code") return "preview";
+        else if (prev === "preview") return "none";
+        return prev;
+      });
+    }
+    if (action === "escape") {
+      setFullScreenMode("none");
+    }
+    if (action === "reverseView") {
+      setReversedView((prev) => !prev);
+    }
   };
 
   useEffect(() => {
@@ -264,6 +269,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     reversedView,
     theme,
     isHorizontal,
+    previewKey,
     setPageWidth,
     setPageHeight,
     setCodeWidth,
@@ -276,6 +282,7 @@ const CodeProvider: FC<CodeProviderProps> = ({ children }) => {
     setReversedView,
     setTheme,
     setIsHorizontal,
+    setPreviewKey,
   };
 
   return <CodeContext.Provider value={value}>{children}</CodeContext.Provider>;

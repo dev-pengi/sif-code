@@ -37,8 +37,8 @@ const Nav: FC = () => {
           <DownloadMenu showOnContextMenu showOnclick>
             <NavButton
               Icon={ExportIcon}
-              tooltip="Download project"
-              id={"download"}
+              tooltip="Export or Share"
+              id={"export"}
             />
           </DownloadMenu>
           {!smallScreen && (

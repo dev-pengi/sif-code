@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { Item, Menu, Separator, useContextMenu } from "react-contexify";
 import { toast } from "react-hot-toast";
-import { initialCodes } from "@/constants";
+import { FileType, initialCodes, snowflake } from "@/constants";
 const MENU_ID = "create-file";
 
 type FileCreateType = "css" | "scss" | "less" | "js" | "json";
@@ -12,6 +12,7 @@ type FileCreateType = "css" | "scss" | "less" | "js" | "json";
 type FileCreate = {
   type: FileCreateType;
   icon: FC;
+  compileToType?: FileType;
   separate?: boolean;
 };
 const filesCreate: FileCreate[] = [
@@ -20,15 +21,17 @@ const filesCreate: FileCreate[] = [
     icon: assets.ColoredCssIcon,
     separate: true,
   },
-  // {
-  //   type: "scss",
-  //   icon: assets.ColoredScssIcon,
-  // },
-  // {
-  //   type: "less",
-  //   icon: assets.ColoredLessIcon,
-  //   separate: true,
-  // },
+  {
+    type: "scss",
+    compileToType: "css",
+    icon: assets.ColoredScssIcon,
+  },
+  {
+    type: "less",
+    compileToType: "css",
+    icon: assets.ColoredLessIcon,
+    separate: true,
+  },
   {
     type: "js",
     icon: assets.ColoredJsIcon,
@@ -75,10 +78,34 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
       default: "file",
     };
 
-    const typeIndex = files.filter((file) => file.type === type).length;
-    const nameIndex = typeIndex > 0 ? typeIndex : "";
     const typeName = typeNames[type] || typeNames.default;
+    const newFileCreateDetails = filesCreate.find((file) => file.type === type);
+    const typeIndex = files.filter((file) => {
+      let isIndexed = false;
+      const fileDetails = filesCreate.find(
+        (fileCreate) => fileCreate.type === file.type
+      );
+      if (file.type === type) isIndexed = true;
+      if (fileDetails?.compileToType && fileDetails.compileToType === type)
+        isIndexed = true;
+      if (
+        newFileCreateDetails?.compileToType &&
+        newFileCreateDetails.compileToType === file.type
+      )
+        isIndexed = true;
+
+      if (
+        newFileCreateDetails?.compileToType &&
+        fileDetails?.compileToType &&
+        newFileCreateDetails?.compileToType === fileDetails?.compileToType
+      )
+        isIndexed = true;
+
+      return isIndexed;
+    }).length;
+    const nameIndex = typeIndex || "";
     const fullName = `${typeName}${nameIndex}.${type}`;
+    const fileID = String(snowflake.generate());
 
     setFiles((prev) => [
       ...prev,
@@ -86,6 +113,7 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
         name: fullName,
         type,
         content: initialCodes[type] || "",
+        id: fileID,
         isNew: true,
       },
     ]);
@@ -101,7 +129,7 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
       >
         {children}
       </div>
-      <Menu id={MENU_ID} theme="dark" animation="fade">
+      <Menu id={MENU_ID} theme="dark" animation={false}>
         {filesCreate.map((fileCreate: FileCreate, index: number) => (
           <>
             <Item key={index} onClick={() => handleCreateFile(fileCreate.type)}>

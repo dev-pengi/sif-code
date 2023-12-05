@@ -8,10 +8,11 @@ import {
   ReactNode,
 } from "react";
 import { useSearchParams } from "next/navigation";
-import { File, initialFiles } from "@/constants";
+import { File, initialFiles, snowflake } from "@/constants";
 import { convertToBinary, parseBinarySif } from "@/utils";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { SnowFlakeConfig, Snowflake } from "snowflake-uid";
 interface FilesContextValue {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
@@ -87,7 +88,7 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
         setFiles(parsedData.files);
         setProjectName(parsedData.projectName);
       } catch (error) {
-        console.error(error)
+        console.error(error);
         toast.error("Couldn't load the project");
       }
     }
@@ -107,6 +108,17 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
       setActiveFile(previousFile.name);
     }
   };
+  useEffect(() => {
+    const snowflakeId = snowflake.generate();
+    setFiles((prev) => {
+      return prev.map((file) => {
+        if (!file.id) {
+          file.id = String(snowflakeId);
+        }
+        return file;
+      });
+    });
+  }, [files]);
 
   const checkShortCut = (event: KeyboardEvent, key: string) => {
     const condition =

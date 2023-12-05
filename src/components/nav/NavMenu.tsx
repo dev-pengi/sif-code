@@ -28,7 +28,7 @@ const NavMenu: FC<NavMenuProps> = ({
   showOnContextMenu,
   children,
 }) => {
-  const { smallScreen, setTheme, theme } = useCodeContext();
+  const { smallScreen, setTheme, setPreviewKey, theme } = useCodeContext();
   const { setProjectName, setFiles } = useFilesContext();
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const openShortcuts = (): void => {
@@ -57,6 +57,13 @@ const NavMenu: FC<NavMenuProps> = ({
   const handleReset = () => {
     setFiles(initialFiles);
     setProjectName("My New Project");
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/");
+    }
+  };
+
+  const handleRecompile = () => {
+    setPreviewKey((prev) => prev + 1);
   };
   return (
     <>
@@ -67,7 +74,14 @@ const NavMenu: FC<NavMenuProps> = ({
       >
         {children}
       </div>
-      <Menu id={MENU_ID} theme="dark">
+      <Menu id={MENU_ID} theme="dark" animation={false}>
+        <Item onClick={handleRecompile}>
+          <div className="w-[22px]">
+            <assets.PlayIcon />
+          </div>
+          <span className="ml-[10px]">Recompile Project</span>
+        </Item>
+        <Separator />
         {smallScreen ? (
           <>
             <Item onClick={handleDarkTheme}>
@@ -109,7 +123,7 @@ const NavMenu: FC<NavMenuProps> = ({
           </Submenu>
         )}
         <Separator />
-        <Item onClick={openShortcuts} >
+        <Item onClick={openShortcuts}>
           <div className="w-[25px]">
             <assets.ShortcutIcon />
           </div>

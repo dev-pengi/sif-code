@@ -13,8 +13,9 @@ interface LivePreviewProps {
 }
 
 const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
-  const { files, isLoaded } = useFilesContext();
-  const { smallScreen, reversedView, fullScreenMode } = useCodeContext();
+  const { files, isLoaded, projectName } = useFilesContext();
+  const { smallScreen, reversedView, fullScreenMode, previewKey } =
+    useCodeContext();
   const [showPreview, setShowPreview] = useState<boolean>(true);
 
   const [mergedFiles, setMergedFiles] = useState<string>("");
@@ -25,7 +26,7 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
   }, [reversedView, smallScreen]);
 
   const handleFileUpdate = async () => {
-    const HtmlFile = await mergeFile(files);
+    const HtmlFile = await mergeFile(files, projectName);
     setMergedFiles(HtmlFile);
   };
   useEffect(() => {
@@ -56,6 +57,7 @@ const LivePreview: FC<LivePreviewProps> = ({ width, height }) => {
           {isLoaded ? (
             <iframe
               srcDoc={mergedFiles}
+              key={previewKey}
               title="output"
               sandbox="allow-scripts allow-same-origin"
               referrerPolicy="no-referrer"

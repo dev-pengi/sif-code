@@ -25,6 +25,7 @@ import ColoredScssIcon from "./ColoredScssIcon";
 import ColoredLessIcon from "./ColoredLessIcon";
 import ColoredJsIcon from "./ColoredJsIcon";
 import ColoredJsonIcon from "./ColoredJsonIcon";
+import PlayIcon from "./PlayIcon";
 
 export {
   downloadIcon,
@@ -52,5 +53,5 @@ export {
   ColoredCssIcon,
   ColoredScssIcon,
   ColoredLessIcon,ColoredJsIcon,
-  ColoredJsonIcon,
+  ColoredJsonIcon,PlayIcon
 };
