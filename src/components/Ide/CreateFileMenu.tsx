@@ -132,13 +132,16 @@ const CreateFileMenu: FC<CreateFileMenuProps> = ({
       <Menu id={MENU_ID} theme="dark" animation={false}>
         {filesCreate.map((fileCreate: FileCreate, index: number) => (
           <>
-            <Item key={index} onClick={() => handleCreateFile(fileCreate.type)}>
+            <Item
+              key={`fileCreate-${index}`}
+              onClick={() => handleCreateFile(fileCreate.type)}
+            >
               <div className="w-[25px]">
                 <fileCreate.icon />
               </div>
               <span className="ml-[10px]">{fileCreate.type}</span>
             </Item>
-            {fileCreate.separate && <Separator />}
+            {fileCreate.separate && <Separator key={`separator-${index}`} />}
           </>
         ))}
       </Menu>

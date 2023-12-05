@@ -11,9 +11,9 @@ const GithubIcon: FC = () => {
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g
           transform="translate(-140.000000, -7559.000000)"

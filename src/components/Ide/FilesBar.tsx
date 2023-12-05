@@ -11,7 +11,7 @@ const FilesBar: FC = () => {
   const { files } = useFilesContext();
   const { theme } = useCodeContext();
   return (
-    <Droppable droppableId="files-bar" direction="horizontal">
+    <Droppable droppableId="files-bar" direction="horizontal" >
       {(provided, snapshot) => (
         <div
           className={`w-full flex items-center filesbar-scroll h-12 pr-[10px]`}

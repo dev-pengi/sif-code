@@ -171,7 +171,6 @@ const FileTab: FC<FileTabProps> = ({ file, index }) => {
   };
 
   useEffect(() => {
-    console.log(isRenaming);
     if (isRenaming) {
       setIsError(false);
       handleErrorCheck();

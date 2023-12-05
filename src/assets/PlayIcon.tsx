@@ -10,9 +10,9 @@ const PlayIcon: FC = () => {
     >
       <g
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g
           transform="translate(-412.000000, -622.000000)"

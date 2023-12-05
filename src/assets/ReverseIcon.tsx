@@ -10,10 +10,10 @@ const ReverseIcon: FC = () => {
     >
       <g
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         transform="translate(4 2)"
       >
         <path d="m4.5 8.5-4 4 4 4" />

@@ -88,7 +88,6 @@ const FilesProvider: FC<FilesProviderProps> = ({ children }) => {
         setFiles(parsedData.files);
         setProjectName(parsedData.projectName);
       } catch (error) {
-        console.error(error);
         toast.error("Couldn't load the project");
       }
     }
