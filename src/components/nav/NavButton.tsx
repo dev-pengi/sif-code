@@ -77,7 +77,7 @@ const NavButton: FC<NavButtonProps> = ({
         </div>
       </LinkOrButton>
       <Tooltip
-        place={smallScreen ? "right" : "bottom"}
+        place={"bottom"}
         offset={18}
         style={{ background: "#3498db" }}
         border={"#111111"}

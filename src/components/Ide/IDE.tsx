@@ -47,7 +47,7 @@ const IDE: FC = () => {
 
   return (
     <main
-      className={`vsm:px-[5px] vsm:pb-[5px] w-[calc(100vw-60px)] h-screen mt-0 ml-[60px] vsm:w-full vsm:h-[calc(100vh-60px)] vsm:mt-[60px] vsm:ml-0`}
+      className={`vsm:px-[5px] vsm:pb-[5px] w-full h-[calc(100vh-60px)] mt-[60px] ml-0`}
     >
       <div
         id="main"

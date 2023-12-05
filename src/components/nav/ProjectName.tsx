@@ -1,4 +1,5 @@
 "use client";
+import { useCodeContext } from "@/contexts/CodeContext";
 import { useFilesContext } from "@/contexts/FilesContext";
 import { FC, useEffect, useRef, useState } from "react";
 
@@ -6,6 +7,7 @@ const ProjectName: FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const nameArea = useRef<HTMLHeadingElement | null>(null);
   const { projectName, setProjectName } = useFilesContext();
+  const { smallScreen } = useCodeContext();
   const [editedProjectName, setEditedProjectName] = useState(projectName);
   const [isEditing, setIsEditing] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -99,8 +101,8 @@ const ProjectName: FC = () => {
     <h3
       onClick={handleEditing}
       className={`${
-        isEditing ? "" : "px-3 py-1 bg-main-lighter rounded-md"
-      } text-white mx-4 text-center font-medium truncate cursor-pointer max-w-[300px]`}
+        isEditing ? "" : `vsm:px-3 px-2 py-1 bg-main-lighter rounded-md`
+      } text-white vsm:mx-4 ml-2 text-center font-medium truncate cursor-pointer max-w-[300px]`}
       ref={nameArea}
     >
       {isEditing ? (

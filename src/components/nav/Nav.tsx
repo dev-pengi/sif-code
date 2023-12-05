@@ -27,10 +27,10 @@ const Nav: FC = () => {
 
   return (
     <nav
-      className={`z-10 bg-transparent fixed left-0 h-screen w-navD vsm:top-0 vsm:w-screen vsm:h-navD vsm:px-6`}
+      className={`z-10 bg-transparent fixed left-0 top-0 w-screen h-navD px-6`}
     >
       <div className={`flex items-center h-full w-full`}>
-        <div className={`flex gap-4 vsm:flex-row flex-col flex-1 items-center`}>
+        <div className={`flex gap-4 flex-row flex-1 items-center justify-start`}>
           <NavMenu showOnContextMenu showOnclick>
             <NavButton Icon={MenuIcon} tooltip="info" id={"info"} />
           </NavMenu>
@@ -56,9 +56,9 @@ const Nav: FC = () => {
             onClick={handleReverseView}
           />
         </div>
+            <ProjectName />
         {!smallScreen && (
           <>
-            <ProjectName />
             <SizeIndicator />
           </>
         )}
