@@ -1,4 +1,3 @@
-import downloadIcon from "./download.svg";
 import ExportIcon from "./ExportIcon";
 import ThemeIcon from "./ThemeIcon";
 import RotateIcon from "./RotateIcon";
@@ -26,9 +25,10 @@ import ColoredLessIcon from "./ColoredLessIcon";
 import ColoredJsIcon from "./ColoredJsIcon";
 import ColoredJsonIcon from "./ColoredJsonIcon";
 import PlayIcon from "./PlayIcon";
+import DownloadIcon from "./DownloadIcon";
 
 export {
-  downloadIcon,
+  DownloadIcon,
   ExportIcon,
   ThemeIcon,
   RotateIcon,

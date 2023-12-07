@@ -130,6 +130,15 @@ const NavMenu: FC<NavMenuProps> = ({
           <span className="ml-[10px]">keyboard shortcuts</span>
         </Item>
 
+        <Item>
+          <a target="_blank" className="flex" href="https://github.com/dev-pengi/sif-code-desktop/releases/download/app/sif-code.0.1.0.msi">
+            <div className="w-[25px]">
+              <assets.DownloadIcon />
+            </div>
+            <span className="ml-[10px]">Desktop App</span>
+          </a>
+        </Item>
+
         <Separator />
 
         <Item>
