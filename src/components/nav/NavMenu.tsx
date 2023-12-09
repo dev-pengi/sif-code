@@ -131,7 +131,11 @@ const NavMenu: FC<NavMenuProps> = ({
         </Item>
 
         <Item>
-          <a target="_blank" className="flex" href="https://github.com/dev-pengi/sif-code-desktop/releases/download/app/sif-code.0.1.0.msi">
+          <a
+            target="_blank"
+            className="flex"
+            href="https://github.com/dev-pengi/sif-code-desktop/releases/latest/download/sif-code.msi"
+          >
             <div className="w-[25px]">
               <assets.DownloadIcon />
             </div>
