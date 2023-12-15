@@ -144,7 +144,7 @@ const NavMenu: FC<NavMenuProps> = ({
         </Item>
 
         <Separator />
-
+        {/* 
         <Item>
           <a
             href="https://github.com/dev-pengi/sif-code"
@@ -207,7 +207,7 @@ const NavMenu: FC<NavMenuProps> = ({
           </Submenu>
         )}
 
-        <Separator />
+        <Separator /> */}
 
         <Item onClick={handleReset} className="danger">
           <div className="w-[25px]">
